@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KasMate - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-cube"></i> <span>KasMate</span>
+            </div>
+
+            <div class="sidebar-menu">
+                <a href="#" class="menu-item active">
+                    <i class="fa-solid fa-border-all"></i> Dashboard
+                </a>
+
+                <div class="menu-section">
+                    <p class="section-title">KELOLA IURAN</p>
+                    <a href="#" class="menu-item"><i class="fa-solid fa-users-line"></i> Grup Iuran</a>
+                    <a href="#" class="menu-item"><i class="fa-solid fa-user-group"></i> Anggota</a>
+                    <a href="#" class="menu-item"><i class="fa-solid fa-file-invoice-dollar"></i> Iuran & Tagihan</a>
+                    <a href="#" class="menu-item"><i class="fa-regular fa-circle-check"></i> Pembayaran</a>
+                </div>
+
+                <div class="menu-section">
+                    <p class="section-title">KEUANGAN</p>
+                    <a href="#" class="menu-item"><i class="fa-solid fa-clock-rotate-left"></i> Pemasukan</a> <a href="#" class="menu-item"><i class="fa-regular fa-eye"></i> Pengeluaran</a> <a href="#" class="menu-item"><i class="fa-solid fa-chart-pie"></i> Ringkasan Keuangan</a>
+                </div>
+
+                <div class="menu-section">
+                    <p class="section-title">LAPORAN</p>
+                    <a href="#" class="menu-item"><i class="fa-regular fa-file-lines"></i> Laporan</a>
+                    <a href="#" class="menu-item"><i class="fa-solid fa-clock-rotate-left"></i> Riwayat Transaksi</a>
+                </div>
+            </div>
+
+            <div class="sidebar-bottom">
+                <a href="#" class="menu-item"><i class="fa-solid fa-gear"></i> Pengaturan</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div class="header-text">
+                    <h1>Dashboard Bendahara</h1>
+                    <p class="welcome-text">Selamat datang, Budi Santoso</p>
+                    <p class="subtitle">Kelola keuangan kelompok dengan mudah dan transparan.</p>
+                </div>
+                <div class="header-right">
+                    <button class="btn-notification">
+                        <i class="fa-regular fa-bell"></i>
+                    </button>
+                    <div class="user-profile">
+                        <img src="https://ui-avatars.com/api/?name=Budi+Santoso&background=e2e8f0&color=475569" alt="Budi Santoso">
+                        <div class="user-info">
+                            <span class="user-name">Budi Santoso</span>
+                            <span class="user-role">Bendahara</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down dropdown-icon"></i>
+                    </div>
+                </div>
+            </header>
+
+            <section class="overview-cards">
+                <div class="card stat-card">
+                    <div class="stat-header">
+                        <h2>3 <span class="trend up"><i class="fa-solid fa-caret-up"></i></span></h2>
+                    </div>
+                    <p class="stat-title">Grup Iuran</p>
+                    <p class="stat-desc">Total grup dikelola <i class="fa-solid fa-caret-down"></i></p>
+                </div>
+                <div class="card stat-card">
+                    <div class="stat-header">
+                        <h2>27</h2>
+                    </div>
+                    <p class="stat-title">Anggota</p>
+                    <p class="stat-desc">Total anggota aktif <i class="fa-solid fa-caret-down"></i></p>
+                </div>
+                <div class="card stat-card">
+                    <div class="stat-header">
+                        <h2>Rp 3.250.000</h2>
+                    </div>
+                    <p class="stat-title">Total Pemasukan</p>
+                    <p class="stat-desc">Bulan ini <i class="fa-solid fa-caret-down"></i></p>
+                </div>
+                <div class="card stat-card">
+                    <div class="stat-header">
+                        <h2>Rp 850.000</h2>
+                    </div>
+                    <p class="stat-title">Total Pengeluaran</p>
+                    <p class="stat-desc">Bulan ini <i class="fa-solid fa-caret-down"></i></p>
+                </div>
+            </section>
+
+            <section class="charts-section">
+                <div class="card chart-card flex-2">
+                    <h3 class="card-title">Ringkasan Keuangan (Bulan Ini)</h3>
+                    <div class="chart-container">
+                        <div class="chart-info left-info">
+                            <p class="legend-label"><span class="dot dot-blue"></span> Pemasukan</p>
+                            <h4>Rp 3.250.000</h4>
+                        </div>
+                        
+                        <div class="donut-wrapper">
+                            <div class="donut-chart-1"></div>
+                            <div class="donut-inner">
+                                <span class="inner-label">Saldo</span>
+                                <span class="inner-value">Rp 2.400.000</span>
+                            </div>
+                        </div>
+
+                        <div class="chart-info right-info">
+                            <p class="legend-label"><span class="dot dot-yellow"></span> Pengeluaran</p>
+                            <h4>Rp 850.000</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card chart-card flex-1">
+                    <h3 class="card-title">Status Pembayaran</h3>
+                    <div class="chart-container">
+                        <div class="donut-wrapper small-donut">
+                            <div class="donut-chart-2"></div>
+                            <div class="donut-inner"></div>
+                        </div>
+                        <ul class="legend-list">
+                            <li>
+                                <span><span class="dot dot-green"></span> Lunas</span>
+                                <span>18 (66.7%)</span>
+                            </li>
+                            <li>
+                                <span><span class="dot dot-orange"></span> Belum Lunas</span>
+                                <span>7 (25.9%)</span>
+                            </li>
+                            <li>
+                                <span><span class="dot dot-red"></span> Terlambat</span>
+                                <span>2 (7.4%)</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="table-section">
+                <div class="card table-card">
+                    <h3 class="card-title">Grup Iuran Terbaru</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nama Grup</th>
+                                <th>Jumlah Anggota</th>
+                                <th>Iuran per Orang</th>
+                                <th>Periode</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="fw-500">Kelas TI-2A 2024</td>
+                                <td>9</td>
+                                <td>Rp 50.000</td>
+                                <td>Mei 2024</td>
+                                <td><button class="btn-action">Lihat</button></td>
+                            </tr>
+                            <tr>
+                                <td class="fw-500">PKK RT 05</td>
+                                <td>12</td>
+                                <td>Rp 20.000</td>
+                                <td>Mei 2024</td>
+                                <td><button class="btn-action">Lihat</button></td>
+                            </tr>
+                            <tr>
+                                <td class="fw-500">Arisan Keluarga</td>
+                                <td>6</td>
+                                <td>Rp 100.000</td>
+                                <td>Mei 2024</td>
+                                <td><button class="btn-action">Lihat</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>
