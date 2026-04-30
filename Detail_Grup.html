@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KasMate - Detail Grup Pembayaran</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-cube"></i>
+                <span>KasMate</span>
+            </div>
+
+            <div class="sidebar-menu">
+                <a href="dashboard.html" class="menu-item">
+                    <i class="fa-solid fa-border-all"></i> Dashboard
+                </a>
+
+                <div class="menu-section">
+                    <p class="section-title">KELOLA IURAN</p>
+                    <a href="grup-iuran.html" class="menu-item"><i class="fa-solid fa-users-line"></i> Grup Iuran</a>
+                    <a href="#" class="menu-item"><i class="fa-solid fa-user-group"></i> Anggota</a>
+                    <a href="#" class="menu-item"><i class="fa-solid fa-file-invoice-dollar"></i> Iuran & Tagihan</a>
+                    <a href="#" class="menu-item active"><i class="fa-regular fa-circle-check"></i> Pembayaran</a>
+                </div>
+
+                <div class="menu-section">
+                    <p class="section-title">KEUANGAN</p>
+                    <a href="#" class="menu-item"><i class="fa-solid fa-clock-rotate-left"></i> Pemasukan</a>
+                    <a href="#" class="menu-item"><i class="fa-regular fa-eye"></i> Pengeluaran</a>
+                    <a href="#" class="menu-item"><i class="fa-solid fa-chart-pie"></i> Ringkasan Keuangan</a>
+                </div>
+
+                <div class="menu-section">
+                    <p class="section-title">LAPORAN</p>
+                    <a href="#" class="menu-item"><i class="fa-regular fa-file-lines"></i> Laporan</a>
+                    <a href="#" class="menu-item"><i class="fa-solid fa-clock-rotate-left"></i> Riwayat Transaksi</a>
+                </div>
+            </div>
+
+            <div class="sidebar-bottom">
+                <a href="#" class="menu-item"><i class="fa-solid fa-gear"></i> Pengaturan</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div class="header-text">
+                    <h1>Detail Grup - Pembayaran</h1>
+                    <p class="subtitle">Grup Iuran &gt; Kelas TI-2A 2024 &gt; Pembayaran</p>
+                </div>
+            </header>
+
+            <div class="tabs-container">
+                <a href="#" class="tab-item">Anggota</a>
+                <a href="#" class="tab-item">Tagihan</a>
+                <a href="#" class="tab-item active">Pembayaran</a>
+            </div>
+
+            <!-- Kotak Ringkasan Angka (Desain Ikon Modern) -->
+            <section class="overview-cards">
+                <div class="card stat-card" style="display: flex; align-items: center; gap: 15px; padding: 25px 20px;">
+                    <div style="width: 55px; height: 55px; border-radius: 14px; background-color: #e0f2fe; color: var(--color-blue); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0;">
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+                    </div>
+                    <div>
+                        <p style="font-size: 13px; font-weight: 500; color: var(--text-muted); margin-bottom: 4px;">Total Tagihan</p>
+                        <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 0; color: var(--text-dark);">Rp 6.000.000</h2>
+                    </div>
+                </div>
+
+                <div class="card stat-card" style="display: flex; align-items: center; gap: 15px; padding: 25px 20px;">
+                    <div style="width: 55px; height: 55px; border-radius: 14px; background-color: #dcfce7; color: var(--color-green); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0;">
+                        <i class="fa-regular fa-circle-check"></i>
+                    </div>
+                    <div>
+                        <p style="font-size: 13px; font-weight: 500; color: var(--text-muted); margin-bottom: 4px;">Lunas</p>
+                        <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 0; color: var(--text-dark);">Rp 3.400.000 <span style="font-size: 12px; font-weight: 500; color: var(--text-muted); margin-left: 4px;">(56.7%)</span></h2>
+                    </div>
+                </div>
+
+                <div class="card stat-card" style="display: flex; align-items: center; gap: 15px; padding: 25px 20px;">
+                    <div style="width: 55px; height: 55px; border-radius: 14px; background-color: #ffedd5; color: var(--color-orange); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0;">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                    </div>
+                    <div>
+                        <p style="font-size: 13px; font-weight: 500; color: var(--text-muted); margin-bottom: 4px;">Belum Lunas</p>
+                        <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 0; color: var(--text-dark);">Rp 2.000.000 <span style="font-size: 12px; font-weight: 500; color: var(--text-muted); margin-left: 4px;">(33.3%)</span></h2>
+                    </div>
+                </div>
+
+                <div class="card stat-card" style="display: flex; align-items: center; gap: 15px; padding: 25px 20px;">
+                    <div style="width: 55px; height: 55px; border-radius: 14px; background-color: #fee2e2; color: var(--color-red); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0;">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                    </div>
+                    <div>
+                        <p style="font-size: 13px; font-weight: 500; color: var(--text-muted); margin-bottom: 4px;">Terlambat</p>
+                        <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 0; color: var(--text-dark);">Rp 600.000 <span style="font-size: 12px; font-weight: 500; color: var(--text-muted); margin-left: 4px;">(10.0%)</span></h2>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card table-card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nama Anggota</th>
+                            <th>Status</th>
+                            <th>Terakhir Bayar</th>
+                            <th>Total Bayar</th>
+                            <th>Sisa Tagihan</th>
+                            <th style="text-align: center;">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="fw-500">Andi Wijaya</td>
+                            <td><span class="badge badge-lunas">Lunas</span></td>
+                            <td>08 Mei 2024</td>
+                            <td>Rp 300.000</td>
+                            <td>Rp 0</td>
+                            <td style="text-align: center;">
+                                <div class="action-icons" style="justify-content: center;">
+                                    <i class="fa-regular fa-eye"></i>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fw-500">Dewi Lestari</td>
+                            <td><span class="badge badge-pending">Belum Lunas</span></td>
+                            <td>-</td>
+                            <td>Rp 0</td>
+                            <td>Rp 300.000</td>
+                            <td style="text-align: center;">
+                                <button class="btn-action btn-dark">Bayar</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fw-500">Rudi Herman</td>
+                            <td><span class="badge badge-lunas">Lunas</span></td>
+                            <td>09 Mei 2024</td>
+                            <td>Rp 300.000</td>
+                            <td>Rp 0</td>
+                            <td style="text-align: center;">
+                                <div class="action-icons" style="justify-content: center;">
+                                    <i class="fa-regular fa-eye"></i>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fw-500">Siti Aisyah</td>
+                            <td><span class="badge badge-terlambat">Terlambat</span></td>
+                            <td>01 Apr 2024</td>
+                            <td>Rp 100.000</td>
+                            <td>Rp 200.000</td>
+                            <td style="text-align: center;">
+                                <button class="btn-action btn-dark">Bayar</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="table-footer">
+                    <div class="table-info">Menampilkan 1 - 4 dari 12 data</div>
+                    <div class="pagination">
+                        <button class="page-btn active">1</button>
+                        <button class="page-btn">2</button>
+                        <button class="page-btn">3</button>
+                        <button class="page-btn"><i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>
