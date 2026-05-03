@@ -9,6 +9,110 @@
     <link rel="stylesheet" href="../style.css">
 </head>
 
+<style>
+    .main-content {
+    padding: 20px;
+}
+
+.section-title{
+    font-size: 18px;
+    margin-bottom: 16px;
+}
+
+.content-wrapper{
+    display: flex;
+    gap: 20px;
+}
+
+.group-list{
+    width: 40%;
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+}
+
+.group-card{
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.group-card:hover{
+    background-color: #f5f5f5;
+}
+
+.group-name{
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.group-info{
+    font-size: 13px;
+    color: #666;
+}
+
+.group-detail{
+    width: 60%;
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+}
+
+.detail-header{
+    margin-bottom: 20px;
+}
+
+.detail-header h2{
+    margin: 0;
+}
+
+.detail-item{
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.tagihan-table{
+    margin-top: 20px;
+}
+
+.tagihan-table table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tagihan-table th, .tagihan-table td{
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+.status-lunas{
+    background-color: #d4edda;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
+.status-belum{
+    background-color: #fff3cd;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
+footer{
+    background-color: #2A3636;
+    margin-top: 50px;
+    padding: 15px;
+}
+
+footer p{
+    color: white;
+    text-align: center;
+}
+</style>
+
 <body>
     <div class="dashboard-layout">
         <aside class="sidebar">
@@ -25,3 +129,83 @@
                     <a href="Profil.html" class="menu-item"><i class="fa-regular fa-circle-check"></i>Profil</a>
                 </div>
         </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <h1>Grup Saya</h1>
+                <p>Daftar grup yang kamu ikuti</p>
+            </div>
+        </header>
+
+        <div class="content-wrapper">
+   
+            <div class="group-list">
+                <h3 class="section-title">Daftar Grup</h3>
+
+                <div class="group-card">
+                    <div class="group-name">Kelas TI-2A 2024</div>
+                    <div class="group-info">25 anggota • Rp 50.000/bulan</div>
+                </div>
+
+                <div class="group-card">
+                    <div class="group-name">Arisan Keluarga</div>
+                    <div class="group-info">12 anggota • Rp 100.000/bulan</div>
+                </div>
+
+                <div class="group-card">
+                    <div class="group-name">HIMA TI UNNES</div>
+                    <div class="group-info">40 anggota • Rp 25.000/bulan</div>
+                </div>
+
+            </div>
+
+            <div class="group-detail">
+                <div class="detail-header">
+                    <h2>Kelas TI-2A 2024</h2>
+                    <p>Grup iuran kelas angkatan 2024</p>
+                </div>
+
+                <div class="detail-item">Bendahara: Budi Santoso</div>
+                <div class="detail-item">Jumlah Anggota: 25 orang</div>
+                <div class="detail-item">Iuran: Rp 50.000 / bulan</div>
+                <div class="detail-item">Periode: Jan 2024 - Des 2024</div>
+
+                <div class="tagihan-table">
+                    <h3 class="section-title">Tagihan Saya</h3>
+
+                    <table>
+                        <tr>
+                            <th>Periode</th>
+                            <th>Jumlah</th>
+                            <th>Status</th>
+                        </tr>
+
+                        <tr>
+                            <td>Mei 2024</td>
+                            <td>Rp 50.000</td>
+                            <td><span class="status-lunas">Lunas</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Juni 2024</td>
+                            <td>Rp 50.000</td>
+                            <td><span class="status-belum">Belum Bayar</span></td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <footer>
+            <p>&copy; 2026 KasMate. All rights reserved.</p>
+        </footer>
+
+    </main>
+</div>
+</body>
+</html>
+
