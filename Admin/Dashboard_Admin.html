@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KasMate - Dashboard Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-cube"></i>
+                <span>KasMate</span>
+            </div>
+            <nav class="sidebar-menu">
+                <div class="menu-section">
+                    <a href="Dashboard_Admin.html" class="menu-item active">
+                        <i class='bx bxs-dashboard'></i> Dashboard
+                    </a>
+                    <a href="Manajemen_User.html" class="menu-item">
+                        <i class='bx bxs-user-account'></i> Manajemen User
+                    </a>
+                    <a href="Manajemen_Grup.html" class="menu-item">
+                        <i class='bx bxs-group'></i> Manajemen Grup
+                    </a>
+                    <a href="Pengaturan.html" class="menu-item">
+                        <i class='bx bxs-cog'></i> Pengaturan Sistem
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div class="header-text">
+                    <h1>Dashboard Admin</h1>
+                    <p class="subtitle">Ringkasan informasi sistem secara keseluruhan</p>
+                </div>
+                <div class="header-right">
+                    <button class="btn-notification"><i class='bx bx-bell'></i></button>
+                    <div class="user-profile">
+                        <img src="https://ui-avatars.com/api/?name=Admin&background=e2e8f0&color=475569" alt="Admin">
+                        <div class="user-info">
+                            <span class="user-name">Admin</span>
+                            <span class="user-role">Administrator</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <section class="overview-cards">
+                <div class="card">
+                    <p class="stat-title">Total User</p>
+                    <div class="stat-header">
+                        <h2>128</h2>
+                    </div>
+                    <p class="stat-desc text-green">+12 dari bulan lalu</p>
+                </div>
+                <div class="card">
+                    <p class="stat-title">Total Grup</p>
+                    <div class="stat-header">
+                        <h2>24</h2>
+                    </div>
+                    <p class="stat-desc text-green">+3 dari bulan lalu</p>
+                </div>
+                <div class="card">
+                    <p class="stat-title">Total Transaksi</p>
+                    <div class="stat-header">
+                        <h2>1.256</h2>
+                    </div>
+                    <p class="stat-desc text-green">+18% dari bulan lalu</p>
+                </div>
+                <div class="card">
+                    <p class="stat-title">Total Saldo</p>
+                    <div class="stat-header">
+                        <h2>Rp 125.750.000</h2>
+                    </div>
+                    <p class="stat-desc">Total saldo keseluruhan</p>
+                </div>
+            </section>
+
+            <section class="charts-section">
+                <div class="card flex-2">
+                    <h3 class="card-title">Grafik Transaksi (6 Bulan Terakhir)</h3>
+                    <div class="chart-placeholder">
+                        <div class="bar-chart">
+                            <div class="bar-item">
+                                <div class="bar" style="height: 40%;"></div>
+                                <span>Jan</span>
+                            </div>
+                            <div class="bar-item">
+                                <div class="bar" style="height: 65%;"></div>
+                                <span>Feb</span>
+                            </div>
+                            <div class="bar-item">
+                                <div class="bar" style="height: 50%;"></div>
+                                <span>Mar</span>
+                            </div>
+                            <div class="bar-item">
+                                <div class="bar" style="height: 85%;"></div>
+                                <span>Apr</span>
+                            </div>
+                            <div class="bar-item">
+                                <div class="bar" style="height: 60%;"></div>
+                                <span>Mei</span>
+                            </div>
+                            <div class="bar-item">
+                                <div class="bar" style="height: 95%;"></div>
+                                <span>Jun</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card flex-1">
+                    <h3 class="card-title">Aktivitas Terbaru</h3>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-user">
+                                <strong>Budi Santoso</strong>
+                                <span>Membuat grup baru</span>
+                            </div>
+                            <span class="activity-time">10 Mei 10:30</span>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-user">
+                                <strong>Khaila</strong>
+                                <span>Melakukan pembayaran</span>
+                            </div>
+                            <span class="activity-time">10 Mei 09:15</span>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-user">
+                                <strong>Faqih & Keluarga</strong>
+                                <span>Membuat tagihan baru</span>
+                            </div>
+                            <span class="activity-time">09 Mei 16:45</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>

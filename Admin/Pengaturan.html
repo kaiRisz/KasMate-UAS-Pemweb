@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KasMate - Pengaturan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-cube"></i>
+                <span>KasMate</span>
+            </div>
+            <nav class="sidebar-menu">
+                <div class="menu-section">
+                    <a href="Dashboard_Admin.html" class="menu-item">
+                        <i class='bx bxs-dashboard'></i> Dashboard
+                    </a>
+                    <a href="Manajemen_User.html" class="menu-item">
+                        <i class='bx bxs-user-account'></i> Manajemen User
+                    </a>
+                    <a href="Manajemen_Grup.html" class="menu-item">
+                        <i class='bx bxs-group'></i> Manajemen Grup
+                    </a>
+                    <a href="Pengaturan.html" class="menu-item active">
+                        <i class='bx bxs-cog'></i> Pengaturan Sistem
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div class="header-text">
+                    <h1>Pengaturan</h1>
+                    <p class="subtitle">Pengaturan Umum Sistem</p>
+                </div>
+                <div class="header-right">
+                    <button class="btn-notification"><i class='bx bx-bell'></i></button>
+                    <div class="user-profile">
+                        <img src="https://ui-avatars.com/api/?name=Admin&background=e2e8f0&color=475569" alt="Admin">
+                        <div class="user-info">
+                            <span class="user-name">Admin</span>
+                            <span class="user-role">Administrator</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <section class="content-body">
+                <div class="card">
+                    <h3 class="card-title">Informasi Sistem</h3>
+                    <form>
+                        <div class="input-group">
+                            <label>Nama Sistem</label>
+                            <input type="text" value="KasMate">
+                        </div>
+
+                        <div class="input-group">
+                            <label>Deskripsi</label>
+                            <input type="text" value="Sistem Informasi Manajemen Iuran dan Keuangan Kelompok">
+                        </div>
+
+                        <div class="input-group">
+                            <label>Logo Sistem</label>
+                            <div style="display: flex; gap: 20px; align-items: center;">
+                                <i class="fa-solid fa-cube" style="font-size: 40px; color: var(--bg-sidebar);"></i>
+                                <button type="button" class="btn-action">Pilih File</button>
+                            </div>
+                            <small style="color: var(--text-muted); font-size: 11px;">Format: PNG, JPG (Max. 2MB)</small>
+                        </div>
+
+                        <div style="display: flex; justify-content: flex-end;">
+                            <button type="submit" class="btn-action btn-dark" style="padding: 10px 30px;">Simpan Perubahan</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>

@@ -669,3 +669,249 @@ tr:last-child td {
     border-color: var(--bg-sidebar);
 }
 
+.chart-placeholder {
+    width: 100%;
+    height: 250px;
+    margin-top: 15px;
+    display: flex;
+    align-items: flex-end;
+    padding: 10px 15px 25px 15px;
+}
+
+.bar-chart {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    width: 100%;
+    height: 200px;
+    border-bottom: 2px solid var(--border-color);
+    border-left: 2px solid var(--border-color);
+    background: linear-gradient(to bottom, var(--border-color) 1px, transparent 1px);
+    background-size: 100% 25%;
+    position: relative;
+}
+
+.bar-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+    width: 10%;
+    position: relative;
+    z-index: 2;
+}
+
+.bar {
+    width: 100%;
+    background-color: var(--color-blue);
+    border-radius: 4px 4px 0 0;
+}
+
+.bar-item span {
+    position: absolute;
+    bottom: -25px;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.activity-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.activity-user {
+    display: flex;
+    flex-direction: column;
+}
+
+.activity-user strong {
+    font-size: 13px;
+    color: var(--text-dark);
+}
+
+.activity-user span {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.activity-time {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.btn-add-user {
+    background-color: #1C2632;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.3s;
+}
+
+.btn-add-user:hover {
+    background-color: #2d3d50;
+}
+
+.table-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding: 5px;
+}
+
+.search-box input {
+    padding: 10px 15px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    width: 300px;
+    outline: none;
+    font-size: 13px;
+}
+
+.filter-box {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.filter-box span {
+    font-size: 13px;
+    color: #64748b;
+}
+
+.filter-box select {
+    padding: 8px 15px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    outline: none;
+    color: #1e293b;
+    font-size: 13px;
+    min-width: 150px;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table th {
+    text-align: left;
+    padding: 15px;
+    background-color: #f8fafc;
+    color: #64748b;
+    font-weight: 600;
+    font-size: 13px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.data-table td {
+    padding: 15px;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 13px;
+    color: #1e293b;
+}
+
+.badge {
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.badge-aktif {
+    background-color: #dcfce7;
+    color: #16a34a;
+    border: 1px solid #bbf7d0;
+}
+
+.badge-nonaktif {
+    background-color: #fee2e2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+}
+
+.action-icons {
+    display: flex;
+    gap: 15px;
+    font-size: 18px;
+    color: #94a3b8;
+    cursor: pointer;
+}
+
+.action-icons i:hover {
+    color: #1e293b;
+}
+
+.text-red {
+    color: #ef4444;
+}
+
+.text-red:hover {
+    color: #dc2626;
+}
+
+.table-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 25px;
+    padding-top: 15px;
+}
+
+.table-info {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.pagination {
+    display: flex;
+    gap: 8px;
+}
+
+.page-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e2e8f0;
+    background: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: 0.2s;
+}
+
+.page-btn.active {
+    background-color: #1C2632;
+    color: white;
+    border-color: #1C2632;
+}
+
+.page-btn:hover:not(.active) {
+    background-color: #f8fafc;
+}
