@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard User</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<style>
+
+    .main-content {
+        padding: 20px;
+    }   
+
+    footer{
+        background-color: #2A3636;
+        margin-top: 50px;
+        width: auto;
+        padding: 15px 30px 15px 30px;
+    }
+
+    footer p{
+        color: white;
+        text-align: center;
+
+    }
+
+    .table-tittle{
+        font-size: 16px;
+        margin-bottom: 16px;
+
+    }
+
+    .table-content{
+        background-color: white;
+        padding: 20px 40px 40px 40px;
+        border-radius: 16px;
+    }
+
+    .status-belum-lunas{
+        background-color: rgb(255, 246, 230);
+        border-radius: 16px;
+    }
+
+    .status-sudah-lunas{
+        background-color: rgb(205, 241, 205);
+        border-radius: 40px;
+    }
+
+    .overview-cards{
+        background-color: white;
+        border-radius: 16px;
+        width: auto;
+        padding: 16px;
+        display: flex;
+        align-items: center;
+    }
+</style>
+
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-cube"></i>
+                <span>KasMate</span>
+            </div>
+
+                <div class="menu-section">
+                    <a href="Dashboard_User.html" class="menu-item"><i class="fa-solid fa-users-line"></i> Dashboard</a>
+                    <a href="Tagihan_Saya.html" class="menu-item"><i class="fa-solid fa-file-invoice-dollar"></i> Tagihan Saya</a>
+                    <a href="Riwayat_Pembayaran.html" class="menu-item"><i class="fa-regular fa-circle-check"></i>Riwayat Pembayaran</a>
+                    <a href="Grup_Saya.html" class="menu-item"><i class="fa-regular fa-circle-check"></i>Grup Saya</a>
+                    <a href="Profil.html" class="menu-item"><i class="fa-regular fa-circle-check"></i>Profil</a>
+                </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div class="header-text">
+                    <h1>Dashboard</h1>
+                    <p class="subtitle">Selamat Datang, Andi Wijaya!</p>
+                </div>
+                <div class="header-right">
+                    <button class="btn-notification">
+                        <img src="../assets/icon-notif.png" alt="notification">
+                    </button>
+                    <div class="user-profile">
+                        <img src="../assets/user_pict.jpg" alt="Muhammad Raka">
+                        <div class="user-info">
+                            <span class="user-name">Muhammad Raka</span>
+                            <span class="user-role">Anggota</span>
+                        </div>
+
+                    </div>
+                </div>
+            </header>
+
+            <section class="overview">
+                <div class="overview-cards">
+                    <p class="overview-tittle">Total Tagihan</p>
+                    <h1 class="overview-content">Rp. 900.000,00</h1>
+                </div>
+
+                <div class="overview-cards">
+                    <p class="overview-tittle">Sudah Bayar</p>
+                    <h1 class="overview-content">Rp. 600.000,00</h1>
+                </div>
+
+                <div class="overview-cards">
+                    <p class="overview-tittle">Belum Bayar</p>
+                    <h1 class="overview-content">Rp. 300.000,00</h1>
+                </div>
+            </section>
+
+            <section class="table-content">
+                <h1 class="table-tittle">Tagihan Terdekat</h1>
+
+                <div table-card>
+                    <table border="1" cellpading="2px">
+                        <th>Grup</th>
+                        <th>Periode</th>
+                        <th>Jumlah</th>
+                        <th>Status</th>
+                        <th>Deadline</th>
+
+                        <tr>
+                            <td>Kelas Matdis-A 2024</td>
+                            <td>Mei 2024</td>
+                            <td>Rp. 300.000,00</td>
+                            <td class="status-belum-lunas">Belum Lunas</td>
+                            <td>31 Mei 2024</td>
+                        </tr>
+
+                        <tr>
+                            <td>Kelas RPL-A 2024</td>
+                            <td>Mei 2024</td>
+                            <td>Rp. 300.000,00</td>
+                            <td class="status-belum-lunas">Sudah Lunas</td>
+                            <td>31 Mei 2024</td>
+                        </tr>
+
+                        <tr>
+                            <td>Kelas ADSI-A 2024</td>
+                            <td>April 2024</td>
+                            <td>Rp. 300.000,00</td>
+                            <td class="status-sudah-lunas">Sudah Lunas</td>
+                            <td>31 April 2024</td>
+                        </tr>
+
+                        <tr>
+                            <td>Kelas RPL-A 2024</td>
+                            <td>Maret 2024</td>
+                            <td>Rp. 300.000,00</td>
+                            <td class="status-sudah-lunas">Sudah Lunas</td>
+                            <td>31 Maret 2024</td>
+                        </tr>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+            <footer>
+                <div>
+                    <p><i>&copy; 2026 KasMate. All rights reserved.</i></p>
+                </div>
+            </footer>
+
+</body>
+</html>
+    
