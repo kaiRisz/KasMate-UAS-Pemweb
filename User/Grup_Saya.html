@@ -91,26 +91,22 @@
 
 .status-lunas{
     background-color: #d4edda;
+    color: darkgreen;
     padding: 5px 10px;
     border-radius: 10px;
+    text-align: center;
+    display: inline-block;
 }
 
 .status-belum{
-    background-color: #fff3cd;
+    background-color: #ffcdcd;
+    color: crimson;
     padding: 5px 10px;
     border-radius: 10px;
-}
-
-footer{
-    background-color: #2A3636;
-    margin-top: 50px;
-    padding: 15px;
-}
-
-footer p{
-    color: white;
     text-align: center;
+    display: inline-block;
 }
+
 </style>
 
 <body>
@@ -132,12 +128,26 @@ footer p{
 
     <main class="main-content">
 
-        <header class="topbar">
-            <div>
-                <h1>Grup Saya</h1>
-                <p>Daftar grup yang kamu ikuti</p>
-            </div>
-        </header>
+        <main class="main-content">
+            <header class="topbar">
+                <div class="header-text">
+                    <h1>Grup Saya</h1>
+                    <p class="subtitle">Grup Iuran Anda</p>
+                </div>
+                <div class="header-right">
+                    <button class="btn-notification">
+                        <img src="../assets/icon-notif.png" alt="notification">
+                    </button>
+                    <div class="user-profile">
+                        <img src="../assets/user_pict.jpg" alt="Muhammad Raka">
+                        <div class="user-info">
+                            <span class="user-name">Muhammad Raka</span>
+                            <span class="user-role">Anggota</span>
+                        </div>
+
+                    </div>
+                </div>
+            </header>
 
         <div class="content-wrapper">
    
@@ -185,13 +195,13 @@ footer p{
                         <tr>
                             <td>Mei 2024</td>
                             <td>Rp 50.000</td>
-                            <td><span class="status-lunas">Lunas</span></td>
+                            <td><span class="status-lunas">Sudah Lunas</span></td>
                         </tr>
 
                         <tr>
                             <td>Juni 2024</td>
                             <td>Rp 50.000</td>
-                            <td><span class="status-belum">Belum Bayar</span></td>
+                            <td><span class="status-belum">Belum Lunas</span></td>
                         </tr>
 
                     </table>
@@ -199,10 +209,6 @@ footer p{
             </div>
 
         </div>
-
-        <footer>
-            <p>&copy; 2026 KasMate. All rights reserved.</p>
-        </footer>
 
     </main>
 </div>

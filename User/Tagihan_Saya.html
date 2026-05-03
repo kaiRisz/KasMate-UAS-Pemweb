@@ -15,19 +15,6 @@
         padding: 20px;
     }   
 
-    footer{
-        background-color: #2A3636;
-        margin-top: 50px;
-        width: auto;
-        padding: 15px 30px 15px 30px;
-    }
-
-    footer p{
-        color: white;
-        text-align: center;
-
-    }
-
     .table-tittle{
         font-size: 16px;
         margin-bottom: 16px;
@@ -41,13 +28,19 @@
     }
 
     .status-belum-lunas{
-        background-color: rgb(255, 246, 230);
-        border-radius: 16px;
+        background-color: #ffcdcd;
+        color: crimson;
+        padding: 5px 10px;
+        border-radius: 10px;
     }
 
     .status-sudah-lunas{
-        background-color: rgb(205, 241, 205);
-        border-radius: 40px;
+        background-color: #d4edda;
+        color: darkgreen;
+        padding: 5px 10px;
+        border-radius: 10px;
+        text-align: center;
+        display: inline-block;
     }
 
     .overview-cards{
@@ -57,6 +50,12 @@
         padding: 16px;
         display: flex;
         align-items: center;
+    }
+
+    .btn-action{
+        background-color: #e74040;
+        color: white;
+
     }
 </style>
 
@@ -80,8 +79,8 @@
         <main class="main-content">
             <header class="topbar">
                 <div class="header-text">
-                    <h1>Dashboard</h1>
-                    <p class="subtitle">Selamat Datang, Andi Wijaya!</p>
+                    <h1>Tagihan Saya</h1>
+                    <p class="subtitle">Lihat tagihan Anda</p>
                 </div>
                 <div class="header-right">
                     <button class="btn-notification">
@@ -102,7 +101,7 @@
                 <h1 class="table-tittle">Tagihan Terdekat</h1>
 
                 <div table-card>
-                    <table border="1" cellpading="2px">
+                    <table cellpading="2px">
                         <th>Grup</th>
                         <th>Periode</th>
                         <th>Jumlah</th>
@@ -114,36 +113,36 @@
                             <td>Kelas Matdis-A 2024</td>
                             <td>Mei 2024</td>
                             <td>Rp. 300.000,00</td>
-                            <td class="status-belum-lunas">Belum Lunas</td>
+                            <td> <span class="status-belum-lunas">Belum Lunas</span></td>
                             <td>31 Mei 2024</td>
-                            <td><button id="bayar">Bayar</button></td>
+                            <td><button id="hapus" class="btn-action">Hapus</button></td>
                         </tr>
 
                         <tr>
                             <td>Kelas RPL-A 2024</td>
                             <td>Mei 2024</td>
                             <td>Rp. 300.000,00</td>
-                            <td class="status-belum-lunas">Sudah Lunas</td>
+                            <td ><span class="status-belum-lunas">Belum Lunas</span></td>
                             <td>31 Mei 2024</td>
-                            <td><button id="bayar">Bayar</button></td>
+                            <td><button id="hapus" class="btn-action">Hapus</button></td>
                         </tr>
 
                         <tr>
                             <td>Kelas ADSI-A 2024</td>
                             <td>April 2024</td>
                             <td>Rp. 300.000,00</td>
-                            <td class="status-sudah-lunas">Sudah Lunas</td>
+                            <td><span class="status-sudah-lunas">Sudah Lunas</span></td>
                             <td>31 April 2024</td>
-                            <td><button id="hapus">Hapus</button></td>
+                            <td><button id="hapus" class="btn-action">Hapus</button></td>
                         </tr>
 
                         <tr>
                             <td>Kelas RPL-A 2024</td>
                             <td>Maret 2024</td>
                             <td>Rp. 300.000,00</td>
-                            <td class="status-sudah-lunas">Sudah Lunas</td>
+                            <td><span class="status-sudah-lunas">Sudah Lunas</span></td>
                             <td>31 Maret 2024</td>
-                            <td><button id="hapus">Hapus</button></td>
+                            <td><button id="hapus" class="btn-action">Hapus</button></td>
                         </tr>
 
                     </table>
@@ -151,12 +150,6 @@
                 </div>
 
             </section>
-
-            <footer>
-                <div>
-                    <p><i>&copy; 2026 KasMate. All rights reserved.</i></p>
-                </div>
-            </footer>
 
 </body>
 </html>

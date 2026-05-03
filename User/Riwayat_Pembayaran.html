@@ -15,19 +15,6 @@
         padding: 20px;
     }   
 
-    footer{
-        background-color: #2A3636;
-        margin-top: 50px;
-        width: auto;
-        padding: 15px 30px 15px 30px;
-    }
-
-    footer p{
-        color: white;
-        text-align: center;
-
-    }
-
     .table-tittle{
         font-size: 16px;
         margin-bottom: 16px;
@@ -41,13 +28,21 @@
     }
 
     .status-belum-lunas{
-        background-color: rgb(255, 246, 230);
-        border-radius: 16px;
+        background-color: #ffcdcd;
+        color: crimson;
+        padding: 5px 10px;
+        border-radius: 10px;
+        text-align: center;
+        display: inline-block;
     }
 
     .status-sudah-lunas{
-        background-color: rgb(205, 241, 205);
-        border-radius: 40px;
+        background-color: #d4edda;
+        color: darkgreen;
+        padding: 5px 10px;
+        border-radius: 10px;
+        text-align: center;
+        display: inline-block;
     }
 
     .overview-cards{
@@ -80,8 +75,8 @@
         <main class="main-content">
             <header class="topbar">
                 <div class="header-text">
-                    <h1>Dashboard</h1>
-                    <p class="subtitle">Selamat Datang, Andi Wijaya!</p>
+                    <h1>Riwayat Pembayaran</h1>
+                    <p class="subtitle">Lihat riwayat pembayaran Anda</p>
                 </div>
                 <div class="header-right">
                     <button class="btn-notification">
@@ -102,7 +97,7 @@
                 <h1 class="table-tittle">Tagihan Terdekat</h1>
 
                 <div table-card>
-                    <table border="1" cellpading="2px">
+                    <table  cellpading="2px">
                         <th>Tanggal</th>
                         <th>Grup</th>
                         <th>Jumlah</th>
@@ -115,7 +110,7 @@
                             <td>Kelas ADSI-A 2024</td>
                             <td>Rp. 300.000,00</td>
                             <td>Transfer</td>
-                            <td class="status-sudah-lunas">Sudah Lunas</td>
+                            <td><span class="status-belum-lunas">Belum Lunas</span></td>
                 
                         </tr>
 
@@ -124,7 +119,7 @@
                             <td>Kelas RPL-A 2024</td>                           
                             <td>Rp. 300.000,00</td>                        
                             <td>Tunai</td>
-                            <td class="status-sudah-lunas">Sudah Lunas</td>
+                            <td><span class="status-belum-lunas">Belum Lunas</span></td>
                         </tr>
 
                     </table>
@@ -132,12 +127,6 @@
                 </div>
 
             </section>
-
-            <footer>
-                <div>
-                    <p><i>&copy; 2026 KasMate. All rights reserved.</i></p>
-                </div>
-            </footer>
 
 </body>
 </html>
