@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Register</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+:root {
+    --cream: #EBEAE7;
+    --dark: #2A3636;
+}
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* layout */
+.register {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* kiri */
+.left {
+    width: 50%;
+    background: var(--dark);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* card */
+.box {
+    background: var(--cream);
+    padding: 40px;
+    width: 320px;
+    border-radius: 12px;
+}
+
+.box h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* kanan */
+.right {
+    width: 50%;
+    background: url('assets/gambar.jpeg') center/cover no-repeat;
+}
+
+/* form */
+label {
+    display: block;
+    margin-top: 12px;
+    font-weight: 600;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+/* button */
+button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 10px;
+    background: var(--dark);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* link */
+a {
+    color: var(--dark);
+}
+</style>
+
+</head>
+<body>
+
+<div class="register">
+
+    <div class="left">
+        <div class="box">
+            <h2>Register</h2>
+
+            <label>Nama</label>
+            <input type="text">
+
+            <label>Email</label>
+            <input type="email">
+
+            <label>Password</label>
+            <input type="password">
+
+            <button>Daftar</button>
+
+            <p style="margin-top:15px; text-align:center;">
+                Sudah punya akun?
+                <a href="login.html">Login</a>
+            </p>
+        </div>
+    </div>
+
+    <div class="right"></div>
+
+</div>
+
+</body>
+</html>

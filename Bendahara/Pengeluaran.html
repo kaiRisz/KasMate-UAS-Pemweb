@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Pengeluaran</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+:root {
+    --cream: #EBEAE7;
+    --dark: #2A3636;
+}
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: var(--cream);
+}
+
+/* layout */
+.page {
+    display: flex;
+}
+
+/* sidebar */
+.sidebar {
+    width: 200px;
+    background: var(--dark);
+    color: white;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.menu {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 6px;
+}
+
+.menu:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+/* content */
+.content {
+    flex: 1;
+    padding: 20px;
+}
+
+/* card */
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/* form */
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+}
+
+/* button */
+button {
+    margin-top: 15px;
+    padding: 10px;
+    background: var(--dark);
+    color: white;
+    border: none;
+}
+
+/* table */
+.table-box {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    min-width: 600px;
+    border-collapse: collapse;
+}
+
+th {
+    background: var(--dark);
+    color: white;
+}
+
+th, td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+</style>
+
+</head>
+<body>
+
+<div class="page">
+
+    <div class="sidebar">
+        <h3>KasMate</h3>
+        <a href="pengeluaran.html" class="menu">Pengeluaran</a>
+        <a href="laporan_keuangan.html" class="menu">Laporan</a>
+    </div>
+
+    <div class="content">
+
+        <h2>Pengeluaran</h2>
+
+        <div class="card">
+            <label>Tanggal</label>
+            <input type="date">
+
+            <label>Keterangan</label>
+            <input type="text">
+
+            <label>Jumlah</label>
+            <input type="number">
+
+            <button>Simpan</button>
+        </div>
+
+        <div class="card">
+            <div class="table-box">
+                <table>
+                    <tr>
+                        <th>Tanggal</th>
+                        <th>Keterangan</th>
+                        <th>Jumlah</th>
+                    </tr>
+                    <tr>
+                        <td>10 Mei</td>
+                        <td>ATK</td>
+                        <td>150.000</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

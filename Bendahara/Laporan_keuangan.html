@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Laporan</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+:root {
+    --cream: #EBEAE7;
+    --dark: #2A3636;
+}
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: var(--cream);
+}
+
+/* layout */
+.page {
+    display: flex;
+}
+
+/* sidebar */
+.sidebar {
+    width: 200px;
+    background: var(--dark);
+    color: white;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.menu {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 6px;
+}
+
+.menu:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+/* content */
+.content {
+    flex: 1;
+    padding: 20px;
+}
+
+/* card */
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/* filter */
+.flex {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* summary */
+.summary {
+    display: flex;
+    gap: 10px;
+}
+
+.box {
+    flex: 1;
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.green {
+    color: green;
+}
+
+/* table */
+.table-box {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    min-width: 600px;
+}
+
+th {
+    background: var(--dark);
+    color: white;
+}
+
+th, td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+</style>
+
+</head>
+<body>
+
+<div class="page">
+
+    <div class="sidebar">
+        <h3>KasMate</h3>
+        <a href="pengeluaran.html" class="menu">Pengeluaran</a>
+        <a href="laporan_keuangan.html" class="menu">Laporan</a>
+    </div>
+
+    <div class="content">
+
+        <h2>Laporan Keuangan</h2>
+
+        <div class="card">
+            <div class="flex">
+                <select><option>Semua Grup</option></select>
+                <select><option>Mei 2024</option></select>
+                <button>Tampilkan</button>
+            </div>
+        </div>
+
+        <div class="summary">
+            <div class="box">
+                <p>Pemasukan</p>
+                <h3 class="green">3.250.000</h3>
+            </div>
+
+            <div class="box">
+                <p>Pengeluaran</p>
+                <h3>850.000</h3>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="table-box">
+                <table>
+                    <tr>
+                        <th>Keterangan</th>
+                        <th>Masuk</th>
+                        <th>Keluar</th>
+                    </tr>
+                    <tr>
+                        <td>Pemasukan</td>
+                        <td>3.250.000</td>
+                        <td>-</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
