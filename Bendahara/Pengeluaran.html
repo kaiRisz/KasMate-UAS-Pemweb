@@ -1,155 +1,204 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-<title>Pengeluaran</title>
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
-:root {
-    --cream: #EBEAE7;
-    --dark: #2A3636;
-}
-
-body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background: var(--cream);
-}
-
-/* layout */
-.page {
-    display: flex;
-}
-
-/* sidebar */
-.sidebar {
-    width: 200px;
-    background: var(--dark);
-    color: white;
-    padding: 20px;
-    min-height: 100vh;
-}
-
-.menu {
-    display: block;
-    color: white;
-    text-decoration: none;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 6px;
-}
-
-.menu:hover {
-    background: rgba(255,255,255,0.2);
-}
-
-/* content */
-.content {
-    flex: 1;
-    padding: 20px;
-}
-
-/* card */
-.card {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-}
-
-/* form */
-label {
-    display: block;
-    margin-top: 10px;
-    font-weight: 600;
-}
-
-input {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-}
-
-/* button */
-button {
-    margin-top: 15px;
-    padding: 10px;
-    background: var(--dark);
-    color: white;
-    border: none;
-}
-
-/* table */
-.table-box {
-    overflow-x: auto;
-}
-
-table {
-    width: 100%;
-    min-width: 600px;
-    border-collapse: collapse;
-}
-
-th {
-    background: var(--dark);
-    color: white;
-}
-
-th, td {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-}
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KasMate - Pengeluaran</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 
-<div class="page">
-
-    <div class="sidebar">
-        <h3>KasMate</h3>
-        <a href="pengeluaran.html" class="menu">Pengeluaran</a>
-        <a href="laporan_keuangan.html" class="menu">Laporan</a>
-    </div>
-
-    <div class="content">
-
-        <h2>Pengeluaran</h2>
-
-        <div class="card">
-            <label>Tanggal</label>
-            <input type="date">
-
-            <label>Keterangan</label>
-            <input type="text">
-
-            <label>Jumlah</label>
-            <input type="number">
-
-            <button>Simpan</button>
-        </div>
-
-        <div class="card">
-            <div class="table-box">
-                <table>
-                    <tr>
-                        <th>Tanggal</th>
-                        <th>Keterangan</th>
-                        <th>Jumlah</th>
-                    </tr>
-                    <tr>
-                        <td>10 Mei</td>
-                        <td>ATK</td>
-                        <td>150.000</td>
-                    </tr>
-                </table>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-cube"></i>
+                <span>KasMate</span>
             </div>
-        </div>
 
+            <div class="sidebar-menu">
+                <a href="dashboard.html" class="menu-item">
+                    <i class="fa-solid fa-border-all"></i> Dashboard
+                </a>
+
+                <div class="menu-section">
+                    <p class="section-title">KELOLA IURAN</p>
+                    <a href="grup-iuran.html" class="menu-item"><i class="fa-solid fa-users-line"></i> Grup Iuran</a>
+                    <a href="#" class="menu-item"><i class="fa-solid fa-user-group"></i> Anggota</a>
+                    <a href="#" class="menu-item"><i class="fa-solid fa-file-invoice-dollar"></i> Iuran & Tagihan</a>
+                    <a href="#" class="menu-item"><i class="fa-regular fa-circle-check"></i> Pembayaran</a>
+                </div>
+
+                <div class="menu-section">
+                    <p class="section-title">KEUANGAN</p>
+                    <a href="#" class="menu-item"><i class="fa-solid fa-clock-rotate-left"></i> Pemasukan</a>
+                    <a href="pengeluaran.html" class="menu-item active"><i class="fa-regular fa-eye"></i> Pengeluaran</a>
+                    <a href="#" class="menu-item"><i class="fa-solid fa-chart-pie"></i> Ringkasan Keuangan</a>
+                </div>
+
+                <div class="menu-section">
+                    <p class="section-title">LAPORAN</p>
+                    <a href="laporan_keuangan.html" class="menu-item"><i class="fa-regular fa-file-lines"></i> Laporan</a>
+                    <a href="#" class="menu-item"><i class="fa-solid fa-clock-rotate-left"></i> Riwayat Transaksi</a>
+                </div>
+            </div>
+
+            <div class="sidebar-bottom">
+                <a href="#" class="menu-item"><i class="fa-solid fa-gear"></i> Pengaturan</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div class="header-text">
+                    <h1>Pengeluaran</h1>
+                    <p class="subtitle">Catat dan pantau semua pengeluaran kas kelompok.</p>
+                </div>
+                <div class="header-right">
+                    <button class="btn-notification">
+                        <i class="fa-regular fa-bell"></i>
+                    </button>
+                    <div class="user-profile">
+                        <img src="../assets/user_pict.jpg" alt="Budi Santoso" style="width: 32px; height: 32px; border-radius: 50%;">
+                        <div class="user-info">
+                            <span class="user-name">Budi Santoso</span>
+                            <span class="user-role">Bendahara Utama</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down dropdown-icon"></i>
+                    </div>
+                </div>
+            </header>
+
+            <section class="overview-cards">
+                <div class="card stat-card">
+                    <div>
+                        <i class="fa-solid fa-arrow-trend-down"></i>
+                    </div>
+                    <div>
+                        <p>Total Pengeluaran</p>
+                        <h2 class="text-red">Rp 850.000 <span>(Bulan ini)</span></h2>
+                    </div>
+                </div>
+
+                <div class="card stat-card">
+                    <div>
+                        <i class="fa-solid fa-receipt"></i>
+                    </div>
+                    <div>
+                        <p>Total Transaksi</p>
+                        <h2>4 <span>Transaksi</span></h2>
+                    </div>
+                </div>
+
+                <div class="card stat-card">
+                    <div>
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </div>
+                    <div>
+                        <p>Pengeluaran Terbesar</p>
+                        <h2>Rp 350.000 <span>(Konsumsi)</span></h2>
+                    </div>
+                </div>
+
+                <div class="card stat-card">
+                    <div>
+                        <i class="fa-solid fa-paperclip"></i>
+                    </div>
+                    <div>
+                        <p>Rata-rata Keluar</p>
+                        <h2>Rp 212.500 <span>/ Trx</span></h2>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Form Tambah Pengeluaran -->
+            <section class="card" style="margin-bottom: 25px;">
+                <h3 class="card-title">Tambah Pengeluaran Baru</h3>
+                <div style="display: flex; gap: 15px; align-items: flex-end; flex-wrap: wrap;">
+                    <div class="input-group" style="margin-bottom: 0; flex: 1; min-width: 150px;">
+                        <label>Tanggal</label>
+                        <input type="date">
+                    </div>
+                    <div class="input-group" style="margin-bottom: 0; flex: 2; min-width: 250px;">
+                        <label>Keterangan</label>
+                        <input type="text" placeholder="Contoh: Beli ATK, Konsumsi, dll.">
+                    </div>
+                    <div class="input-group" style="margin-bottom: 0; flex: 1; min-width: 150px;">
+                        <label>Jumlah (Rp)</label>
+                        <input type="number" placeholder="0">
+                    </div>
+                    <button class="btn-action btn-dark" style="padding: 12px 20px; height: 46px; border-radius: 10px;">
+                        <i class="fa-solid fa-save"></i> Simpan
+                    </button>
+                </div>
+            </section>
+
+            <section class="card table-card">
+                <div class="search-box" style="margin-bottom: 20px;">
+                    <input type="text" placeholder="Cari pengeluaran...">
+                </div>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 50px; text-align: center;">No</th>
+                            <th>Tanggal</th>
+                            <th>Keterangan</th>
+                            <th>Jumlah</th>
+                            <th style="text-align: center;">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: center; color: var(--text-muted);">1</td>
+                            <td>10 Mei 2024</td>
+                            <td class="fw-500">Belanja ATK (Kertas HVS, Tinta)</td>
+                            <td class="fw-500 text-red">- Rp 150.000</td>
+                            <td>
+                                <div class="action-icons" style="justify-content: center;">
+                                    <i class="fa-solid fa-pen"></i>
+                                    <i class="fa-solid fa-trash-can text-red"></i>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; color: var(--text-muted);">2</td>
+                            <td>08 Mei 2024</td>
+                            <td class="fw-500">Konsumsi Rapat Pengurus</td>
+                            <td class="fw-500 text-red">- Rp 350.000</td>
+                            <td>
+                                <div class="action-icons" style="justify-content: center;">
+                                    <i class="fa-solid fa-pen"></i>
+                                    <i class="fa-solid fa-trash-can text-red"></i>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; color: var(--text-muted);">3</td>
+                            <td>05 Mei 2024</td>
+                            <td class="fw-500">Fotokopi Laporan Bulan April</td>
+                            <td class="fw-500 text-red">- Rp 50.000</td>
+                            <td>
+                                <div class="action-icons" style="justify-content: center;">
+                                    <i class="fa-solid fa-pen"></i>
+                                    <i class="fa-solid fa-trash-can text-red"></i>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="table-footer">
+                    <div class="table-info">Menampilkan 1 - 3 dari 3 data</div>
+                    <div class="pagination">
+                        <button class="page-btn active">1</button>
+                        <button class="page-btn"><i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </section>
+        </main>
     </div>
-
-</div>
 
 </body>
 </html>

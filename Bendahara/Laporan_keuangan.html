@@ -1,163 +1,171 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-<title>Laporan</title>
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
-:root {
-    --cream: #EBEAE7;
-    --dark: #2A3636;
-}
-
-body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background: var(--cream);
-}
-
-/* layout */
-.page {
-    display: flex;
-}
-
-/* sidebar */
-.sidebar {
-    width: 200px;
-    background: var(--dark);
-    color: white;
-    padding: 20px;
-    min-height: 100vh;
-}
-
-.menu {
-    display: block;
-    color: white;
-    text-decoration: none;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 6px;
-}
-
-.menu:hover {
-    background: rgba(255,255,255,0.2);
-}
-
-/* content */
-.content {
-    flex: 1;
-    padding: 20px;
-}
-
-/* card */
-.card {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-}
-
-/* filter */
-.flex {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-/* summary */
-.summary {
-    display: flex;
-    gap: 10px;
-}
-
-.box {
-    flex: 1;
-    background: white;
-    padding: 15px;
-    border-radius: 10px;
-}
-
-.green {
-    color: green;
-}
-
-/* table */
-.table-box {
-    overflow-x: auto;
-}
-
-table {
-    width: 100%;
-    min-width: 600px;
-}
-
-th {
-    background: var(--dark);
-    color: white;
-}
-
-th, td {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-}
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KasMate - Laporan Keuangan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 
-<div class="page">
-
-    <div class="sidebar">
-        <h3>KasMate</h3>
-        <a href="pengeluaran.html" class="menu">Pengeluaran</a>
-        <a href="laporan_keuangan.html" class="menu">Laporan</a>
-    </div>
-
-    <div class="content">
-
-        <h2>Laporan Keuangan</h2>
-
-        <div class="card">
-            <div class="flex">
-                <select><option>Semua Grup</option></select>
-                <select><option>Mei 2024</option></select>
-                <button>Tampilkan</button>
-            </div>
-        </div>
-
-        <div class="summary">
-            <div class="box">
-                <p>Pemasukan</p>
-                <h3 class="green">3.250.000</h3>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-cube"></i>
+                <span>KasMate</span>
             </div>
 
-            <div class="box">
-                <p>Pengeluaran</p>
-                <h3>850.000</h3>
-            </div>
-        </div>
+            <div class="sidebar-menu">
+                <a href="dashboard.html" class="menu-item">
+                    <i class="fa-solid fa-border-all"></i> Dashboard
+                </a>
 
-        <div class="card">
-            <div class="table-box">
-                <table>
-                    <tr>
-                        <th>Keterangan</th>
-                        <th>Masuk</th>
-                        <th>Keluar</th>
-                    </tr>
-                    <tr>
-                        <td>Pemasukan</td>
-                        <td>3.250.000</td>
-                        <td>-</td>
-                    </tr>
+                <div class="menu-section">
+                    <p class="section-title">KELOLA IURAN</p>
+                    <a href="grup-iuran.html" class="menu-item"><i class="fa-solid fa-users-line"></i> Grup Iuran</a>
+                    <a href="#" class="menu-item"><i class="fa-solid fa-user-group"></i> Anggota</a>
+                    <a href="#" class="menu-item"><i class="fa-solid fa-file-invoice-dollar"></i> Iuran & Tagihan</a>
+                    <a href="#" class="menu-item"><i class="fa-regular fa-circle-check"></i> Pembayaran</a>
+                </div>
+
+                <div class="menu-section">
+                    <p class="section-title">KEUANGAN</p>
+                    <a href="#" class="menu-item"><i class="fa-solid fa-clock-rotate-left"></i> Pemasukan</a>
+                    <a href="pengeluaran.html" class="menu-item"><i class="fa-regular fa-eye"></i> Pengeluaran</a>
+                    <a href="#" class="menu-item"><i class="fa-solid fa-chart-pie"></i> Ringkasan Keuangan</a>
+                </div>
+
+                <div class="menu-section">
+                    <p class="section-title">LAPORAN</p>
+                    <a href="laporan_keuangan.html" class="menu-item active"><i class="fa-regular fa-file-lines"></i> Laporan</a>
+                    <a href="#" class="menu-item"><i class="fa-solid fa-clock-rotate-left"></i> Riwayat Transaksi</a>
+                </div>
+            </div>
+
+            <div class="sidebar-bottom">
+                <a href="#" class="menu-item"><i class="fa-solid fa-gear"></i> Pengaturan</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div class="header-text">
+                    <h1>Laporan Keuangan</h1>
+                    <p class="subtitle">Ringkasan pemasukan dan pengeluaran kas.</p>
+                </div>
+                <div class="header-right">
+                    <button class="btn-notification">
+                        <i class="fa-regular fa-bell"></i>
+                    </button>
+                    <div class="user-profile">
+                        <img src="../assets/user_pict.jpg" alt="Budi Santoso" style="width: 32px; height: 32px; border-radius: 50%;">
+                        <div class="user-info">
+                            <span class="user-name">Budi Santoso</span>
+                            <span class="user-role">Bendahara Utama</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down dropdown-icon"></i>
+                    </div>
+                </div>
+            </header>
+
+            <div class="card" style="margin-bottom: 25px;">
+                <div class="filter-box">
+                    <span>Filter:</span>
+                    <select>
+                        <option>Semua Grup</option>
+                        <option>Kelas TI-2A 2024</option>
+                        <option>Arisan Keluarga</option>
+                    </select>
+                    <select>
+                        <option>Mei 2024</option>
+                        <option>April 2024</option>
+                        <option>Maret 2024</option>
+                    </select>
+                    <button class="btn-action btn-dark">Tampilkan</button>
+                </div>
+            </div>
+
+            <section class="overview-cards">
+                <div class="card stat-card">
+                    <div>
+                        <i class="fa-solid fa-arrow-trend-up"></i>
+                    </div>
+                    <div>
+                        <p>Total Pemasukan</p>
+                        <h2 class="text-green">Rp 3.250.000</h2>
+                    </div>
+                </div>
+
+                <div class="card stat-card">
+                    <div>
+                        <i class="fa-solid fa-arrow-trend-down"></i>
+                    </div>
+                    <div>
+                        <p>Total Pengeluaran</p>
+                        <h2 class="text-red">Rp 850.000</h2>
+                    </div>
+                </div>
+
+                <div class="card stat-card">
+                    <div>
+                        <i class="fa-solid fa-wallet"></i>
+                    </div>
+                    <div>
+                        <p>Saldo Akhir</p>
+                        <h2>Rp 2.400.000</h2>
+                    </div>
+                </div>
+                
+                <div class="card stat-card">
+                    <div>
+                        <i class="fa-solid fa-file-invoice"></i>
+                    </div>
+                    <div>
+                        <p>Total Transaksi</p>
+                        <h2>24</h2>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card table-card">
+                <div class="table-controls">
+                    <h3 class="card-title" style="margin-bottom: 0;">Rincian Laporan</h3>
+                    <button class="btn-action"><i class="fa-solid fa-download"></i> Unduh PDF</button>
+                </div>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Keterangan</th>
+                            <th>Masuk</th>
+                            <th>Keluar</th>
+                            <th>Saldo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="fw-500">Pemasukan Iuran Mei</td>
+                            <td class="text-green fw-500">Rp 3.250.000</td>
+                            <td>-</td>
+                            <td class="fw-500">Rp 3.250.000</td>
+                        </tr>
+                        <tr>
+                            <td class="fw-500">Pengeluaran Operasional</td>
+                            <td>-</td>
+                            <td class="text-red fw-500">Rp 850.000</td>
+                            <td class="fw-500">Rp 2.400.000</td>
+                        </tr>
+                    </tbody>
                 </table>
-            </div>
-        </div>
 
+                <div class="table-footer">
+                    <div class="table-info">Menampilkan ringkasan periode Mei 2024</div>
+                </div>
+            </section>
+        </main>
     </div>
-
-</div>
 
 </body>
 </html>
