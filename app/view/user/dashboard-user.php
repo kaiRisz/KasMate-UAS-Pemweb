@@ -6,7 +6,7 @@
     <title>Dashboard User</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../../../public/assets/css/style.css">
 </head>
 
 <style>
@@ -21,22 +21,6 @@
 body {
     background-color: #f0f2f5;
     color: #333;
-}
-
-.dashboard-layout {
-    display: flex;
-    min-height: 100vh;
-}
-
-.sidebar {
-    width: 260px;
-    background-color: #2A3636;
-    border-right: 1px solid #e4e6eb;
-    padding: 25px 20px;
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    height: 100vh;
 }
 
 .logo {
@@ -58,69 +42,6 @@ body {
     display: flex;
     flex-direction: column;
     gap: 8px;
-}
-
-.menu-item {
-    text-decoration: none;
-    color: #ffffff;
-    padding: 12px 15px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    transition: all 0.2s ease;
-    font-size: 14px;
-    font-weight: 500;
-}
-
-.menu-item:hover {
-    background-color: #f2f2f2;
-    color: #050505;
-}
-
-.main-content {
-    flex: 1;
-    margin-left: 260px;
-    padding: 30px 40px;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-.topbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 35px;
-}
-
-.header-text h1 {
-    font-size: 26px;
-    font-weight: 700;
-    color: #1c1e21;
-}
-
-.subtitle {
-    color: #65676b;
-    font-size: 14px;
-}
-
-.header-right {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.btn-notification {
-    background: white;
-    border: 1px solid #dddfe2;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .user-profile {
@@ -243,11 +164,11 @@ td {
             </div>
 
                 <div class="menu-section">
-                    <a href="Dashboard_User.html" class="menu-item"><i class="fa-solid fa-users-line"></i> Dashboard</a>
-                    <a href="Tagihan_Saya.html" class="menu-item"><i class="fa-solid fa-file-invoice-dollar"></i> Tagihan Saya</a>
-                    <a href="Riwayat_Pembayaran.html" class="menu-item"><i class="fa-regular fa-circle-check"></i>Riwayat Pembayaran</a>
-                    <a href="Grup_Saya.html" class="menu-item"><i class="fa-regular fa-circle-check"></i>Grup Saya</a>
-                    <a href="Profil.html" class="menu-item"><i class="fa-regular fa-circle-check"></i>Profil</a>
+                    <a href="dashboard-user.php" class="menu-item"><i class="fa-solid fa-house-chimney"></i></i> Dashboard</a>
+                    <a href="tagihan-saya.php" class="menu-item"><i class="fa-solid fa-file-invoice-dollar"></i> Tagihan Saya</a>
+                    <a href="riwayat-pembayaran.php" class="menu-item"><i class="fa-solid fa-clock-rotate-left"></i>Riwayat Pembayaran</a>
+                    <a href="grup-saya.php" class="menu-item"><i class="fa-solid fa-users-line"></i>Grup Saya</a>
+                    <a href="profil.php" class="menu-item"><i class="fa-solid fa-circle-user"></i>Profil</a>
                 </div>
         </aside>
 
@@ -259,10 +180,10 @@ td {
                 </div>
                 <div class="header-right">
                     <button class="btn-notification">
-                        <img src="../assets/icon-notif.png" alt="notification">
+                        <i class="fa-solid fa-bell"></i>
                     </button>
                     <div class="user-profile">
-                        <img src="../assets/user_pict.jpg" alt="Muhammad Raka">
+                        <img src="../../../public/assets/image/user_pict.jpg" alt="Muhammad Raka">
                         <div class="user-info">
                             <span class="user-name">Muhammad Raka</span>
                             <span class="user-role">Anggota</span>
