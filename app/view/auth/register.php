@@ -1,120 +1,154 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <title>Register</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - IMPULSEGUARD</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../../public/assets/css/style.css">
-</head>
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
-:root {
-    --cream: #EBEAE7;
-    --dark: #2A3636;
-}
-
-body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-}
-
-/* layout */
-.register {
-    display: flex;
-    min-height: 100vh;
-}
-
-/* kiri */
-.left {
-    width: 50%;
-    background: var(--dark);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* card */
-.box {
-    background: var(--cream);
-    padding: 40px;
-    width: 320px;
-    border-radius: 12px;
-}
-
-.box h2 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-/* kanan */
-.right {
-    width: 50%;
-    background: url('assets/gambar.jpeg') center/cover no-repeat;
-}
-
-/* form */
-label {
-    display: block;
-    margin-top: 12px;
-    font-weight: 600;
-}
-
-input {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-}
-
-/* button */
-button {
-    width: 100%;
-    margin-top: 20px;
-    padding: 10px;
-    background: var(--dark);
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-/* link */
-a {
-    color: var(--dark);
-}
-</style>
-
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+        }
+        .split-layout {
+            display: flex;
+            height: 100vh;
+        }
+        .left-panel {
+            flex: 1;
+            background-color: #2b3a4a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .right-panel {
+            flex: 1;
+        }
+        .right-panel img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .login-card {
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            box-sizing: border-box;
+        }
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .login-header h1 {
+            margin-top: 0;
+            color: #1e293b;
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+        .login-header p {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #1e293b;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            background-color: #1e293b;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 1rem;
+            margin-top: 10px;
+            transition: background-color 0.2s;
+        }
+        .btn-login:hover {
+            background-color: #0f172a;
+        }
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+        .register-link a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
 
-<div class="register">
+    <div class="split-layout">
+        <div class="left-panel">
+            <div class="login-card">
+                <div class="login-header">
+                    <h1>Register</h1>
+                    <p>Silahkan lengkapi data diri anda untuk mendaftar</p>
+                </div>
 
-    <div class="left">
-        <div class="box">
-            <h2>Register</h2>
+                <form action="login.php" method="POST">
+                    <div class="input-group">
+                        <label for="nama">Nama</label>
+                        <input type="text" id="nama" placeholder="Nama Lengkap" required>
+                    </div>
 
-            <label>Nama</label>
-            <input type="text">
+                    <div class="input-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="Email" required>
+                    </div>
 
-            <label>Email</label>
-            <input type="email">
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" placeholder="Password" required>
+                    </div>
 
-            <label>Password</label>
-            <input type="password">
+                    <button type="submit" class="btn-login">Daftar</button>
+                    
+                    <p class="register-link">Sudah punya akun? <a href="login.php">Login di sini</a></p>
+                </form>
+            </div>
+        </div>
 
-            <button>Daftar</button>
-
-            <p style="margin-top:15px; text-align:center;">
-                Sudah punya akun?
-                <a href="login.php">Login</a>
-            </p>
+        <div class="right-panel">
+            <img src="../../../public/assets/image/gambar.jpeg" alt="pict">
         </div>
     </div>
-
-    <div class="right"></div>
-
-</div>
 
 </body>
 </html>

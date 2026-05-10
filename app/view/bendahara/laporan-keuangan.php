@@ -18,34 +18,26 @@
             </div>
 
             <div class="sidebar-menu">
-                <a href="dashboard.php" class="menu-item">
+                <a href="dashboard-bendahara.php" class="menu-item">
                     <i class="fa-solid fa-border-all"></i> Dashboard
                 </a>
 
                 <div class="menu-section">
                     <p class="section-title">KELOLA IURAN</p>
                     <a href="grup-iuran.php" class="menu-item"><i class="fa-solid fa-users-line"></i> Grup Iuran</a>
-                    <a href="#" class="menu-item"><i class="fa-solid fa-user-group"></i> Anggota</a>
-                    <a href="#" class="menu-item"><i class="fa-solid fa-file-invoice-dollar"></i> Iuran & Tagihan</a>
-                    <a href="#" class="menu-item"><i class="fa-regular fa-circle-check"></i> Pembayaran</a>
+                    <a href="detail-grup.php" class="menu-item"><i class="fa-solid fa-user-group"></i> Detail Grup</a>
                 </div>
 
                 <div class="menu-section">
                     <p class="section-title">KEUANGAN</p>
-                    <a href="#" class="menu-item"><i class="fa-solid fa-clock-rotate-left"></i> Pemasukan</a>
+                    <a href="pemasukan.php" class="menu-item"><i class="fa-solid fa-clock-rotate-left"></i> Pemasukan</a>
                     <a href="pengeluaran.php" class="menu-item"><i class="fa-regular fa-eye"></i> Pengeluaran</a>
-                    <a href="#" class="menu-item"><i class="fa-solid fa-chart-pie"></i> Ringkasan Keuangan</a>
                 </div>
 
                 <div class="menu-section">
                     <p class="section-title">LAPORAN</p>
-                    <a href="laporan-keuangan.php" class="menu-item active"><i class="fa-regular fa-file-lines"></i> Laporan</a>
-                    <a href="#" class="menu-item"><i class="fa-solid fa-clock-rotate-left"></i> Riwayat Transaksi</a>
+                    <a href="laporan-keuangan.php" class="menu-item active"><i class="fa-regular fa-file-lines"></i> Laporan Keuangan</a>
                 </div>
-            </div>
-
-            <div class="sidebar-bottom">
-                <a href="#" class="menu-item"><i class="fa-solid fa-gear"></i> Pengaturan</a>
             </div>
         </aside>
 
