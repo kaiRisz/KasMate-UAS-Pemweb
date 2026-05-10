@@ -10,13 +10,9 @@
 </head>
 
 <style>
-    .main-content {
-    padding: 20px;
-}
 
-.section-title{
-    font-size: 18px;
-    margin-bottom: 16px;
+.main-content {
+    padding: 20px;
 }
 
 .content-wrapper{
@@ -125,8 +121,6 @@
                     <a href="profil.php" class="menu-item"><i class="fa-solid fa-circle-user"></i>Profil</a>
                 </div>
         </aside>
-
-    <main class="main-content">
 
         <main class="main-content">
             <header class="topbar">

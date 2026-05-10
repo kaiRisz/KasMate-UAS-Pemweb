@@ -11,38 +11,9 @@
 
 <style>
 
-    * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-
-body {
-    background-color: #f0f2f5;
-    color: #333;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 22px;
-    font-weight: 700;
-    color: #ffffff;
-    margin-bottom: 40px;
-    padding-left: 10px;
-}
-
-.logo i {
-    color: #ffffff;
-}
-
-.menu-section {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
+    .main-content {
+        padding: 20px;
+    }
 
 .user-profile {
     display: flex;
