@@ -6,7 +6,7 @@
     <title>Profil</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../../../public/assets/css/style.css">
 </head>
 
 <style>
@@ -104,11 +104,11 @@
             </div>
 
                 <div class="menu-section">
-                    <a href="Dashboard_User.html" class="menu-item"><i class="fa-solid fa-users-line"></i> Dashboard</a>
-                    <a href="Tagihan_Saya.html" class="menu-item"><i class="fa-solid fa-file-invoice-dollar"></i> Tagihan Saya</a>
-                    <a href="Riwayat_Pembayaran.html" class="menu-item"><i class="fa-regular fa-circle-check"></i>Riwayat Pembayaran</a>
-                    <a href="Grup_Saya.html" class="menu-item"><i class="fa-regular fa-circle-check"></i>Grup Saya</a>
-                    <a href="Profil.html" class="menu-item"><i class="fa-regular fa-circle-check"></i>Profil</a>
+                    <a href="dashboard-user.php" class="menu-item"><i class="fa-solid fa-house-chimney"></i></i> Dashboard</a>
+                    <a href="tagihan-saya.php" class="menu-item"><i class="fa-solid fa-file-invoice-dollar"></i> Tagihan Saya</a>
+                    <a href="riwayat-pembayaran.php" class="menu-item"><i class="fa-solid fa-clock-rotate-left"></i>Riwayat Pembayaran</a>
+                    <a href="grup-saya.php" class="menu-item"><i class="fa-solid fa-users-line"></i>Grup Saya</a>
+                    <a href="profil.php" class="menu-item"><i class="fa-solid fa-circle-user"></i>Profil</a>
                 </div>
         </aside>
 
@@ -126,7 +126,7 @@
 
             <div class="profile-header">
                 <div class="user-profile">
-                        <img src="../assets/user_pict.jpg" alt="Muhammad Raka">
+                        <img src="../../../public/assets/image/user_pict.jpg" alt="Muhammad Raka">
 
                     </div>
                 <div>

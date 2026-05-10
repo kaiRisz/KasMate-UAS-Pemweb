@@ -6,7 +6,7 @@
     <title>KasMate - Dashboard Bendahara</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../../../public/assets/css/style.css">
 </head>
 <body>
 
@@ -18,13 +18,13 @@
             </div>
 
             <div class="sidebar-menu">
-                <a href="../dashboard.html" class="menu-item active">
+                <a href="../dashboard.php" class="menu-item active">
                     <i class="fa-solid fa-border-all"></i> Dashboard
                 </a>
 
                 <div class="menu-section">
                     <p class="section-title">KELOLA IURAN</p>
-                    <a href="../grup-iuran.html" class="menu-item"><i class="fa-solid fa-users-line"></i> Grup Iuran</a>
+                    <a href="../grup-iuran.php" class="menu-item"><i class="fa-solid fa-users-line"></i> Grup Iuran</a>
                     <a href="#" class="menu-item"><i class="fa-solid fa-user-group"></i> Anggota</a>
                     <a href="#" class="menu-item"><i class="fa-solid fa-file-invoice-dollar"></i> Iuran & Tagihan</a>
                     <a href="#" class="menu-item"><i class="fa-regular fa-circle-check"></i> Pembayaran</a>

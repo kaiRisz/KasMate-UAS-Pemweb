@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KasMate - Dashboard Admin</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../../../public/assets/css/style.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -19,16 +19,16 @@
             </div>
             <nav class="sidebar-menu">
                 <div class="menu-section">
-                    <a href="Dashboard_Admin.html" class="menu-item active">
+                    <a href="dashboard-admin.php" class="menu-item active">
                         <i class='bx bxs-dashboard'></i> Dashboard
                     </a>
-                    <a href="Manajemen_User.html" class="menu-item">
+                    <a href="manajemen-user.php" class="menu-item">
                         <i class='bx bxs-user-account'></i> Manajemen User
                     </a>
-                    <a href="Manajemen_Grup.html" class="menu-item">
+                    <a href="manajemen-grup.php" class="menu-item">
                         <i class='bx bxs-group'></i> Manajemen Grup
                     </a>
-                    <a href="Pengaturan.html" class="menu-item">
+                    <a href="pengaturan.php" class="menu-item">
                         <i class='bx bxs-cog'></i> Pengaturan Sistem
                     </a>
                 </div>

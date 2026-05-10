@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Register</title>
+    <title>Register</title>
+    <link rel="stylesheet" href="../../../public/assets/css/style.css">
+</head>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
@@ -105,7 +107,7 @@ a {
 
             <p style="margin-top:15px; text-align:center;">
                 Sudah punya akun?
-                <a href="login.html">Login</a>
+                <a href="login.php">Login</a>
             </p>
         </div>
     </div>
