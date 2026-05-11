@@ -1,3 +1,37 @@
+<?php
+session_start();
+require_once '../../../config/database.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    $query = "SELECT * FROM users WHERE email='$email'";
+    $result = mysqli_query($conn, $query);
+
+    if (mysqli_num_rows($result) === 1) {
+        $row = mysqli_fetch_assoc($result);
+        
+        if (password_verify($password, $row['password'])) {
+            $_SESSION['id_user'] = $row['id_user'];
+            $_SESSION['role'] = $row['role'];
+
+            if ($row['role'] == 'admin') {
+                header("Location: ../admin/dashboard-admin.php");
+            } elseif ($row['role'] == 'bendahara') {
+                header("Location: ../bendahara/dashboard-bendahara.php");
+            } else {
+                header("Location: ../user/dashboard-user.php");
+            }
+            exit();
+        } else {
+            $error = true;
+        }
+    } else {
+        $error = true;
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -110,40 +144,44 @@
         .register-link a:hover {
             text-decoration: underline;
         }
+        .error-message {
+            color: #ef4444;
+            font-size: 0.9rem;
+            text-align: center;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
-
     <div class="split-layout">
         <div class="left-panel">
             <div class="login-card">
                 <div class="login-header">
                     <h1>Login</h1>
-                    <p>Silahkan masukkan username dan password anda</p>
+                    <p>Silahkan masukkan email dan password anda</p>
                 </div>
+                
+                <?php if(isset($error)) : ?>
+                    <div class="error-message">Email atau password salah!</div>
+                <?php endif; ?>
 
-                <form action="../bendahara/dashboard-bendahara.php" method="POST">
+                <form action="" method="POST">
                     <div class="input-group">
-                        <label for="username">Username</label>
-                        <input type="text" id="username" placeholder="Username" required>
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Email" required>
                     </div>
-
                     <div class="input-group">
                         <label for="password">Password</label>
-                        <input type="password" id="password" placeholder="Password" required>
+                        <input type="password" id="password" name="password" placeholder="Password" required>
                     </div>
-
                     <button type="submit" class="btn-login">Login</button>
-                    
                     <p class="register-link">Belum punya akun? <a href="register.php">Daftar sekarang</a></p>
                 </form>
             </div>
         </div>
-
         <div class="right-panel">
             <img src="../../../public/assets/image/gambar.jpeg" alt="pict">
         </div>
     </div>
-
 </body>
 </html>

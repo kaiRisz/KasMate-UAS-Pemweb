@@ -1,3 +1,19 @@
+<?php
+require_once '../../../config/database.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nama = $_POST['nama'];
+    $email = $_POST['email'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $role = 'user';
+
+    $query = "INSERT INTO users (nama, email, password, role) VALUES ('$nama', '$email', '$password', '$role')";
+    mysqli_query($conn, $query);
+
+    header("Location: login.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -113,7 +129,6 @@
     </style>
 </head>
 <body>
-
     <div class="split-layout">
         <div class="left-panel">
             <div class="login-card">
@@ -121,34 +136,27 @@
                     <h1>Register</h1>
                     <p>Silahkan lengkapi data diri anda untuk mendaftar</p>
                 </div>
-
-                <form action="login.php" method="POST">
+                <form action="" method="POST">
                     <div class="input-group">
                         <label for="nama">Nama</label>
-                        <input type="text" id="nama" placeholder="Nama Lengkap" required>
+                        <input type="text" id="nama" name="nama" placeholder="Nama Lengkap" required>
                     </div>
-
                     <div class="input-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" placeholder="Email" required>
+                        <input type="email" id="email" name="email" placeholder="Email" required>
                     </div>
-
                     <div class="input-group">
                         <label for="password">Password</label>
-                        <input type="password" id="password" placeholder="Password" required>
+                        <input type="password" id="password" name="password" placeholder="Password" required>
                     </div>
-
                     <button type="submit" class="btn-login">Daftar</button>
-                    
                     <p class="register-link">Sudah punya akun? <a href="login.php">Login di sini</a></p>
                 </form>
             </div>
         </div>
-
         <div class="right-panel">
             <img src="../../../public/assets/image/gambar.jpeg" alt="pict">
         </div>
     </div>
-
 </body>
 </html>
