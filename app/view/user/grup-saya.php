@@ -102,6 +102,17 @@
     text-align: center;
     display: inline-block;
 }
+/* ACTIVE SIDEBAR USER */
+.menu-item.active {
+    background-color: #6f9693;
+    color: white;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+.menu-item.active i {
+    color: white;
+}
 
 </style>
 
@@ -113,13 +124,29 @@
                 <span>KasMate</span>
             </div>
 
-                <div class="menu-section">
-                    <a href="dashboard-user.php" class="menu-item"><i class="fa-solid fa-house-chimney"></i></i> Dashboard</a>
-                    <a href="tagihan-saya.php" class="menu-item"><i class="fa-solid fa-file-invoice-dollar"></i> Tagihan Saya</a>
-                    <a href="riwayat-pembayaran.php" class="menu-item"><i class="fa-solid fa-clock-rotate-left"></i>Riwayat Pembayaran</a>
-                    <a href="grup-saya.php" class="menu-item"><i class="fa-solid fa-users-line"></i>Grup Saya</a>
-                    <a href="profil.php" class="menu-item"><i class="fa-solid fa-circle-user"></i>Profil</a>
-                </div>
+               <div class="menu-section">
+
+    <a href="dashboard-user.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'dashboard-user.php' ? 'active' : '' ?>">
+        <i class="fa-solid fa-house-chimney"></i> Dashboard
+    </a>
+
+    <a href="tagihan-saya.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'tagihan-saya.php' ? 'active' : '' ?>">
+        <i class="fa-solid fa-file-invoice-dollar"></i> Tagihan Saya
+    </a>
+
+    <a href="riwayat-pembayaran.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'riwayat-pembayaran.php' ? 'active' : '' ?>">
+        <i class="fa-solid fa-clock-rotate-left"></i> Riwayat Pembayaran
+    </a>
+
+    <a href="grup-saya.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'grup-saya.php' ? 'active' : '' ?>">
+        <i class="fa-solid fa-users-line"></i> Grup Saya
+    </a>
+
+    <a href="profil.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'profil.php' ? 'active' : '' ?>">
+        <i class="fa-solid fa-circle-user"></i> Profil
+    </a>
+
+</div>
         </aside>
 
         <main class="main-content">
