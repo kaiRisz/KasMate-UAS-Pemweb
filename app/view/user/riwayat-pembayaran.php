@@ -96,6 +96,10 @@
         <i class="fa-solid fa-circle-user"></i> Profil
     </a>
 
+     <a href="logout.php" class="menu-item"> <i class="fa-solid fa-right-from-bracket"></i> Logout
+    </a>
+
+
 </div>
         </aside>
 

@@ -166,6 +166,9 @@ td {
     <a href="profil.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'profil.php' ? 'active' : '' ?>">
         <i class="fa-solid fa-circle-user"></i> Profil
     </a>
+    <a href="logout.php" class="menu-item">
+    <i class="fa-solid fa-right-from-bracket"></i> Logout
+</a>
 
 </div>
         </aside>
