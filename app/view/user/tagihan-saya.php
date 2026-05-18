@@ -1,3 +1,17 @@
+<?php
+session_start();
+if (!isset($_SESSION['id_user']) || $_SESSION['role'] !== 'user') {
+    header("Location: ../auth/login.php");
+    exit();
+}
+
+$conn = mysqli_connect("localhost", "root", "", "kasmate_db");
+$id_user = $_SESSION['id_user'];
+
+$query_user = mysqli_query($conn, "SELECT nama FROM users WHERE id_user = $id_user");
+$data_user = mysqli_fetch_assoc($query_user);
+$nama_user = $data_user['nama'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,68 +22,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../../../public/assets/css/style.css">
 </head>
-
 <style>
-
-    .main-content {
-        padding: 20px;
-    }   
-
-    .table-tittle{
-        font-size: 16px;
-        margin-bottom: 16px;
-
-    }
-
-    .table-content{
-        background-color: white;
-        padding: 20px 40px 40px 40px;
-        border-radius: 16px;
-    }
-
-    .status-belum-lunas{
-        background-color: #ffcdcd;
-        color: crimson;
-        padding: 5px 10px;
-        border-radius: 10px;
-    }
-
-    .status-sudah-lunas{
-        background-color: #d4edda;
-        color: darkgreen;
-        padding: 5px 10px;
-        border-radius: 10px;
-        text-align: center;
-        display: inline-block;
-    }
-
-    .overview-cards{
-        background-color: white;
-        border-radius: 16px;
-        width: auto;
-        padding: 16px;
-        display: flex;
-        align-items: center;
-    }
-
-    .btn-action{
-        background-color: #e74040;
-        color: white;
-
-    }
-    /* ACTIVE SIDEBAR USER */
-.menu-item.active {
-    background-color: #6f9693;
-    color: white;
-    border-radius: 12px;
-    font-weight: 600;
-}
-
-.menu-item.active i {
-    color: white;
-}
+    .main-content { padding: 20px; }   
+    .table-tittle{ font-size: 16px; margin-bottom: 16px; }
+    .table-content{ background-color: white; padding: 20px 40px 40px 40px; border-radius: 16px; }
+    .status-belum-lunas{ background-color: #ffcdcd; color: crimson; padding: 5px 10px; border-radius: 10px; text-align: center; display: inline-block; }
+    .status-sudah-lunas{ background-color: #d4edda; color: darkgreen; padding: 5px 10px; border-radius: 10px; text-align: center; display: inline-block; }
+    .menu-item.active { background-color: #6f9693; color: white; border-radius: 12px; font-weight: 600; }
+    .menu-item.active i { color: white; }
+    table { width: 100%; border-collapse: collapse; }
+    th { text-align: left; padding: 12px 15px; border-bottom: 2px solid #f0f2f5; color: #65676b; font-size: 13px; font-weight: 600; }
+    td { padding: 15px; border-bottom: 1px solid #f0f2f5; font-size: 14px; color: #1c1e21; }
+    .btn-action{ background-color: #6f9693; color: white; padding: 5px 10px; border-radius: 8px; border: none; font-size: 12px; }
 </style>
-
 <body>
     <div class="dashboard-layout">
         <aside class="sidebar">
@@ -77,34 +42,24 @@
                 <i class="fa-solid fa-cube"></i>
                 <span>KasMate</span>
             </div>
-
-               <div class="menu-section">
-
-    <a href="dashboard-user.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'dashboard-user.php' ? 'active' : '' ?>">
-        <i class="fa-solid fa-house-chimney"></i> Dashboard
-    </a>
-
-    <a href="tagihan-saya.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'tagihan-saya.php' ? 'active' : '' ?>">
-        <i class="fa-solid fa-file-invoice-dollar"></i> Tagihan Saya
-    </a>
-
-    <a href="riwayat-pembayaran.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'riwayat-pembayaran.php' ? 'active' : '' ?>">
-        <i class="fa-solid fa-clock-rotate-left"></i> Riwayat Pembayaran
-    </a>
-
-    <a href="grup-saya.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'grup-saya.php' ? 'active' : '' ?>">
-        <i class="fa-solid fa-users-line"></i> Grup Saya
-    </a>
-
-    <a href="profil.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'profil.php' ? 'active' : '' ?>">
-        <i class="fa-solid fa-circle-user"></i> Profil
-    </a>
-
-     <a href="logout.php" class="menu-item"> <i class="fa-solid fa-right-from-bracket"></i> Logout
-    </a>
-
-
-</div>
+            <div class="menu-section">
+                <a href="dashboard-user.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'dashboard-user.php' ? 'active' : '' ?>">
+                    <i class="fa-solid fa-house-chimney"></i> Dashboard
+                </a>
+                <a href="tagihan-saya.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'tagihan-saya.php' ? 'active' : '' ?>">
+                    <i class="fa-solid fa-file-invoice-dollar"></i> Tagihan Saya
+                </a>
+                <a href="riwayat-pembayaran.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'riwayat-pembayaran.php' ? 'active' : '' ?>">
+                    <i class="fa-solid fa-clock-rotate-left"></i> Riwayat Pembayaran
+                </a>
+                <a href="grup-saya.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'grup-saya.php' ? 'active' : '' ?>">
+                    <i class="fa-solid fa-users-line"></i> Grup Saya
+                </a>
+                <a href="profil.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'profil.php' ? 'active' : '' ?>">
+                    <i class="fa-solid fa-circle-user"></i> Profil
+                </a>
+                <a href="logout.php" class="menu-item"> <i class="fa-solid fa-right-from-bracket"></i> Logout </a>
+            </div>
         </aside>
 
         <main class="main-content">
@@ -118,70 +73,55 @@
                         <i class="fa-solid fa-bell"></i>
                     </button>
                     <div class="user-profile">
-                        <img src="../../../public/assets/image/user_pict.jpg" alt="Muhammad Raka">
+                        <img src="../../../public/assets/image/user_pict.jpg" alt="<?= htmlspecialchars($nama_user); ?>">
                         <div class="user-info">
-                            <span class="user-name">Muhammad Raka</span>
+                            <span class="user-name"><?= htmlspecialchars($nama_user); ?></span>
                             <span class="user-role">Anggota</span>
                         </div>
-
                     </div>
                 </div>
             </header>
 
             <section class="table-content">
-                <h1 class="table-tittle">Tagihan Terdekat</h1>
-
+                <h1 class="table-tittle">Daftar Semua Tagihan</h1>
                 <div table-card>
-                    <table cellpading="2px">
-                        <th>Grup</th>
-                        <th>Periode</th>
-                        <th>Jumlah</th>
-                        <th>Status</th>
-                        <th>Deadline</th>
-                        <th>Aksi</th>
-
-                        <tr>
-                            <td>Kelas Matdis-A 2024</td>
-                            <td>Mei 2024</td>
-                            <td>Rp. 300.000,00</td>
-                            <td> <span class="status-belum-lunas">Belum Lunas</span></td>
-                            <td>31 Mei 2024</td>
-                            <td><button id="hapus" class="btn-action">Hapus</button></td>
-                        </tr>
-
-                        <tr>
-                            <td>Kelas RPL-A 2024</td>
-                            <td>Mei 2024</td>
-                            <td>Rp. 300.000,00</td>
-                            <td ><span class="status-belum-lunas">Belum Lunas</span></td>
-                            <td>31 Mei 2024</td>
-                            <td><button id="hapus" class="btn-action">Hapus</button></td>
-                        </tr>
-
-                        <tr>
-                            <td>Kelas ADSI-A 2024</td>
-                            <td>April 2024</td>
-                            <td>Rp. 300.000,00</td>
-                            <td><span class="status-sudah-lunas">Sudah Lunas</span></td>
-                            <td>31 April 2024</td>
-                            <td><button id="hapus" class="btn-action">Hapus</button></td>
-                        </tr>
-
-                        <tr>
-                            <td>Kelas RPL-A 2024</td>
-                            <td>Maret 2024</td>
-                            <td>Rp. 300.000,00</td>
-                            <td><span class="status-sudah-lunas">Sudah Lunas</span></td>
-                            <td>31 Maret 2024</td>
-                            <td><button id="hapus" class="btn-action">Hapus</button></td>
-                        </tr>
-
+                    <table cellpadding="2px">
+                        <thead>
+                            <tr>
+                                <th>Grup</th>
+                                <th>Nama Iuran</th>
+                                <th>Jumlah</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $query_all_tagihan = mysqli_query($conn, "SELECT g.nama_grup, i.nama_iuran, i.nominal, COALESCE(p.status, 'Belum Lunas') AS status_bayar FROM iuran i JOIN grup g ON i.id_grup = g.id_grup JOIN grup_anggota ga ON g.id_grup = ga.id_grup LEFT JOIN pembayaran p ON i.id_iuran = p.id_iuran AND p.id_user = ga.id_user WHERE ga.id_user = $id_user");
+                            while ($row = mysqli_fetch_assoc($query_all_tagihan)) {
+                                $status_class = ($row['status_bayar'] == 'Lunas') ? 'status-sudah-lunas' : 'status-belum-lunas';
+                                ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($row['nama_grup']); ?></td>
+                                    <td><?= htmlspecialchars($row['nama_iuran']); ?></td>
+                                    <td>Rp. <?= number_format($row['nominal'], 2, ',', '.'); ?></td>
+                                    <td><span class="<?= $status_class; ?>"><?= $row['status_bayar']; ?></span></td>
+                                    <td>
+                                        <?php if($row['status_bayar'] == 'Lunas'): ?>
+                                            <button class="btn-action" style="background-color: green;" disabled>Selesai</button>
+                                        <?php else: ?>
+                                            <button class="btn-action" disabled>Bayar ke Bendahara</button>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                                <?php
+                            }
+                            ?>
+                        </tbody>
                     </table>
-
                 </div>
-
             </section>
-
+        </main>
+    </div>
 </body>
 </html>
-    

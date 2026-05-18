@@ -1,3 +1,39 @@
+<?php
+session_start();
+if (!isset($_SESSION['id_user']) || $_SESSION['role'] !== 'user') {
+    header("Location: ../auth/login.php");
+    exit();
+}
+
+$conn = mysqli_connect("localhost", "root", "", "kasmate_db");
+$id_user = $_SESSION['id_user'];
+
+// Ambil nama user
+$query_user = mysqli_query($conn, "SELECT nama FROM users WHERE id_user = $id_user");
+$data_user = mysqli_fetch_assoc($query_user);
+$nama_user = $data_user['nama'] ?? 'User';
+
+// Total tagihan
+$query_total = mysqli_query($conn, "
+    SELECT SUM(i.nominal) AS total 
+    FROM iuran i 
+    JOIN grup_anggota ga ON i.id_grup = ga.id_grup 
+    WHERE ga.id_user = $id_user
+");
+$total_tagihan = mysqli_fetch_assoc($query_total)['total'] ?? 0;
+
+// Sudah bayar
+$query_lunas = mysqli_query($conn, "
+    SELECT SUM(i.nominal) AS total 
+    FROM pembayaran p 
+    JOIN iuran i ON p.id_iuran = i.id_iuran 
+    WHERE p.id_user = $id_user AND p.status = 'Lunas'
+");
+$sudah_bayar = mysqli_fetch_assoc($query_lunas)['total'] ?? 0;
+
+$belum_bayar = $total_tagihan - $sudah_bayar;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,10 +46,7 @@
 </head>
 
 <style>
-
-    .main-content {
-        padding: 20px;
-    }
+.main-content { padding: 20px; }
 
 .user-profile {
     display: flex;
@@ -32,16 +65,8 @@
     object-fit: cover;
 }
 
-.user-name {
-    font-size: 13px;
-    font-weight: 600;
-}
-
-.user-role {
-    font-size: 11px;
-    color: #65676b;
-    display: block;
-}
+.user-name { font-size: 13px; font-weight: 600; }
+.user-role { font-size: 11px; color: #65676b; display: block; }
 
 .overview {
     display: grid;
@@ -112,7 +137,6 @@ td {
     color: crimson;
     padding: 5px 10px;
     border-radius: 10px;
-    text-align: center;
     display: inline-block;
 }
 
@@ -121,10 +145,9 @@ td {
     color: darkgreen;
     padding: 5px 10px;
     border-radius: 10px;
-    text-align: center;
     display: inline-block;
 }
-/* ACTIVE SIDEBAR USER */
+
 .menu-item.active {
     background-color: #6f9693;
     color: white;
@@ -138,130 +161,124 @@ td {
 </style>
 
 <body>
-    <div class="dashboard-layout">
-        <aside class="sidebar">
-            <div class="logo">
-                <i class="fa-solid fa-cube"></i>
-                <span>KasMate</span>
+<div class="dashboard-layout">
+
+    <aside class="sidebar">
+        <div class="logo">
+            <i class="fa-solid fa-cube"></i>
+            <span>KasMate</span>
+        </div>
+
+        <div class="menu-section">
+            <a href="dashboard-user.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'dashboard-user.php' ? 'active' : '' ?>">
+                <i class="fa-solid fa-house-chimney"></i> Dashboard
+            </a>
+
+            <a href="tagihan-saya.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'tagihan-saya.php' ? 'active' : '' ?>">
+                <i class="fa-solid fa-file-invoice-dollar"></i> Tagihan Saya
+            </a>
+
+            <a href="riwayat-pembayaran.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'riwayat-pembayaran.php' ? 'active' : '' ?>">
+                <i class="fa-solid fa-clock-rotate-left"></i> Riwayat Pembayaran
+            </a>
+
+            <a href="grup-saya.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'grup-saya.php' ? 'active' : '' ?>">
+                <i class="fa-solid fa-users-line"></i> Grup Saya
+            </a>
+
+            <a href="profil.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'profil.php' ? 'active' : '' ?>">
+                <i class="fa-solid fa-circle-user"></i> Profil
+            </a>
+
+            <a href="logout.php" class="menu-item">
+                <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <div class="header-text">
+                <h1>Dashboard</h1>
+                <p class="subtitle">Selamat Datang, <?= htmlspecialchars($nama_user) ?></p>
             </div>
 
-               <div class="menu-section">
+            <div class="header-right">
+                <button class="btn-notification">
+                    <i class="fa-solid fa-bell"></i>
+                </button>
 
-    <a href="dashboard-user.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'dashboard-user.php' ? 'active' : '' ?>">
-        <i class="fa-solid fa-house-chimney"></i> Dashboard
-    </a>
-
-    <a href="tagihan-saya.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'tagihan-saya.php' ? 'active' : '' ?>">
-        <i class="fa-solid fa-file-invoice-dollar"></i> Tagihan Saya
-    </a>
-
-    <a href="riwayat-pembayaran.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'riwayat-pembayaran.php' ? 'active' : '' ?>">
-        <i class="fa-solid fa-clock-rotate-left"></i> Riwayat Pembayaran
-    </a>
-
-    <a href="grup-saya.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'grup-saya.php' ? 'active' : '' ?>">
-        <i class="fa-solid fa-users-line"></i> Grup Saya
-    </a>
-
-    <a href="profil.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'profil.php' ? 'active' : '' ?>">
-        <i class="fa-solid fa-circle-user"></i> Profil
-    </a>
-    <a href="logout.php" class="menu-item">
-    <i class="fa-solid fa-right-from-bracket"></i> Logout
-</a>
-
-</div>
-        </aside>
-
-        <main class="main-content">
-            <header class="topbar">
-                <div class="header-text">
-                    <h1>Dashboard</h1>
-                    <p class="subtitle">Selamat Datang, Muhammad Raka</p>
-                </div>
-                <div class="header-right">
-                    <button class="btn-notification">
-                        <i class="fa-solid fa-bell"></i>
-                    </button>
-                    <div class="user-profile">
-                        <img src="../../../public/assets/image/user_pict.jpg" alt="Muhammad Raka">
-                        <div class="user-info">
-                            <span class="user-name">Muhammad Raka</span>
-                            <span class="user-role">Anggota</span>
-                        </div>
-
+                <div class="user-profile">
+                    <img src="../../../public/assets/image/user_pict.jpg">
+                    <div class="user-info">
+                        <span class="user-name"><?= htmlspecialchars($nama_user) ?></span>
+                        <span class="user-role">Anggota</span>
                     </div>
                 </div>
-            </header>
+            </div>
+        </header>
 
-            <section class="overview">
-                <div class="overview-cards">
-                    <p class="overview-tittle">Total Tagihan</p>
-                    <h1 class="overview-content">Rp. 900.000,00</h1>
-                </div>
+        <section class="overview">
+            <div class="overview-cards">
+                <p class="overview-tittle">Total Tagihan</p>
+                <h1 class="overview-content">Rp. <?= number_format($total_tagihan, 2, ',', '.') ?></h1>
+            </div>
 
-                <div class="overview-cards">
-                    <p class="overview-tittle">Sudah Bayar</p>
-                    <h1 class="overview-content">Rp. 600.000,00</h1>
-                </div>
+            <div class="overview-cards">
+                <p class="overview-tittle">Sudah Bayar</p>
+                <h1 class="overview-content">Rp. <?= number_format($sudah_bayar, 2, ',', '.') ?></h1>
+            </div>
 
-                <div class="overview-cards">
-                    <p class="overview-tittle">Belum Bayar</p>
-                    <h1 class="overview-content">Rp. 300.000,00</h1>
-                </div>
-            </section>
+            <div class="overview-cards">
+                <p class="overview-tittle">Belum Bayar</p>
+                <h1 class="overview-content">Rp. <?= number_format($belum_bayar, 2, ',', '.') ?></h1>
+            </div>
+        </section>
 
-            <section class="table-content">
-                <h1 class="table-tittle">Tagihan Terdekat</h1>
+        <section class="table-content">
+            <h1 class="table-tittle">Tagihan Terdekat</h1>
 
-                <div table-card>
-                    <table cellpading="2px">
+            <div table-card>
+                <table cellpadding="2px">
+                    <tr>
                         <th>Grup</th>
                         <th>Periode</th>
                         <th>Jumlah</th>
                         <th>Status</th>
                         <th>Deadline</th>
+                    </tr>
 
+                    <?php
+                    // Query disesuaikan: Mengeluarkan i.periode & i.deadline karena tidak ada di tabel iuran kasmate_db.sql
+                    $query_tagihan = mysqli_query($conn, "
+                        SELECT g.nama_grup, i.nama_iuran, i.nominal,
+                        COALESCE(p.status, 'Belum Lunas') AS status_bayar
+                        FROM iuran i
+                        JOIN grup g ON i.id_grup = g.id_grup
+                        JOIN grup_anggota ga ON g.id_grup = ga.id_grup
+                        LEFT JOIN pembayaran p 
+                            ON i.id_iuran = p.id_iuran AND p.id_user = ga.id_user
+                        WHERE ga.id_user = $id_user
+                        LIMIT 4
+                    ");
+
+                    while ($row = mysqli_fetch_assoc($query_tagihan)) {
+                        $status_class = ($row['status_bayar'] == 'Lunas') ? 'status-sudah-lunas' : 'status-belum-lunas';
+                    ?>
                         <tr>
-                            <td>Kelas Matdis-A 2024</td>
-                            <td>Mei 2024</td>
-                            <td>Rp. 300.000,00</td>
-                            <td><span class="status-belum-lunas">Belum Lunas</span></td>
-                            <td>31 Mei 2024</td>
+                            <td><?= htmlspecialchars($row['nama_grup']) ?></td>
+                            <td><?= htmlspecialchars($row['nama_iuran']) ?></td>
+                            <td>Rp. <?= number_format($row['nominal'], 2, ',', '.') ?></td>
+                            <td><span class="<?= $status_class ?>"><?= $row['status_bayar'] ?></span></td>
+                            <td>-</td>
                         </tr>
+                    <?php } ?>
 
-                        <tr>
-                            <td>Kelas RPL-A 2024</td>
-                            <td>Mei 2024</td>
-                            <td>Rp. 300.000,00</td>
-                            <td> <span  class="status-belum-lunas">Belum Lunas</span></td>
-                            <td>31 Mei 2024</td>
-                        </tr>
+                </table>
+            </div>
+        </section>
 
-                        <tr>
-                            <td>Kelas ADSI-A 2024</td>
-                            <td>April 2024</td>
-                            <td>Rp. 300.000,00</td>
-                            <td><span class="status-sudah-lunas">Sudah Lunas</span></td>
-                            <td>31 April 2024</td>
-                        </tr>
-
-                        <tr>
-                            <td>Kelas RPL-A 2024</td>
-                            <td>Maret 2024</td>
-                            <td>Rp. 300.000,00</td>
-                            <td><span class="status-sudah-lunas">Sudah Lunas</span></td>
-                            <td>31 Maret 2024</td>
-                        </tr>
-
-                    </table>
-
-                </div>
-
-            </section>
-
-
+    </main>
+</div>
 </body>
-
 </html>
-    
