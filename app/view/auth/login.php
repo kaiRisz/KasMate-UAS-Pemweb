@@ -2,6 +2,23 @@
 session_start();
 require_once '../../../config/database.php';
 
+if (isset($_SESSION['id_user']) && isset($_SESSION['role'])) {
+    if ($_SESSION['role'] == 'admin') {
+        header("Location: ../admin/dashboard-admin.php");
+        exit();
+    } elseif ($_SESSION['role'] == 'bendahara') {
+        header("Location: ../bendahara/dashboard-bendahara.php");
+        exit();
+    } else {
+        header("Location: ../user/dashboard-user.php");
+        exit();
+    }
+}
+
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];

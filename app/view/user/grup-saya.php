@@ -41,11 +41,33 @@ if ($selected_grup_id > 0) {
         padding: 20px; 
     }
     .content-wrapper{
-        display: flex; gap: 20px; 
+        display: flex;
+        gap: 20px; 
     }
-    .group-list{ width: 40%; background: white; border-radius: 16px; padding: 20px; }
-    .group-card{ border: 1px solid #ddd; border-radius: 12px; padding: 15px; margin-bottom: 12px; cursor: pointer; transition: 0.2s; text-decoration: none; display: block; color: inherit; }
-    .group-card:hover{ background-color: #f5f5f5; }
+
+    .group-list{
+        width: 40%;
+        background: white;
+        border-radius: 16px; 
+        padding: 20px;
+    }
+
+    .group-card{
+        border: 1px solid #ddd; 
+        border-radius: 12px; 
+        padding: 15px; 
+        margin-bottom: 12px; 
+        cursor: pointer; 
+        transition: 0.2s; 
+        text-decoration: none; 
+        display: block; 
+        color: inherit;
+    }
+
+    .group-card:hover{ 
+        background-color: #f5f5f5; 
+    }
+    
     .group-name{ font-weight: 600; margin-bottom: 6px; }
     .group-info{ font-size: 13px; color: #666; }
     .group-detail{ width: 60%; background: white; border-radius: 16px; padding: 20px; }

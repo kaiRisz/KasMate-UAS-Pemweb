@@ -8,12 +8,10 @@ if (!isset($_SESSION['id_user']) || $_SESSION['role'] !== 'user') {
 $conn = mysqli_connect("localhost", "root", "", "kasmate_db");
 $id_user = $_SESSION['id_user'];
 
-// Ambil nama user
 $query_user = mysqli_query($conn, "SELECT nama FROM users WHERE id_user = $id_user");
 $data_user = mysqli_fetch_assoc($query_user);
 $nama_user = $data_user['nama'] ?? 'User';
 
-// Total tagihan
 $query_total = mysqli_query($conn, "
     SELECT SUM(i.nominal) AS total 
     FROM iuran i 
@@ -22,7 +20,6 @@ $query_total = mysqli_query($conn, "
 ");
 $total_tagihan = mysqli_fetch_assoc($query_total)['total'] ?? 0;
 
-// Sudah bayar
 $query_lunas = mysqli_query($conn, "
     SELECT SUM(i.nominal) AS total 
     FROM pembayaran p 
@@ -65,7 +62,9 @@ $belum_bayar = $total_tagihan - $sudah_bayar;
     object-fit: cover;
 }
 
-.user-name { font-size: 13px; font-weight: 600; }
+.user-name{
+    font-size: 13px; font-weight: 600;
+}
 .user-role { font-size: 11px; color: #65676b; display: block; }
 
 .overview {
