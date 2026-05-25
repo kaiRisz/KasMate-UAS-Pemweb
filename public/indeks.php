@@ -81,7 +81,7 @@
                 <h3>Halaman Login</h3>
             </a>
 
-            <a href="../app/view/admin/dashboard-admin.php" class="menu-card">
+            <a href="../app/controller/admin/DashboardAdminController.php" class="menu-card">
                 <i class="fa-solid fa-user-tie text-red" style="color: #ef4444;"></i>
                 <h3>Dashboard Admin</h3>
             </a>

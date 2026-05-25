@@ -1,24 +1,5 @@
 <?php
-require_once '../../../config/auth_check.php';
-cekRole('bendahara');
 
-$id_user = $_SESSION['id_user'];
-
-$user_q = mysqli_query($conn, "SELECT nama FROM users WHERE id_user = '$id_user'");
-$nama_bendahara = mysqli_fetch_assoc($user_q)['nama'];
-
-$masuk_query = mysqli_query($conn, "SELECT SUM(i.nominal) as total, COUNT(*) as jml_transaksi FROM pembayaran p JOIN iuran i ON p.id_iuran = i.id_iuran JOIN grup g ON i.id_grup = g.id_grup AND p.status = 'Lunas'");
-$data_masuk = mysqli_fetch_assoc($masuk_query);
-$total_masuk = $data_masuk['total'] ?? 0;
-$trx_masuk = $data_masuk['jml_transaksi'] ?? 0;
-
-$keluar_query = mysqli_query($conn, "SELECT SUM(pe.nominal_keluar) as total, COUNT(*) as jml_transaksi FROM pengeluaran pe JOIN grup g ON pe.id_grup = g.id_grup");
-$data_keluar = mysqli_fetch_assoc($keluar_query);
-$total_keluar = $data_keluar['total'] ?? 0;
-$trx_keluar = $data_keluar['jml_transaksi'] ?? 0;
-
-$saldo_akhir = $total_masuk - $total_keluar;
-$total_transaksi = $trx_masuk + $trx_keluar;
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -38,23 +19,23 @@ $total_transaksi = $trx_masuk + $trx_keluar;
                 <span>KasMate</span>
             </div>
             <div class="sidebar-menu">
-                <a href="dashboard-bendahara.php" class="menu-item"><i class="fa-solid fa-border-all"></i> Dashboard</a>
+                <a href="../../controller/bendahara/DashboardBendaharaController.php" class="menu-item"><i class="fa-solid fa-border-all"></i> Dashboard</a>
                 <div class="menu-section">
                     <p class="section-title">KELOLA IURAN</p>
-                    <a href="grup-iuran.php" class="menu-item"><i class="fa-solid fa-users-line"></i> Grup Iuran</a>
-                    <a href="detail-grup.php" class="menu-item"><i class="fa-solid fa-user-group"></i> Detail Grup</a>
+                    <a href="../../controller/bendahara/GrupIuranController.php" class="menu-item"><i class="fa-solid fa-users-line"></i> Grup Iuran</a>
+                    <a href="../../controller/bendahara/DetailGrupController.php" class="menu-item"><i class="fa-solid fa-user-group"></i> Detail Grup</a>
                 </div>
                 <div class="menu-section">
                     <p class="section-title">KEUANGAN</p>
-                    <a href="pemasukan.php" class="menu-item"><i class="fa-solid fa-clock-rotate-left"></i> Pemasukan</a>
-                    <a href="pengeluaran.php" class="menu-item"><i class="fa-regular fa-eye"></i> Pengeluaran</a>
+                    <a href="../../controller/bendahara/PemasukanController.php" class="menu-item"><i class="fa-solid fa-clock-rotate-left"></i> Pemasukan</a>
+                    <a href="../../controller/bendahara/PengeluaranController.php" class="menu-item"><i class="fa-regular fa-eye"></i> Pengeluaran</a>
                 </div>
                 <div class="menu-section">
                     <p class="section-title">LAPORAN</p>
-                    <a href="laporan-keuangan.php" class="menu-item active"><i class="fa-regular fa-file-lines"></i> Laporan Keuangan</a>
+                    <a href="../../controller/bendahara/LaporanKeuanganController.php" class="menu-item active"><i class="fa-regular fa-file-lines"></i> Laporan Keuangan</a>
                 </div>
                 <div class="sidebar-bottom">
-                    <a href="logout.php" class="menu-item">
+                    <a href="../../controller/bendahara/LogoutController.php" class="menu-item">
                         <i class="fa-solid fa-right-from-bracket"></i> Logout
                     </a>
                 </div>

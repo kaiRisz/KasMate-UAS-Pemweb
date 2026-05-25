@@ -1,70 +1,5 @@
 <?php
-require_once '../../../config/auth_check.php';
-cekRole('bendahara');
 
-$id_user = $_SESSION['id_user'];
-
-if (isset($_GET['hapus_manual'])) {
-    $id_hapus = mysqli_real_escape_string($conn, $_GET['hapus_manual']);
-    mysqli_query($conn, "DELETE FROM pemasukan_kas WHERE id_pemasukan='$id_hapus'");
-    header("Location: pemasukan.php");
-    exit();
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['tambah_pemasukan'])) {
-    $id_grup = mysqli_real_escape_string($conn, $_POST['id_grup']);
-    $id_anggota = mysqli_real_escape_string($conn, $_POST['id_user_pembayar']);
-    $tanggal = mysqli_real_escape_string($conn, $_POST['tanggal']);
-    $deskripsi = mysqli_real_escape_string($conn, $_POST['deskripsi']);
-    $nominal = mysqli_real_escape_string($conn, $_POST['nominal']);
-    $metode = mysqli_real_escape_string($conn, $_POST['metode']);
-    
-    $val_user = empty($id_anggota) ? "NULL" : "'$id_anggota'";
-    
-    mysqli_query($conn, "INSERT INTO pemasukan_kas (id_grup, id_user, tanggal, deskripsi, nominal, metode) VALUES ('$id_grup', $val_user, '$tanggal', '$deskripsi', '$nominal', '$metode')");
-    header("Location: pemasukan.php");
-    exit();
-}
-
-$user_q = mysqli_query($conn, "SELECT nama FROM users WHERE id_user = '$id_user'");
-$nama_bendahara = mysqli_fetch_assoc($user_q)['nama'] ?? 'Bendahara';
-
-$q_masuk_iuran = mysqli_query($conn, "SELECT SUM(i.nominal) as total, COUNT(p.id_pembayaran) as jml FROM pembayaran p JOIN iuran i ON p.id_iuran = i.id_iuran WHERE p.status = 'Lunas'");
-$d_iuran = mysqli_fetch_assoc($q_masuk_iuran);
-
-$q_masuk_manual = mysqli_query($conn, "SELECT SUM(nominal) as total, COUNT(id_pemasukan) as jml, SUM(CASE WHEN metode='Tunai' THEN nominal ELSE 0 END) as tunai, SUM(CASE WHEN metode='Transfer' THEN nominal ELSE 0 END) as tf FROM pemasukan_kas");
-$d_manual = mysqli_fetch_assoc($q_masuk_manual);
-
-$total_masuk = ($d_iuran['total'] ?? 0) + ($d_manual['total'] ?? 0);
-$total_trx = ($d_iuran['jml'] ?? 0) + ($d_manual['jml'] ?? 0);
-$total_tunai = ($d_iuran['total'] ?? 0) + ($d_manual['tunai'] ?? 0);
-$total_tf = $d_manual['tf'] ?? 0;
-
-$query_gabungan = "
-    SELECT 
-        'Iuran' as tipe, p.id_pembayaran as id, p.tanggal_bayar as tanggal, g.nama_grup, 
-        CONCAT(i.nama_iuran, ' (', u.nama, ')') as deskripsi, i.nominal, 'Tunai' as metode
-    FROM pembayaran p 
-    JOIN iuran i ON p.id_iuran = i.id_iuran 
-    JOIN grup g ON i.id_grup = g.id_grup 
-    JOIN users u ON p.id_user = u.id_user 
-    WHERE g.id_bendahara = '$id_user' AND p.status = 'Lunas'
-    
-    UNION ALL
-    
-    SELECT 
-        'Manual' as tipe, pk.id_pemasukan as id, pk.tanggal, g.nama_grup, 
-        IF(pk.id_user IS NOT NULL, CONCAT(pk.deskripsi, ' (', u_man.nama, ')'), pk.deskripsi) as deskripsi, 
-        pk.nominal, pk.metode
-    FROM pemasukan_kas pk
-    JOIN grup g ON pk.id_grup = g.id_grup
-    LEFT JOIN users u_man ON pk.id_user = u_man.id_user
-    WHERE g.id_bendahara = '$id_user'
-    ORDER BY tanggal DESC
-";
-$tabel_pemasukan = mysqli_query($conn, $query_gabungan);
-$daftar_grup = mysqli_query($conn, "SELECT id_grup, nama_grup FROM grup WHERE id_bendahara = '$id_user'");
-$daftar_anggota = mysqli_query($conn, "SELECT DISTINCT u.id_user, u.nama FROM users u JOIN grup_anggota ga ON u.id_user = ga.id_user JOIN grup g ON ga.id_grup = g.id_grup WHERE g.id_bendahara = '$id_user'");
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -84,23 +19,23 @@ $daftar_anggota = mysqli_query($conn, "SELECT DISTINCT u.id_user, u.nama FROM us
                 <span>KasMate</span>
             </div>
             <div class="sidebar-menu">
-                <a href="dashboard-bendahara.php" class="menu-item"><i class="fa-solid fa-border-all"></i> Dashboard</a>
+                <a href="../../controller/bendahara/DashboardBendaharaController.php" class="menu-item"><i class="fa-solid fa-border-all"></i> Dashboard</a>
                 <div class="menu-section">
                     <p class="section-title">KELOLA IURAN</p>
-                    <a href="grup-iuran.php" class="menu-item"><i class="fa-solid fa-users-line"></i> Grup Iuran</a>
-                    <a href="detail-grup.php" class="menu-item"><i class="fa-solid fa-user-group"></i> Detail Grup</a>
+                    <a href="../../controller/bendahara/GrupIuranController.php" class="menu-item"><i class="fa-solid fa-users-line"></i> Grup Iuran</a>
+                    <a href="../../controller/bendahara/DetailGrupController.php" class="menu-item"><i class="fa-solid fa-user-group"></i> Detail Grup</a>
                 </div>
                 <div class="menu-section">
                     <p class="section-title">KEUANGAN</p>
-                    <a href="pemasukan.php" class="menu-item active"><i class="fa-solid fa-clock-rotate-left"></i> Pemasukan</a>
-                    <a href="pengeluaran.php" class="menu-item"><i class="fa-regular fa-eye"></i> Pengeluaran</a>
+                    <a href="../../controller/bendahara/PemasukanController.php" class="menu-item active"><i class="fa-solid fa-clock-rotate-left"></i> Pemasukan</a>
+                    <a href="../../controller/bendahara/PengeluaranController.php" class="menu-item"><i class="fa-regular fa-eye"></i> Pengeluaran</a>
                 </div>
                 <div class="menu-section">
                     <p class="section-title">LAPORAN</p>
-                    <a href="laporan-keuangan.php" class="menu-item"><i class="fa-regular fa-file-lines"></i> Laporan Keuangan</a>
+                    <a href="../../controller/bendahara/LaporanKeuanganController.php" class="menu-item"><i class="fa-regular fa-file-lines"></i> Laporan Keuangan</a>
                 </div>
                 <div class="sidebar-bottom">
-                    <a href="logout.php" class="menu-item">
+                    <a href="../../controller/bendahara/LogoutController.php" class="menu-item">
                         <i class="fa-solid fa-right-from-bracket"></i> Logout
                     </a>
                 </div>
@@ -178,7 +113,8 @@ $daftar_anggota = mysqli_query($conn, "SELECT DISTINCT u.id_user, u.nama FROM us
                     <tbody>
                         <?php 
                         $no = 1;
-                        while($row = mysqli_fetch_assoc($tabel_pemasukan)): 
+                        if (count($tabel_pemasukan) > 0):
+                            foreach($tabel_pemasukan as $row): 
                         ?>
                         <tr>
                             <td style="text-align: center; color: var(--text-muted);"><?php echo $no++; ?></td>
@@ -190,14 +126,17 @@ $daftar_anggota = mysqli_query($conn, "SELECT DISTINCT u.id_user, u.nama FROM us
                             <td>
                                 <div class="action-icons" style="justify-content: center;">
                                     <?php if($row['tipe'] == 'Manual'): ?>
-                                        <a href="pemasukan.php?hapus_manual=<?php echo $row['id']; ?>" onclick="return confirm('Hapus pemasukan ini?');" style="color: #ef4444;"><i class="fa-solid fa-trash-can"></i></a>
+                                        <a href="../../controller/bendahara/PemasukanController.php?hapus_manual=<?php echo $row['id']; ?>" onclick="return confirm('Hapus pemasukan ini?');" style="color: #ef4444;"><i class="fa-solid fa-trash-can"></i></a>
                                     <?php else: ?>
                                         <span style="font-size: 0.8rem; color: #94a3b8;">(Iuran Anggota)</span>
                                     <?php endif; ?>
                                 </div>
                             </td>
                         </tr>
-                        <?php endwhile; ?>
+                        <?php 
+                            endforeach;
+                        endif; 
+                        ?>
                     </tbody>
                 </table>
             </section>
@@ -212,18 +151,30 @@ $daftar_anggota = mysqli_query($conn, "SELECT DISTINCT u.id_user, u.nama FROM us
                     <label style="display:block; margin-bottom:5px; font-weight:500; color:#475569;">Pilih Grup</label>
                     <select name="id_grup" required style="width:100%; padding:12px; border:1px solid #cbd5e1; border-radius:8px; box-sizing: border-box;">
                         <option value="">-- Pilih Grup --</option>
-                        <?php mysqli_data_seek($daftar_grup, 0); while($g = mysqli_fetch_assoc($daftar_grup)): ?>
+                        <?php
+                        if (count($daftar_grup) > 0):
+                            foreach($daftar_grup as $g): 
+                        ?>
                             <option value="<?php echo $g['id_grup']; ?>"><?php echo htmlspecialchars($g['nama_grup']); ?></option>
-                        <?php endwhile; ?>
+                        <?php 
+                            endforeach;
+                        endif; 
+                        ?>
                     </select>
                 </div>
                 <div style="margin-bottom:15px;">
                     <label style="display:block; margin-bottom:5px; font-weight:500; color:#475569;">Pilih Anggota (Opsional)</label>
                     <select name="id_user_pembayar" style="width:100%; padding:12px; border:1px solid #cbd5e1; border-radius:8px; box-sizing: border-box;">
                         <option value="">-- Umum / Bukan Anggota --</option>
-                        <?php while($u = mysqli_fetch_assoc($daftar_anggota)): ?>
+                        <?php
+                        if (count($daftar_anggota) > 0):
+                            foreach($daftar_anggota as $u): 
+                        ?>
                             <option value="<?php echo $u['id_user']; ?>"><?php echo htmlspecialchars($u['nama']); ?></option>
-                        <?php endwhile; ?>
+                        <?php 
+                            endforeach;
+                        endif; 
+                        ?>
                     </select>
                 </div>
                 <div style="display:flex; gap:15px; margin-bottom:15px;">

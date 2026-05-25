@@ -1,58 +1,5 @@
 <?php
-require_once '../../../config/auth_check.php';
-cekRole('admin');
 
-$sukses = false;
-$error = '';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['aksi'])) {
-    
-    if ($_POST['aksi'] === 'update_profil') {
-        $nama = mysqli_real_escape_string($conn, $_POST['nama']);
-        $email = mysqli_real_escape_string($conn, $_POST['email']);
-
-        $q_cek = mysqli_query($conn, "SELECT id_user FROM users WHERE email='$email' AND id_user != {$user_login['id_user']}");
-        if (mysqli_num_rows($q_cek) > 0) {
-            $error = 'Email sudah digunakan oleh user lain.';
-        } else {
-            $query = "UPDATE users SET nama='$nama', email='$email' WHERE id_user = {$user_login['id_user']}";
-            mysqli_query($conn, $query);
-
-            $result_user_login = mysqli_query($conn, "SELECT * FROM users WHERE id_user = {$user_login['id_user']}");
-            $user_login = mysqli_fetch_assoc($result_user_login);
-            $sukses = true;
-        }
-    }
-    
-    if ($_POST['aksi'] === 'update_password') {
-        $password_lama = $_POST['password_lama'];
-        $password_baru = $_POST['password_baru'];
-        $konfirmasi = $_POST['konfirmasi_password'];
-        
-        if (!password_verify($password_lama, $user_login['password'])) {
-            $error = 'Password lama tidak sesuai.';
-        } elseif ($password_baru !== $konfirmasi) {
-            $error = 'Konfirmasi password tidak cocok.';
-        } elseif (strlen($password_baru) < 6) {
-            $error = 'Password baru minimal 6 karakter.';
-        } else {
-            $hash = password_hash($password_baru, PASSWORD_DEFAULT);
-            mysqli_query($conn, "UPDATE users SET password='$hash' WHERE id_user = {$user_login['id_user']}");
-            $sukses = true;
-        }
-    }
-}
-
-$q_total_user = mysqli_query($conn, "SELECT COUNT(*) as t FROM users");
-$total_user = mysqli_fetch_assoc($q_total_user)['t'];
-
-$q_total_grup = mysqli_query($conn, "SELECT COUNT(*) as t FROM grup");
-$total_grup = mysqli_fetch_assoc($q_total_grup)['t'];
-
-$q_trx1 = mysqli_query($conn, "SELECT COUNT(*) as t FROM pembayaran WHERE status = 'Lunas'");
-$q_trx2 = mysqli_query($conn, "SELECT COUNT(*) as t FROM pemasukan_kas");
-$q_trx3 = mysqli_query($conn, "SELECT COUNT(*) as t FROM pengeluaran");
-$total_trx = mysqli_fetch_assoc($q_trx1)['t'] + mysqli_fetch_assoc($q_trx2)['t'] + mysqli_fetch_assoc($q_trx3)['t'];
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -75,21 +22,21 @@ $total_trx = mysqli_fetch_assoc($q_trx1)['t'] + mysqli_fetch_assoc($q_trx2)['t']
             </div>
             <nav class="sidebar-menu">
                 <div class="menu-section">
-                    <a href="dashboard-admin.php" class="menu-item">
+                    <a href="../../controller/admin/DashboardAdminController.php" class="menu-item">
                         <i class='bx bxs-dashboard'></i> Dashboard
                     </a>
-                    <a href="manajemen-user.php" class="menu-item">
+                    <a href="../../controller/admin/ManajemenUserController.php" class="menu-item">
                         <i class='bx bxs-user-account'></i> Manajemen User
                     </a>
-                    <a href="manajemen-grup.php" class="menu-item">
+                    <a href="../../controller/admin/ManajemenGrupController.php" class="menu-item">
                         <i class='bx bxs-group'></i> Manajemen Grup
                     </a>
-                    <a href="pengaturan.php" class="menu-item active">
+                    <a href="../../controller/admin/PengaturanController.php" class="menu-item active">
                         <i class='bx bxs-cog'></i> Pengaturan Sistem
                     </a>
                 </div>
                 <div class="menu-section" style="margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
-                    <a href="logout.php" class="menu-item">
+                    <a href="../../controller/admin/LogoutController.php" class="menu-item">
                         <i class='bx bx-log-out'></i> Logout
                     </a>
                 </div>
@@ -123,7 +70,7 @@ $total_trx = mysqli_fetch_assoc($q_trx1)['t'] + mysqli_fetch_assoc($q_trx2)['t']
                 <?php endif; ?>
 
                 <div class="settings-grid">
-                    <!-- Profil Admin -->
+                    
                     <div class="card">
                         <h3 class="card-title"><i class='bx bx-user'></i> Profil Admin</h3>
                         <form method="POST">

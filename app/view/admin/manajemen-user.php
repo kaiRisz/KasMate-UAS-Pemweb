@@ -1,64 +1,5 @@
 <?php
-require_once '../../../config/auth_check.php';
-cekRole('admin');
 
-if (isset($_GET['hapus'])) {
-    $id_hapus = (int)$_GET['hapus'];
-    if ($id_hapus !== (int)$user_login['id_user']) {
-        mysqli_query($conn, "DELETE FROM users WHERE id_user = $id_hapus");
-    }
-    header("Location: manajemen-user.php");
-    exit();
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['aksi']) && $_POST['aksi'] === 'tambah') {
-    $nama = mysqli_real_escape_string($conn, $_POST['nama']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $role = mysqli_real_escape_string($conn, $_POST['role']);
-
-    mysqli_query($conn, "INSERT INTO users (nama, email, password, role) VALUES ('$nama', '$email', '$password', '$role')");
-    header("Location: manajemen-user.php");
-    exit();
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['aksi']) && $_POST['aksi'] === 'edit') {
-    $id_edit = (int)$_POST['id_user'];
-    $nama = mysqli_real_escape_string($conn, $_POST['nama']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $role = mysqli_real_escape_string($conn, $_POST['role']);
-
-    $query_update = "UPDATE users SET nama='$nama', email='$email', role='$role'";
-    if (!empty($_POST['password'])) {
-        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-        $query_update .= ", password='$password'";
-    }
-    $query_update .= " WHERE id_user = $id_edit";
-    mysqli_query($conn, $query_update);
-    header("Location: manajemen-user.php");
-    exit();
-}
-
-$search = isset($_GET['search']) ? mysqli_real_escape_string($conn, $_GET['search']) : '';
-$filter_role = isset($_GET['role']) ? mysqli_real_escape_string($conn, $_GET['role']) : '';
-
-$where = "WHERE 1=1";
-if ($search !== '') {
-    $where .= " AND (nama LIKE '%$search%' OR email LIKE '%$search%')";
-}
-if ($filter_role !== '') {
-    $where .= " AND role = '$filter_role'";
-}
-
-$per_page = 10;
-$page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
-$offset = ($page - 1) * $per_page;
-
-$q_count = mysqli_query($conn, "SELECT COUNT(*) as total FROM users $where");
-$total_data = mysqli_fetch_assoc($q_count)['total'];
-$total_pages = max(1, ceil($total_data / $per_page));
-
-$q_users = mysqli_query($conn, "SELECT * FROM users $where ORDER BY id_user DESC LIMIT $per_page OFFSET $offset");
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -81,21 +22,21 @@ $q_users = mysqli_query($conn, "SELECT * FROM users $where ORDER BY id_user DESC
             </div>
             <nav class="sidebar-menu">
                 <div class="menu-section">
-                    <a href="dashboard-admin.php" class="menu-item">
+                    <a href="../../controller/admin/DashboardAdminController.php" class="menu-item">
                         <i class='bx bxs-dashboard'></i> Dashboard
                     </a>
-                    <a href="manajemen-user.php" class="menu-item active">
+                    <a href="../../controller/admin/ManajemenUserController.php" class="menu-item active">
                         <i class='bx bxs-user-account'></i> Manajemen User
                     </a>
-                    <a href="manajemen-grup.php" class="menu-item">
+                    <a href="../../controller/admin/ManajemenGrupController.php" class="menu-item">
                         <i class='bx bxs-group'></i> Manajemen Grup
                     </a>
-                    <a href="pengaturan.php" class="menu-item">
+                    <a href="../../controller/admin/PengaturanController.php" class="menu-item">
                         <i class='bx bxs-cog'></i> Pengaturan Sistem
                     </a>
                 </div>
                 <div class="menu-section" style="margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
-                    <a href="logout.php" class="menu-item">
+                    <a href="../../controller/admin/LogoutController.php" class="menu-item">
                         <i class='bx bx-log-out'></i> Logout
                     </a>
                 </div>
@@ -132,7 +73,7 @@ $q_users = mysqli_query($conn, "SELECT * FROM users $where ORDER BY id_user DESC
                         </form>
                         <div class="filter-box">
                             <span>Filter Role</span>
-                            <select onchange="window.location.href='manajemen-user.php?role='+this.value+'&search=<?= urlencode($search) ?>'">
+                            <select onchange="window.location.href='../../controller/admin/ManajemenUserController.php?role='+this.value+'&search=<?= urlencode($search) ?>'">
                                 <option value="" <?= $filter_role === '' ? 'selected' : '' ?>>Semua Role</option>
                                 <option value="admin" <?= $filter_role === 'admin' ? 'selected' : '' ?>>Admin</option>
                                 <option value="bendahara" <?= $filter_role === 'bendahara' ? 'selected' : '' ?>>Bendahara</option>
@@ -151,8 +92,8 @@ $q_users = mysqli_query($conn, "SELECT * FROM users $where ORDER BY id_user DESC
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if (mysqli_num_rows($q_users) > 0): ?>
-                                <?php while ($u = mysqli_fetch_assoc($q_users)): ?>
+                            <?php if (count($users) > 0): ?>
+                                <?php foreach ($users as $u): ?>
                                     <tr>
                                         <td><?= htmlspecialchars($u['nama']) ?></td>
                                         <td><?= htmlspecialchars($u['email']) ?></td>
@@ -176,7 +117,7 @@ $q_users = mysqli_query($conn, "SELECT * FROM users $where ORDER BY id_user DESC
                                             </div>
                                         </td>
                                     </tr>
-                                <?php endwhile; ?>
+                                <?php endforeach; ?>
                             <?php else: ?>
                                 <tr>
                                     <td colspan="4" style="text-align: center; padding: 30px; color: #94a3b8;">Data tidak ditemukan</td>
@@ -299,7 +240,7 @@ $q_users = mysqli_query($conn, "SELECT * FROM users $where ORDER BY id_user DESC
 
         function bukaModalHapus(id, nama) {
             document.getElementById('hapus_nama').textContent = nama;
-            document.getElementById('hapus_link').href = 'manajemen-user.php?hapus=' + id;
+            document.getElementById('hapus_link').href = '../../controller/admin/ManajemenUserController.php?hapus=' + id;
             document.getElementById('modalHapus').classList.add('active');
         }
 

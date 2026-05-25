@@ -1,51 +1,5 @@
 <?php
-require_once '../../../config/auth_check.php';
-cekRole('admin');
 
-$q_total_user = mysqli_query($conn, "SELECT COUNT(*) as total FROM users");
-$total_user = mysqli_fetch_assoc($q_total_user)['total'];
-
-$q_total_grup = mysqli_query($conn, "SELECT COUNT(*) as total FROM grup");
-$total_grup = mysqli_fetch_assoc($q_total_grup)['total'];
-
-$q_masuk_iuran = mysqli_query($conn, "SELECT COALESCE(SUM(i.nominal), 0) as total FROM pembayaran p JOIN iuran i ON p.id_iuran = i.id_iuran WHERE p.status = 'Lunas'");
-$total_masuk_iuran = mysqli_fetch_assoc($q_masuk_iuran)['total'];
-
-$q_masuk_manual = mysqli_query($conn, "SELECT COALESCE(SUM(nominal), 0) as total FROM pemasukan_kas");
-$total_masuk_manual = mysqli_fetch_assoc($q_masuk_manual)['total'];
-
-$total_pemasukan = $total_masuk_iuran + $total_masuk_manual;
-
-$q_pengeluaran = mysqli_query($conn, "SELECT COALESCE(SUM(nominal_keluar), 0) as total FROM pengeluaran");
-$total_pengeluaran = mysqli_fetch_assoc($q_pengeluaran)['total'];
-
-$total_saldo = $total_pemasukan - $total_pengeluaran;
-
-$q_trx1 = mysqli_query($conn, "SELECT COUNT(*) as total FROM pembayaran WHERE status = 'Lunas'");
-$q_trx2 = mysqli_query($conn, "SELECT COUNT(*) as total FROM pemasukan_kas");
-$q_trx3 = mysqli_query($conn, "SELECT COUNT(*) as total FROM pengeluaran");
-$total_trx = mysqli_fetch_assoc($q_trx1)['total'] + mysqli_fetch_assoc($q_trx2)['total'] + mysqli_fetch_assoc($q_trx3)['total'];
-
-$q_aktivitas = mysqli_query($conn, "
-    (SELECT 'Pembayaran Iuran' as aktivitas, u.nama as nama_user, i.nominal as jumlah, p.tanggal_bayar as tanggal
-     FROM pembayaran p 
-     JOIN users u ON p.id_user = u.id_user 
-     JOIN iuran i ON p.id_iuran = i.id_iuran 
-     WHERE p.status = 'Lunas'
-     ORDER BY p.tanggal_bayar DESC LIMIT 5)
-    UNION ALL
-    (SELECT 'Pemasukan Manual' as aktivitas, COALESCE(u.nama, 'Umum') as nama_user, pk.nominal as jumlah, pk.tanggal
-     FROM pemasukan_kas pk 
-     LEFT JOIN users u ON pk.id_user = u.id_user 
-     ORDER BY pk.tanggal DESC LIMIT 5)
-    UNION ALL
-    (SELECT CONCAT('Pengeluaran: ', pe.deskripsi) as aktivitas, g.nama_grup as nama_user, pe.nominal_keluar as jumlah, pe.tanggal_keluar as tanggal
-     FROM pengeluaran pe 
-     JOIN grup g ON pe.id_grup = g.id_grup 
-     ORDER BY pe.tanggal_keluar DESC LIMIT 5)
-    ORDER BY tanggal DESC
-    LIMIT 5
-");
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -68,21 +22,21 @@ $q_aktivitas = mysqli_query($conn, "
             </div>
             <nav class="sidebar-menu">
                 <div class="menu-section">
-                    <a href="dashboard-admin.php" class="menu-item active">
+                    <a href="../../controller/admin/DashboardAdminController.php" class="menu-item active">
                         <i class='bx bxs-dashboard'></i> Dashboard
                     </a>
-                    <a href="manajemen-user.php" class="menu-item">
+                    <a href="../../controller/admin/ManajemenUserController.php" class="menu-item">
                         <i class='bx bxs-user-account'></i> Manajemen User
                     </a>
-                    <a href="manajemen-grup.php" class="menu-item">
+                    <a href="../../controller/admin/ManajemenGrupController.php" class="menu-item">
                         <i class='bx bxs-group'></i> Manajemen Grup
                     </a>
-                    <a href="pengaturan.php" class="menu-item">
+                    <a href="../../controller/admin/PengaturanController.php" class="menu-item">
                         <i class='bx bxs-cog'></i> Pengaturan Sistem
                     </a>
                 </div>
                 <div class="sidebar-bottom">
-                    <a href="logout.php" class="menu-item">
+                    <a href="../../controller/admin/LogoutController.php" class="menu-item">
                         <i class='bx bx-log-out'></i> Logout
                     </a>
                 </div>
@@ -156,8 +110,8 @@ $q_aktivitas = mysqli_query($conn, "
                 <div class="card flex-1">
                     <h3 class="card-title">Aktivitas Terbaru</h3>
                     <div class="activity-list">
-                        <?php if (mysqli_num_rows($q_aktivitas) > 0): ?>
-                            <?php while ($akt = mysqli_fetch_assoc($q_aktivitas)): ?>
+                        <?php if (count($q_aktivitas) > 0): ?>
+                            <?php foreach ($q_aktivitas as $akt): ?>
                                 <div class="activity-item">
                                     <div class="activity-user">
                                         <strong><?= htmlspecialchars($akt['nama_user']) ?></strong>
@@ -165,7 +119,7 @@ $q_aktivitas = mysqli_query($conn, "
                                     </div>
                                     <span class="activity-time"><?= date('d M', strtotime($akt['tanggal'])) ?></span>
                                 </div>
-                            <?php endwhile; ?>
+                            <?php endforeach; ?>
                         <?php else: ?>
                             <p class="stat-desc" style="text-align: center; padding: 20px;">Belum ada aktivitas</p>
                         <?php endif; ?>

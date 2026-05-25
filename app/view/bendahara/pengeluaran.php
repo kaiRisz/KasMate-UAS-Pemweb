@@ -1,34 +1,5 @@
 <?php
-require_once '../../../config/auth_check.php';
-cekRole('bendahara');
 
-$id_user = $_SESSION['id_user'];
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['tambah_pengeluaran'])) {
-    $id_grup = $_POST['id_grup'];
-    $tanggal = $_POST['tanggal'];
-    $keterangan = $_POST['keterangan'];
-    $jumlah = $_POST['jumlah'];
-    
-    if(!empty($id_grup) && !empty($tanggal) && !empty($keterangan) && !empty($jumlah)) {
-        mysqli_query($conn, "INSERT INTO pengeluaran (id_grup, deskripsi, nominal_keluar, tanggal_keluar) VALUES ('$id_grup', '$keterangan', '$jumlah', '$tanggal')");
-        header("Location: pengeluaran.php");
-        exit();
-    }
-}
-
-$user_q = mysqli_query($conn, "SELECT nama FROM users WHERE id_user = '$id_user'");
-$nama_bendahara = mysqli_fetch_assoc($user_q)['nama'] ?? 'Bendahara';
-
-$keluar_query = mysqli_query($conn, "SELECT SUM(pe.nominal_keluar) as total, COUNT(pe.id_pengeluaran) as jml, MAX(pe.nominal_keluar) as terbesar, AVG(pe.nominal_keluar) as rata FROM pengeluaran pe JOIN grup g ON pe.id_grup = g.id_grup");
-$data_keluar = mysqli_fetch_assoc($keluar_query);
-$total_keluar = $data_keluar['total'] ?? 0;
-$total_trx = $data_keluar['jml'] ?? 0;
-$pengeluaran_terbesar = $data_keluar['terbesar'] ?? 0;
-$rata_rata = $data_keluar['rata'] ?? 0;
-
-$tabel_pengeluaran = mysqli_query($conn, "SELECT pe.*, g.nama_grup FROM pengeluaran pe JOIN grup g ON pe.id_grup = g.id_grup ORDER BY pe.tanggal_keluar DESC");
-$daftar_grup = mysqli_query($conn, "SELECT id_grup, nama_grup FROM grup");
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -48,23 +19,23 @@ $daftar_grup = mysqli_query($conn, "SELECT id_grup, nama_grup FROM grup");
                 <span>KasMate</span>
             </div>
             <div class="sidebar-menu">
-                <a href="dashboard-bendahara.php" class="menu-item"><i class="fa-solid fa-border-all"></i> Dashboard</a>
+                <a href="../../controller/bendahara/DashboardBendaharaController.php" class="menu-item"><i class="fa-solid fa-border-all"></i> Dashboard</a>
                 <div class="menu-section">
                     <p class="section-title">KELOLA IURAN</p>
-                    <a href="grup-iuran.php" class="menu-item"><i class="fa-solid fa-users-line"></i> Grup Iuran</a>
-                    <a href="detail-grup.php" class="menu-item"><i class="fa-solid fa-user-group"></i> Detail Grup</a>
+                    <a href="../../controller/bendahara/GrupIuranController.php" class="menu-item"><i class="fa-solid fa-users-line"></i> Grup Iuran</a>
+                    <a href="../../controller/bendahara/DetailGrupController.php" class="menu-item"><i class="fa-solid fa-user-group"></i> Detail Grup</a>
                 </div>
                 <div class="menu-section">
                     <p class="section-title">KEUANGAN</p>
-                    <a href="pemasukan.php" class="menu-item"><i class="fa-solid fa-clock-rotate-left"></i> Pemasukan</a>
-                    <a href="pengeluaran.php" class="menu-item active"><i class="fa-regular fa-eye"></i> Pengeluaran</a>
+                    <a href="../../controller/bendahara/PemasukanController.php" class="menu-item"><i class="fa-solid fa-clock-rotate-left"></i> Pemasukan</a>
+                    <a href="../../controller/bendahara/PengeluaranController.php" class="menu-item active"><i class="fa-regular fa-eye"></i> Pengeluaran</a>
                 </div>
                 <div class="menu-section">
                     <p class="section-title">LAPORAN</p>
-                    <a href="laporan-keuangan.php" class="menu-item"><i class="fa-regular fa-file-lines"></i> Laporan Keuangan</a>
+                    <a href="../../controller/bendahara/LaporanKeuanganController.php" class="menu-item"><i class="fa-regular fa-file-lines"></i> Laporan Keuangan</a>
                 </div>
                 <div class="sidebar-bottom">
-                    <a href="logout.php" class="menu-item">
+                    <a href="../../controller/bendahara/LogoutController.php" class="menu-item">
                         <i class="fa-solid fa-right-from-bracket"></i> Logout
                     </a>
                 </div>
@@ -128,9 +99,15 @@ $daftar_grup = mysqli_query($conn, "SELECT id_grup, nama_grup FROM grup");
                         <label>Grup Iuran</label>
                         <select name="id_grup" required style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1;">
                             <option value="">Pilih Grup</option>
-                            <?php while($g = mysqli_fetch_assoc($daftar_grup)): ?>
+                            <?php 
+                            if (count($daftar_grup) > 0):
+                                foreach($daftar_grup as $g): 
+                            ?>
                                 <option value="<?php echo $g['id_grup']; ?>"><?php echo htmlspecialchars($g['nama_grup']); ?></option>
-                            <?php endwhile; ?>
+                            <?php 
+                                endforeach;
+                            endif; 
+                            ?>
                         </select>
                     </div>
                     <div class="input-group" style="margin-bottom: 0; flex: 1; min-width: 150px;">
@@ -170,7 +147,8 @@ $daftar_grup = mysqli_query($conn, "SELECT id_grup, nama_grup FROM grup");
                     <tbody>
                         <?php 
                         $no = 1;
-                        while($row = mysqli_fetch_assoc($tabel_pengeluaran)): 
+                        if (count($tabel_pengeluaran) > 0):
+                            foreach($tabel_pengeluaran as $row): 
                         ?>
                         <tr>
                             <td style="text-align: center; color: var(--text-muted);"><?php echo $no++; ?></td>
@@ -185,8 +163,10 @@ $daftar_grup = mysqli_query($conn, "SELECT id_grup, nama_grup FROM grup");
                                 </div>
                             </td>
                         </tr>
-                        <?php endwhile; ?>
-                        <?php if(mysqli_num_rows($tabel_pengeluaran) == 0): ?>
+                        <?php 
+                            endforeach;
+                        else: 
+                        ?>
                         <tr>
                             <td colspan="6" style="text-align:center;">Belum ada data pengeluaran.</td>
                         </tr>

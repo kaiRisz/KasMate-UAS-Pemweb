@@ -1,60 +1,5 @@
 <?php
-require_once '../../../config/auth_check.php';
-cekRole('bendahara');
 
-$id_user = $_SESSION['id_user'];
-
-if (isset($_GET['hapus'])) {
-    $id_hapus = $_GET['hapus'];
-    
-    mysqli_query($conn, "DELETE FROM pembayaran WHERE id_iuran IN (SELECT id_iuran FROM iuran WHERE id_grup='$id_hapus')");
-    mysqli_query($conn, "DELETE FROM iuran WHERE id_grup='$id_hapus'");
-    mysqli_query($conn, "DELETE FROM pengeluaran WHERE id_grup='$id_hapus'");
-    mysqli_query($conn, "DELETE FROM grup_anggota WHERE id_grup='$id_hapus'");
-    mysqli_query($conn, "DELETE FROM grup WHERE id_grup='$id_hapus' AND id_bendahara='$id_user'");
-    
-    header("Location: grup-iuran.php");
-    exit();
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_grup'])) {
-    $id_edit = $_POST['id_grup'];
-    $nama_edit = $_POST['nama_grup'];
-    $deskripsi_edit = $_POST['deskripsi'];
-    
-    mysqli_query($conn, "UPDATE grup SET nama_grup='$nama_edit', deskripsi='$deskripsi_edit' WHERE id_grup='$id_edit' AND id_bendahara='$id_user'");
-    header("Location: grup-iuran.php");
-    exit();
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['tambah_grup'])) {
-    $nama_grup = $_POST['nama_grup'];
-    $deskripsi = $_POST['deskripsi'];
-    
-    mysqli_query($conn, "INSERT INTO grup (nama_grup, deskripsi, id_bendahara) VALUES ('$nama_grup', '$deskripsi', '$id_user')");
-    header("Location: grup-iuran.php");
-    exit();
-}
-
-$grup_query = mysqli_query($conn, "SELECT COUNT(*) as total FROM grup");
-$total_grup = mysqli_fetch_assoc($grup_query)['total'] ?? 0;
-
-$anggota_query = mysqli_query($conn, "SELECT COUNT(DISTINCT ga.id_user) as total FROM grup_anggota ga JOIN grup g ON ga.id_grup = g.id_grup");
-$total_anggota = mysqli_fetch_assoc($anggota_query)['total'] ?? 0;
-
-$iuran_query = mysqli_query($conn, "SELECT AVG(i.nominal) as avg_nominal FROM iuran i JOIN grup g ON i.id_grup = g.id_grup");
-$avg_iuran = mysqli_fetch_assoc($iuran_query)['avg_nominal'] ?? 0;
-
-$max_grup_query = mysqli_query($conn, "SELECT MAX(member_count) as max_member FROM (SELECT COUNT(ga.id_user) as member_count FROM grup g LEFT JOIN grup_anggota ga ON g.id_grup = ga.id_grup GROUP BY g.id_grup) as counts");
-$max_grup = mysqli_fetch_assoc($max_grup_query)['max_member'] ?? 0;
-
-$tabel_grup = mysqli_query($conn, "
-    SELECT g.id_grup, g.nama_grup, g.deskripsi, 
-    (SELECT COUNT(*) FROM grup_anggota WHERE id_grup = g.id_grup) as jml_anggota,
-    (SELECT AVG(nominal) FROM iuran WHERE id_grup = g.id_grup) as avg_nominal
-    FROM grup g 
-    ORDER BY g.id_grup DESC
-    ");
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -74,23 +19,22 @@ $tabel_grup = mysqli_query($conn, "
                 <span>KasMate</span>
             </div>
             <div class="sidebar-menu">
-                <a href="dashboard-bendahara.php" class="menu-item"><i class="fa-solid fa-border-all"></i> Dashboard</a>
+                <a href="../../controller/bendahara/DashboardBendaharaController.php" class="menu-item"><i class="fa-solid fa-border-all"></i> Dashboard</a>
                 <div class="menu-section">
                     <p class="section-title">KELOLA IURAN</p>
-                    <a href="grup-iuran.php" class="menu-item active"><i class="fa-solid fa-users-line"></i> Grup Iuran</a>
-                    <a href="detail-grup.php" class="menu-item"><i class="fa-solid fa-user-group"></i> Detail Grup</a>
+                    <a href="../../controller/bendahara/GrupIuranController.php" class="menu-item active"><i class="fa-solid fa-users-line"></i> Grup Iuran</a>
                 </div>
                 <div class="menu-section">
                     <p class="section-title">KEUANGAN</p>
-                    <a href="pemasukan.php" class="menu-item"><i class="fa-solid fa-clock-rotate-left"></i> Pemasukan</a>
-                    <a href="pengeluaran.php" class="menu-item"><i class="fa-regular fa-eye"></i> Pengeluaran</a>
+                    <a href="../../controller/bendahara/PemasukanController.php" class="menu-item"><i class="fa-solid fa-clock-rotate-left"></i> Pemasukan</a>
+                    <a href="../../controller/bendahara/PengeluaranController.php" class="menu-item"><i class="fa-regular fa-eye"></i> Pengeluaran</a>
                 </div>
                 <div class="menu-section">
                     <p class="section-title">LAPORAN</p>
-                    <a href="laporan-keuangan.php" class="menu-item"><i class="fa-regular fa-file-lines"></i> Laporan Keuangan</a>
+                    <a href="../../controller/bendahara/LaporanKeuanganController.php" class="menu-item"><i class="fa-regular fa-file-lines"></i> Laporan Keuangan</a>
                 </div>
                 <div class="sidebar-bottom">
-                    <a href="logout.php" class="menu-item">
+                    <a href="../../controller/bendahara/LogoutController.php" class="menu-item">
                         <i class="fa-solid fa-right-from-bracket"></i> Logout
                     </a>
                 </div>
@@ -160,7 +104,8 @@ $tabel_grup = mysqli_query($conn, "
                     <tbody>
                         <?php 
                         $no = 1;
-                        while($row = mysqli_fetch_assoc($tabel_grup)): 
+                        if (count($tabel_grup) > 0):
+                            foreach($tabel_grup as $row): 
                         ?>
                         <tr>
                             <td style="text-align: center;"><?php echo $no++; ?></td>
@@ -170,14 +115,16 @@ $tabel_grup = mysqli_query($conn, "
                             <td class="fw-500">Rp <?php echo number_format($row['avg_nominal'] ?? 0, 0, ',', '.'); ?></td>
                             <td>
                                 <div class="action-icons" style="justify-content: center; display: flex; gap: 15px; align-items: center;">
-                                    <a href="detail-grup.php?id=<?php echo $row['id_grup']; ?>" style="color: #64748b;" title="Lihat Detail"><i class="fa-regular fa-eye"></i></a>
+                                    <a href="../../controller/bendahara/DetailGrupController.php?id=<?php echo $row['id_grup']; ?>" style="color: #64748b;" title="Lihat Detail"><i class="fa-regular fa-eye"></i></a>
                                     <a href="javascript:void(0);" onclick="openEditModal('<?php echo $row['id_grup']; ?>', '<?php echo addslashes(htmlspecialchars($row['nama_grup'])); ?>', '<?php echo addslashes(htmlspecialchars($row['deskripsi'])); ?>')" style="color: #64748b;" title="Edit Grup"><i class="fa-solid fa-pen"></i></a>
-                                    <a href="grup-iuran.php?hapus=<?php echo $row['id_grup']; ?>" onclick="return confirm('Peringatan: Menghapus grup ini juga akan MENGHAPUS SEMUA DATA iuran, pengeluaran, dan pembayaran yang ada di dalamnya. Anda yakin?');" style="color: #ef4444;" title="Hapus Grup"><i class="fa-regular fa-trash-can"></i></a>
+                                    <a href="../../controller/bendahara/GrupIuranController.php?hapus=<?php echo $row['id_grup']; ?>" onclick="return confirm('Peringatan: Menghapus grup ini juga akan MENGHAPUS SEMUA DATA iuran, pengeluaran, dan pembayaran yang ada di dalamnya. Anda yakin?');" style="color: #ef4444;" title="Hapus Grup"><i class="fa-regular fa-trash-can"></i></a>
                                 </div>
                             </td>
                         </tr>
-                        <?php endwhile; ?>
-                        <?php if(mysqli_num_rows($tabel_grup) == 0): ?>
+                        <?php 
+                            endforeach;
+                        else: 
+                        ?>
                         <tr>
                             <td colspan="6" style="text-align:center;">Belum ada grup yang dibuat.</td>
                         </tr>

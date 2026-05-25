@@ -241,7 +241,7 @@ td {
                     </tr>
 
                     <?php
-                    // Query disesuaikan: Mengeluarkan i.periode & i.deadline karena tidak ada di tabel iuran kasmate_db.sql
+                    
                     $query_tagihan = mysqli_query($conn, "
                         SELECT g.nama_grup, i.nama_iuran, i.nominal,
                         COALESCE(p.status, 'Belum Lunas') AS status_bayar

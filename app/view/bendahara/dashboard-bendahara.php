@@ -1,36 +1,5 @@
 <?php
-require_once '../../../config/auth_check.php';
-cekRole('bendahara');
 
-$id_user = $_SESSION['id_user'];
-
-$user_query = mysqli_query($conn, "SELECT nama FROM users WHERE id_user = '$id_user'");
-$user_data = mysqli_fetch_assoc($user_query);
-$nama_bendahara = $user_data['nama'] ?? 'Bendahara';
-
-$grup_query = mysqli_query($conn, "SELECT COUNT(*) as total FROM grup");
-$total_grup = mysqli_fetch_assoc($grup_query)['total'] ?? 0;
-
-$anggota_query = mysqli_query($conn, "SELECT COUNT(*) as total FROM users");
-$total_anggota = mysqli_fetch_assoc($anggota_query)['total'] ?? 0;
-
-$masuk_query = mysqli_query($conn, "SELECT SUM(i.nominal) as total FROM pembayaran p JOIN iuran i ON p.id_iuran = i.id_iuran WHERE p.status = 'Lunas'");
-$total_masuk = mysqli_fetch_assoc($masuk_query)['total'] ?? 0;
-
-$keluar_query = mysqli_query($conn, "SELECT SUM(nominal_keluar) as total FROM pengeluaran");
-$total_keluar = mysqli_fetch_assoc($keluar_query)['total'] ?? 0;
-
-$saldo = $total_masuk - $total_keluar;
-
-$status_lunas_q = mysqli_query($conn, "SELECT COUNT(*) as total FROM pembayaran WHERE status = 'Lunas'");
-$count_lunas = mysqli_fetch_assoc($status_lunas_q)['total'] ?? 0;
-
-$status_belum_q = mysqli_query($conn, "SELECT COUNT(*) as total FROM pembayaran WHERE status = 'Belum Lunas'");
-$count_belum = mysqli_fetch_assoc($status_belum_q)['total'] ?? 0;
-
-$total_tagihan_semua = $count_lunas + $count_belum;
-$persen_lunas = $total_tagihan_semua > 0 ? round(($count_lunas / $total_tagihan_semua) * 100, 1) : 0;
-$persen_belum = $total_tagihan_semua > 0 ? round(($count_belum / $total_tagihan_semua) * 100, 1) : 0;
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -50,25 +19,24 @@ $persen_belum = $total_tagihan_semua > 0 ? round(($count_belum / $total_tagihan_
                 <span>KasMate</span>
             </div>
             <div class="sidebar-menu">
-                <a href="dashboard-bendahara.php" class="menu-item active">
+                <a href="../../controller/bendahara/DashboardBendaharaController.php" class="menu-item active">
                     <i class="fa-solid fa-border-all"></i> Dashboard
                 </a>
                 <div class="menu-section">
                     <p class="section-title">KELOLA IURAN</p>
-                    <a href="grup-iuran.php" class="menu-item"><i class="fa-solid fa-users-line"></i> Grup Iuran</a>
-                    <a href="detail-grup.php" class="menu-item"><i class="fa-solid fa-user-group"></i> Detail Grup</a>
+                    <a href="../../controller/bendahara/GrupIuranController.php" class="menu-item"><i class="fa-solid fa-users-line"></i> Grup Iuran</a>
                 </div>
                 <div class="menu-section">
                     <p class="section-title">KEUANGAN</p>
-                    <a href="pemasukan.php" class="menu-item"><i class="fa-solid fa-clock-rotate-left"></i> Pemasukan</a>
-                    <a href="pengeluaran.php" class="menu-item"><i class="fa-regular fa-eye"></i> Pengeluaran</a>
+                    <a href="../../controller/bendahara/PemasukanController.php" class="menu-item"><i class="fa-solid fa-clock-rotate-left"></i> Pemasukan</a>
+                    <a href="../../controller/bendahara/PengeluaranController.php" class="menu-item"><i class="fa-regular fa-eye"></i> Pengeluaran</a>
                 </div>
                 <div class="menu-section">
                     <p class="section-title">LAPORAN</p>
-                    <a href="laporan-keuangan.php" class="menu-item"><i class="fa-regular fa-file-lines"></i> Laporan Keuangan</a>
+                    <a href="../../controller/bendahara/LaporanKeuanganController.php" class="menu-item"><i class="fa-regular fa-file-lines"></i> Laporan Keuangan</a>
                 </div>
                 <div class="sidebar-bottom">
-                    <a href="logout.php" class="menu-item">
+                    <a href="../../controller/bendahara/LogoutController.php" class="menu-item">
                         <i class="fa-solid fa-right-from-bracket"></i> Logout
                     </a>
                 </div>
@@ -175,20 +143,22 @@ $persen_belum = $total_tagihan_semua > 0 ? round(($count_belum / $total_tagihan_
                         </thead>
                         <tbody>
                             <?php
-                            $tabel_grup = mysqli_query($conn, "SELECT * FROM grup ORDER BY id_grup DESC LIMIT 5");
                             $no = 1;
-                            while($row = mysqli_fetch_assoc($tabel_grup)):
+                            if (count($tabel_grup) > 0):
+                                foreach($tabel_grup as $row):
                             ?>
                             <tr>
                                 <td><?php echo $no++; ?></td>
-                                <td><span class="fw-500"><?php echo $row['nama_grup']; ?></span></td>
-                                <td><?php echo $row['deskripsi']; ?></td>
+                                <td><span class="fw-500"><?php echo htmlspecialchars($row['nama_grup']); ?></span></td>
+                                <td><?php echo htmlspecialchars($row['deskripsi']); ?></td>
                                 <td>
-                                    <a href="detail-grup.php?id=<?php echo $row['id_grup']; ?>" class="btn-action" style="text-decoration:none; padding:5px 10px; border-radius:5px; background:#1e293b; color:#fff;">Kelola</a>
+                                    <a href="../../controller/bendahara/DetailGrupController.php?id=<?php echo $row['id_grup']; ?>" class="btn-action" style="text-decoration:none; padding:5px 10px; border-radius:5px; background:#1e293b; color:#fff;">Kelola</a>
                                 </td>
                             </tr>
-                            <?php endwhile; ?>
-                            <?php if(mysqli_num_rows($tabel_grup) == 0): ?>
+                            <?php 
+                                endforeach;
+                            else: 
+                            ?>
                             <tr>
                                 <td colspan="4" style="text-align:center;">Belum ada grup yang dibuat.</td>
                             </tr>

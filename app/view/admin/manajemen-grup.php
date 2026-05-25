@@ -1,43 +1,5 @@
 <?php
-require_once '../../../config/auth_check.php';
-cekRole('admin');
 
-if (isset($_GET['hapus'])) {
-    $id_hapus = (int)$_GET['hapus'];
-    mysqli_query($conn, "DELETE FROM grup WHERE id_grup = $id_hapus");
-    header("Location: manajemen-grup.php");
-    exit();
-}
-
-$search = isset($_GET['search']) ? mysqli_real_escape_string($conn, $_GET['search']) : '';
-
-$where = "WHERE 1=1";
-if ($search !== '') {
-    $where .= " AND (g.nama_grup LIKE '%$search%' OR u.nama LIKE '%$search%')";
-}
-
-$per_page = 10;
-$page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
-$offset = ($page - 1) * $per_page;
-
-$q_count = mysqli_query($conn, "
-    SELECT COUNT(*) as total 
-    FROM grup g 
-    JOIN users u ON g.id_bendahara = u.id_user 
-    $where
-");
-$total_data = mysqli_fetch_assoc($q_count)['total'];
-$total_pages = max(1, ceil($total_data / $per_page));
-
-$q_groups = mysqli_query($conn, "
-    SELECT g.*, u.nama as nama_bendahara,
-        (SELECT COUNT(*) FROM grup_anggota ga WHERE ga.id_grup = g.id_grup) as jumlah_anggota
-    FROM grup g 
-    JOIN users u ON g.id_bendahara = u.id_user 
-    $where 
-    ORDER BY g.id_grup DESC 
-    LIMIT $per_page OFFSET $offset
-");
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -60,21 +22,21 @@ $q_groups = mysqli_query($conn, "
             </div>
             <nav class="sidebar-menu">
                 <div class="menu-section">
-                    <a href="dashboard-admin.php" class="menu-item">
+                    <a href="../../controller/admin/DashboardAdminController.php" class="menu-item">
                         <i class='bx bxs-dashboard'></i> Dashboard
                     </a>
-                    <a href="manajemen-user.php" class="menu-item">
+                    <a href="../../controller/admin/ManajemenUserController.php" class="menu-item">
                         <i class='bx bxs-user-account'></i> Manajemen User
                     </a>
-                    <a href="manajemen-grup.php" class="menu-item active">
+                    <a href="../../controller/admin/ManajemenGrupController.php" class="menu-item active">
                         <i class='bx bxs-group'></i> Manajemen Grup
                     </a>
-                    <a href="pengaturan.php" class="menu-item">
+                    <a href="../../controller/admin/PengaturanController.php" class="menu-item">
                         <i class='bx bxs-cog'></i> Pengaturan Sistem
                     </a>
                 </div>
                 <div class="menu-section" style="margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
-                    <a href="logout.php" class="menu-item">
+                    <a href="../../controller/admin/LogoutController.php" class="menu-item">
                         <i class='bx bx-log-out'></i> Logout
                     </a>
                 </div>
@@ -118,8 +80,8 @@ $q_groups = mysqli_query($conn, "
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if (mysqli_num_rows($q_groups) > 0): ?>
-                                <?php while ($g = mysqli_fetch_assoc($q_groups)): ?>
+                            <?php if (count($q_groups) > 0): ?>
+                                <?php foreach ($q_groups as $g): ?>
                                     <tr>
                                         <td class="fw-500"><?= htmlspecialchars($g['nama_grup']) ?></td>
                                         <td><?= htmlspecialchars($g['deskripsi'] ?? '-') ?></td>
@@ -132,7 +94,7 @@ $q_groups = mysqli_query($conn, "
                                             </div>
                                         </td>
                                     </tr>
-                                <?php endwhile; ?>
+                                <?php endforeach; ?>
                             <?php else: ?>
                                 <tr>
                                     <td colspan="5" style="text-align: center; padding: 30px; color: #94a3b8;">Data tidak ditemukan</td>
@@ -176,7 +138,7 @@ $q_groups = mysqli_query($conn, "
     <script>
         function bukaModalHapus(id, nama) {
             document.getElementById('hapus_nama').textContent = nama;
-            document.getElementById('hapus_link').href = 'manajemen-grup.php?hapus=' + id;
+            document.getElementById('hapus_link').href = '../../controller/admin/ManajemenGrupController.php?hapus=' + id;
             document.getElementById('modalHapus').classList.add('active');
         }
 

@@ -4,13 +4,13 @@ require_once '../../../config/database.php';
 
 if (isset($_SESSION['id_user']) && isset($_SESSION['role'])) {
     if ($_SESSION['role'] == 'admin') {
-        header("Location: ../admin/dashboard-admin.php");
+        header("Location: ../../controller/admin/DashboardAdminController.php");
         exit();
     } elseif ($_SESSION['role'] == 'bendahara') {
-        header("Location: ../bendahara/dashboard-bendahara.php");
+        header("Location: ../../controller/bendahara/DashboardBendaharaController.php");
         exit();
     } else {
-        header("Location: ../user/dashboard-user.php");
+        header("Location: ../../controller/user/DashboardUserController.php");
         exit();
     }
 }
@@ -34,11 +34,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['role'] = $row['role'];
 
             if ($row['role'] == 'admin') {
-                header("Location: ../admin/dashboard-admin.php");
+                header("Location: ../../controller/admin/DashboardAdminController.php");
             } elseif ($row['role'] == 'bendahara') {
-                header("Location: ../bendahara/dashboard-bendahara.php");
+                header("Location: ../../controller/bendahara/DashboardBendaharaController.php");
             } else {
-                header("Location: ../user/dashboard-user.php");
+                header("Location: ../../controller/user/DashboardUserController.php");
             }
             exit();
         } else {
@@ -168,6 +168,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             margin-bottom: 15px;
         }
     </style>
+    <script>
+        // Mencegah user menekan tombol 'back' kembali ke halaman sebelumnya setelah berada di login
+        history.pushState(null, null, location.href);
+        window.onpopstate = function () {
+            history.go(1);
+        };
+    </script>
 </head>
 <body>
     <div class="split-layout">

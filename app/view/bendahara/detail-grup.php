@@ -1,89 +1,6 @@
 <?php
-require_once '../../../config/auth_check.php';
-cekRole('bendahara');
 
-$id_user = $_SESSION['id_user'];
-$id_grup = isset($_GET['id']) ? mysqli_real_escape_string($conn, $_GET['id']) : null;
-$tab = isset($_GET['tab']) ? $_GET['tab'] : 'pembayaran';
-
-if (!$id_grup) {
-    $cek_grup = mysqli_query($conn, "SELECT id_grup FROM grup ORDER BY id_grup DESC LIMIT 1");
-    if (mysqli_num_rows($cek_grup) > 0) {
-        $id_grup = mysqli_fetch_assoc($cek_grup)['id_grup'];
-    } else {
-        echo "<script>alert('Anda belum membuat grup iuran apapun!'); window.location.href='grup-iuran.php';</script>";
-        exit();
-    }
-}
-
-$grup_query = mysqli_query($conn, "SELECT nama_grup FROM grup WHERE id_grup = '$id_grup'");
-if (mysqli_num_rows($grup_query) == 0) {
-    echo "<script>alert('Grup tidak ditemukan!'); window.location.href='grup-iuran.php';</script>";
-    exit();
-}
-$nama_grup = mysqli_fetch_assoc($grup_query)['nama_grup'];
-
-$user_q = mysqli_query($conn, "SELECT nama FROM users WHERE id_user = '$id_user'");
-$nama_bendahara = mysqli_fetch_assoc($user_q)['nama'];
-
-if (isset($_POST['tambah_anggota'])) {
-    $id_user_baru = mysqli_real_escape_string($conn, $_POST['id_user_baru']);
-    mysqli_query($conn, "INSERT INTO grup_anggota (id_grup, id_user) VALUES ('$id_grup', '$id_user_baru')");
-    header("Location: detail-grup.php?id=$id_grup&tab=anggota");
-    exit();
-}
-
-if (isset($_GET['hapus_anggota'])) {
-    $id_hapus = mysqli_real_escape_string($conn, $_GET['hapus_anggota']);
-    mysqli_query($conn, "DELETE FROM grup_anggota WHERE id_grup='$id_grup' AND id_user='$id_hapus'");
-    header("Location: detail-grup.php?id=$id_grup&tab=anggota");
-    exit();
-}
-
-if (isset($_POST['tambah_tagihan'])) {
-    $nama_iuran = mysqli_real_escape_string($conn, $_POST['nama_iuran']);
-    $nominal = mysqli_real_escape_string($conn, $_POST['nominal']);
-    mysqli_query($conn, "INSERT INTO iuran (id_grup, nama_iuran, nominal) VALUES ('$id_grup', '$nama_iuran', '$nominal')");
-    header("Location: detail-grup.php?id=$id_grup&tab=tagihan");
-    exit();
-}
-
-if (isset($_GET['hapus_tagihan'])) {
-    $id_hapus_tagihan = mysqli_real_escape_string($conn, $_GET['hapus_tagihan']);
-    mysqli_query($conn, "DELETE FROM pembayaran WHERE id_iuran='$id_hapus_tagihan'");
-    mysqli_query($conn, "DELETE FROM iuran WHERE id_iuran='$id_hapus_tagihan' AND id_grup='$id_grup'");
-    header("Location: detail-grup.php?id=$id_grup&tab=tagihan");
-    exit();
-}
-
-if (isset($_POST['bayar_tagihan'])) {
-    $id_user_bayar = mysqli_real_escape_string($conn, $_POST['id_user_bayar']);
-    $id_iuran_bayar = mysqli_real_escape_string($conn, $_POST['id_iuran_bayar']);
-    $tanggal_bayar = date('Y-m-d');
-    
-    $cek = mysqli_query($conn, "SELECT * FROM pembayaran WHERE id_user='$id_user_bayar' AND id_iuran='$id_iuran_bayar'");
-    if(mysqli_num_rows($cek) > 0) {
-        mysqli_query($conn, "UPDATE pembayaran SET status='Lunas', tanggal_bayar='$tanggal_bayar' WHERE id_user='$id_user_bayar' AND id_iuran='$id_iuran_bayar'");
-    } else {
-        mysqli_query($conn, "INSERT INTO pembayaran (id_iuran, id_user, tanggal_bayar, status) VALUES ('$id_iuran_bayar', '$id_user_bayar', '$tanggal_bayar', 'Lunas')");
-    }
-    
-    $nominal_q = mysqli_query($conn, "SELECT nominal FROM iuran WHERE id_iuran='$id_iuran_bayar'");
-    $nominal_iuran = mysqli_fetch_assoc($nominal_q)['nominal'];
-    mysqli_query($conn, "INSERT INTO p_pemasukan_temp (keterangan) VALUES ('Bayar')"); 
-    
-    header("Location: detail-grup.php?id=$id_grup&tab=pembayaran");
-    exit();
-}
-
-$q_tagihan = mysqli_query($conn, "SELECT 
-    SUM(i.nominal) as total_tagihan,
-    SUM(CASE WHEN p.status = 'Lunas' THEN i.nominal ELSE 0 END) as total_lunas,
-    SUM(CASE WHEN p.status = 'Belum Lunas' THEN i.nominal ELSE 0 END) as total_belum
-    FROM pembayaran p 
-    JOIN iuran i ON p.id_iuran = i.id_iuran 
-    WHERE i.id_grup = '$id_grup'");
-$data_tagihan = mysqli_fetch_assoc($q_tagihan);
+?>
 
 $total_tagihan = $data_tagihan['total_tagihan'] ?? 0;
 $total_lunas = $data_tagihan['total_lunas'] ?? 0;
@@ -110,23 +27,23 @@ $persen_belum = $total_tagihan > 0 ? round(($total_belum / $total_tagihan) * 100
                 <span>KasMate</span>
             </div>
             <div class="sidebar-menu">
-                <a href="dashboard-bendahara.php" class="menu-item"><i class="fa-solid fa-border-all"></i> Dashboard</a>
+                <a href="../../controller/bendahara/DashboardBendaharaController.php" class="menu-item"><i class="fa-solid fa-border-all"></i> Dashboard</a>
                 <div class="menu-section">
                     <p class="section-title">KELOLA IURAN</p>
-                    <a href="grup-iuran.php" class="menu-item"><i class="fa-solid fa-users-line"></i> Grup Iuran</a>
-                    <a href="detail-grup.php?id=<?php echo $id_grup; ?>" class="menu-item active"><i class="fa-solid fa-user-group"></i> Detail Grup</a>
+                    <a href="../../controller/bendahara/GrupIuranController.php" class="menu-item"><i class="fa-solid fa-users-line"></i> Grup Iuran</a>
+                    <a href="../../controller/bendahara/DetailGrupController.php?id=<?php echo $id_grup; ?>" class="menu-item active"><i class="fa-solid fa-user-group"></i> Detail Grup</a>
                 </div>
                 <div class="menu-section">
                     <p class="section-title">KEUANGAN</p>
-                    <a href="pemasukan.php" class="menu-item"><i class="fa-solid fa-clock-rotate-left"></i> Pemasukan</a>
-                    <a href="pengeluaran.php" class="menu-item"><i class="fa-regular fa-eye"></i> Pengeluaran</a>
+                    <a href="../../controller/bendahara/PemasukanController.php" class="menu-item"><i class="fa-solid fa-clock-rotate-left"></i> Pemasukan</a>
+                    <a href="../../controller/bendahara/PengeluaranController.php" class="menu-item"><i class="fa-regular fa-eye"></i> Pengeluaran</a>
                 </div>
                 <div class="menu-section">
                     <p class="section-title">LAPORAN</p>
-                    <a href="laporan-keuangan.php" class="menu-item"><i class="fa-regular fa-file-lines"></i> Laporan Keuangan</a>
+                    <a href="../../controller/bendahara/LaporanKeuanganController.php" class="menu-item"><i class="fa-regular fa-file-lines"></i> Laporan Keuangan</a>
                 </div>
                 <div class="sidebar-bottom">
-                    <a href="logout.php" class="menu-item">
+                    <a href="../../controller/bendahara/LogoutController.php" class="menu-item">
                         <i class="fa-solid fa-right-from-bracket"></i> Logout
                     </a>
                 </div>
@@ -152,9 +69,9 @@ $persen_belum = $total_tagihan > 0 ? round(($total_belum / $total_tagihan) * 100
             </header>
 
             <div class="tabs-container">
-                <a href="detail-grup.php?id=<?php echo $id_grup; ?>&tab=anggota" class="tab-item <?php echo $tab == 'anggota' ? 'active' : ''; ?>">Anggota</a>
-                <a href="detail-grup.php?id=<?php echo $id_grup; ?>&tab=tagihan" class="tab-item <?php echo $tab == 'tagihan' ? 'active' : ''; ?>">Tagihan</a>
-                <a href="detail-grup.php?id=<?php echo $id_grup; ?>&tab=pembayaran" class="tab-item <?php echo $tab == 'pembayaran' ? 'active' : ''; ?>">Pembayaran</a>
+                <a href="../../controller/bendahara/DetailGrupController.php?id=<?php echo $id_grup; ?>&tab=anggota" class="tab-item <?php echo $tab == 'anggota' ? 'active' : ''; ?>">Anggota</a>
+                <a href="../../controller/bendahara/DetailGrupController.php?id=<?php echo $id_grup; ?>&tab=tagihan" class="tab-item <?php echo $tab == 'tagihan' ? 'active' : ''; ?>">Tagihan</a>
+                <a href="../../controller/bendahara/DetailGrupController.php?id=<?php echo $id_grup; ?>&tab=pembayaran" class="tab-item <?php echo $tab == 'pembayaran' ? 'active' : ''; ?>">Pembayaran</a>
             </div>
 
             <?php if($tab == 'pembayaran'): ?>
@@ -200,9 +117,9 @@ $persen_belum = $total_tagihan > 0 ? round(($total_belum / $total_tagihan) * 100
                         </thead>
                         <tbody>
                             <?php
-                            $q_anggota = mysqli_query($conn, "SELECT u.id_user, u.nama, u.email FROM users u JOIN grup_anggota ga ON u.id_user = ga.id_user WHERE ga.id_grup = '$id_grup'");
                             $no = 1;
-                            while($row = mysqli_fetch_assoc($q_anggota)):
+                            if (count($anggota_grup) > 0):
+                                foreach($anggota_grup as $row):
                             ?>
                             <tr>
                                 <td style="text-align: center;"><?php echo $no++; ?></td>
@@ -210,11 +127,14 @@ $persen_belum = $total_tagihan > 0 ? round(($total_belum / $total_tagihan) * 100
                                 <td><?php echo htmlspecialchars($row['email']); ?></td>
                                 <td>
                                     <div class="action-icons" style="justify-content: center;">
-                                        <a href="detail-grup.php?id=<?php echo $id_grup; ?>&tab=anggota&hapus_anggota=<?php echo $row['id_user']; ?>" onclick="return confirm('Keluarkan anggota ini dari grup?');" style="color: #ef4444;"><i class="fa-regular fa-trash-can"></i></a>
+                                        <a href="../../controller/bendahara/DetailGrupController.php?id=<?php echo $id_grup; ?>&tab=anggota&hapus_anggota=<?php echo $row['id_user']; ?>" onclick="return confirm('Keluarkan anggota ini dari grup?');" style="color: #ef4444;"><i class="fa-regular fa-trash-can"></i></a>
                                     </div>
                                 </td>
                             </tr>
-                            <?php endwhile; ?>
+                            <?php 
+                                endforeach;
+                            endif; 
+                            ?>
                         </tbody>
                     </table>
 
@@ -234,9 +154,9 @@ $persen_belum = $total_tagihan > 0 ? round(($total_belum / $total_tagihan) * 100
                         </thead>
                         <tbody>
                             <?php
-                            $q_iuran = mysqli_query($conn, "SELECT * FROM iuran WHERE id_grup = '$id_grup'");
                             $no = 1;
-                            while($row = mysqli_fetch_assoc($q_iuran)):
+                            if (count($tagihan_grup) > 0):
+                                foreach($tagihan_grup as $row):
                             ?>
                             <tr>
                                 <td style="text-align: center;"><?php echo $no++; ?></td>
@@ -244,11 +164,14 @@ $persen_belum = $total_tagihan > 0 ? round(($total_belum / $total_tagihan) * 100
                                 <td class="fw-500">Rp <?php echo number_format($row['nominal'], 0, ',', '.'); ?></td>
                                 <td>
                                     <div class="action-icons" style="justify-content: center;">
-                                        <a href="detail-grup.php?id=<?php echo $id_grup; ?>&tab=tagihan&hapus_tagihan=<?php echo $row['id_iuran']; ?>" onclick="return confirm('Hapus tagihan ini? Data pembayaran terkait juga akan hilang.');" style="color: #ef4444;"><i class="fa-regular fa-trash-can"></i></a>
+                                        <a href="../../controller/bendahara/DetailGrupController.php?id=<?php echo $id_grup; ?>&tab=tagihan&hapus_tagihan=<?php echo $row['id_iuran']; ?>" onclick="return confirm('Hapus tagihan ini? Data pembayaran terkait juga akan hilang.');" style="color: #ef4444;"><i class="fa-regular fa-trash-can"></i></a>
                                     </div>
                                 </td>
                             </tr>
-                            <?php endwhile; ?>
+                            <?php 
+                                endforeach;
+                            endif; 
+                            ?>
                         </tbody>
                     </table>
 
@@ -269,24 +192,12 @@ $persen_belum = $total_tagihan > 0 ? round(($total_belum / $total_tagihan) * 100
                         </thead>
                         <tbody>
                             <?php
-                            $query_anggota = mysqli_query($conn, "
-                                SELECT u.id_user, u.nama, 
-                                   SUM(CASE WHEN p.status = 'Lunas' THEN i.nominal ELSE 0 END) as dibayar,
-                                   SUM(i.nominal) as total_beban,
-                                   MAX(CASE WHEN p.status = 'Lunas' THEN p.tanggal_bayar ELSE NULL END) as tgl_bayar
-                                FROM grup_anggota ga
-                                JOIN users u ON ga.id_user = u.id_user
-                                LEFT JOIN iuran i ON i.id_grup = ga.id_grup
-                                LEFT JOIN pembayaran p ON p.id_iuran = i.id_iuran AND p.id_user = u.id_user
-                                WHERE ga.id_grup = '$id_grup'
-                                GROUP BY u.id_user
-                            ");
-
-                            while($row = mysqli_fetch_assoc($query_anggota)):
-                                $sisa_tagihan = $row['total_beban'] - $row['dibayar'];
-                                $status = ($sisa_tagihan <= 0 && $row['total_beban'] > 0) ? "Lunas" : "Belum Lunas";
-                                $badge_class = ($status == "Lunas") ? "badge-lunas" : "badge-pending";
-                                $tgl_bayar = $row['tgl_bayar'] ? date('d M Y', strtotime($row['tgl_bayar'])) : '-';
+                            if (count($status_pembayaran_anggota) > 0):
+                                foreach($status_pembayaran_anggota as $row):
+                                    $sisa_tagihan = $row['total_beban'] - $row['dibayar'];
+                                    $status = ($sisa_tagihan <= 0 && $row['total_beban'] > 0) ? "Lunas" : "Belum Lunas";
+                                    $badge_class = ($status == "Lunas") ? "badge-lunas" : "badge-pending";
+                                    $tgl_bayar = $row['tgl_bayar'] ? date('d M Y', strtotime($row['tgl_bayar'])) : '-';
                             ?>
                             <tr>
                                 <td class="fw-500"><?php echo htmlspecialchars($row['nama']); ?></td>
@@ -302,7 +213,10 @@ $persen_belum = $total_tagihan > 0 ? round(($total_belum / $total_tagihan) * 100
                                     <?php endif; ?>
                                 </td>
                             </tr>
-                            <?php endwhile; ?>
+                            <?php 
+                                endforeach;
+                            endif; 
+                            ?>
                         </tbody>
                     </table>
                 <?php endif; ?>
@@ -319,11 +233,14 @@ $persen_belum = $total_tagihan > 0 ? round(($total_belum / $total_tagihan) * 100
                     <select name="id_user_baru" required style="width:100%; padding:12px; border:1px solid #cbd5e1; border-radius:8px; box-sizing: border-box;">
                         <option value="">-- Pilih User --</option>
                         <?php
-                        $q_user_luar = mysqli_query($conn, "SELECT id_user, nama FROM users WHERE role='user' AND id_user NOT IN (SELECT id_user FROM grup_anggota WHERE id_grup='$id_grup')");
-                        while($u = mysqli_fetch_assoc($q_user_luar)):
+                        if (count($users_not_in_grup) > 0):
+                            foreach($users_not_in_grup as $u):
                         ?>
                         <option value="<?php echo $u['id_user']; ?>"><?php echo htmlspecialchars($u['nama']); ?></option>
-                        <?php endwhile; ?>
+                        <?php 
+                            endforeach;
+                        endif; 
+                        ?>
                     </select>
                 </div>
                 <div style="display:flex; justify-content:flex-end; gap:10px;">
@@ -367,11 +284,14 @@ $persen_belum = $total_tagihan > 0 ? round(($total_belum / $total_tagihan) * 100
                     <label style="display:block; margin-bottom:5px; font-weight:500; color:#475569;">Pilih Tagihan yang Dibayar</label>
                     <select name="id_iuran_bayar" required style="width:100%; padding:12px; border:1px solid #cbd5e1; border-radius:8px; box-sizing: border-box;">
                         <?php
-                        $q_list_iuran = mysqli_query($conn, "SELECT id_iuran, nama_iuran, nominal FROM iuran WHERE id_grup='$id_grup'");
-                        while($i = mysqli_fetch_assoc($q_list_iuran)):
+                        if (count($tagihan_grup) > 0):
+                            foreach($tagihan_grup as $i):
                         ?>
                         <option value="<?php echo $i['id_iuran']; ?>"><?php echo htmlspecialchars($i['nama_iuran']); ?> (Rp <?php echo number_format($i['nominal'], 0, ',', '.'); ?>)</option>
-                        <?php endwhile; ?>
+                        <?php 
+                            endforeach;
+                        endif; 
+                        ?>
                     </select>
                 </div>
                 <div style="display:flex; justify-content:flex-end; gap:10px;">
