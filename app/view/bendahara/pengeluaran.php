@@ -68,6 +68,11 @@ $daftar_grup = mysqli_query($conn, "SELECT id_grup, nama_grup FROM grup WHERE id
                     <p class="section-title">LAPORAN</p>
                     <a href="laporan-keuangan.php" class="menu-item"><i class="fa-regular fa-file-lines"></i> Laporan Keuangan</a>
                 </div>
+                <div class="sidebar-bottom">
+                    <a href="logout.php" class="menu-item">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </a>
+                </div>
             </div>
         </aside>
 

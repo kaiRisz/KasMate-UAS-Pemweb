@@ -72,6 +72,11 @@ $persen_belum = $total_tagihan_semua > 0 ? round(($count_belum / $total_tagihan_
                     <p class="section-title">LAPORAN</p>
                     <a href="laporan-keuangan.php" class="menu-item"><i class="fa-regular fa-file-lines"></i> Laporan Keuangan</a>
                 </div>
+                <div class="sidebar-bottom">
+                    <a href="logout.php" class="menu-item">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </a>
+                </div>
             </div>
         </aside>
 

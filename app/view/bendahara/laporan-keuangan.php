@@ -58,6 +58,11 @@ $total_transaksi = $trx_masuk + $trx_keluar;
                     <p class="section-title">LAPORAN</p>
                     <a href="laporan-keuangan.php" class="menu-item active"><i class="fa-regular fa-file-lines"></i> Laporan Keuangan</a>
                 </div>
+                <div class="sidebar-bottom">
+                    <a href="logout.php" class="menu-item">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </a>
+                </div>
             </div>
         </aside>
 
