@@ -1,11 +1,6 @@
 <?php
-session_start();
-require_once '../../../config/database.php';
-
-if (!isset($_SESSION['id_user']) || $_SESSION['role'] !== 'bendahara') {
-    header("Location: ../auth/login.php");
-    exit();
-}
+require_once '../../../config/auth_check.php';
+cekRole('bendahara');
 
 $id_user = $_SESSION['id_user'];
 
@@ -34,10 +29,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['tambah_pemasukan'])) {
 $user_q = mysqli_query($conn, "SELECT nama FROM users WHERE id_user = '$id_user'");
 $nama_bendahara = mysqli_fetch_assoc($user_q)['nama'] ?? 'Bendahara';
 
-$q_masuk_iuran = mysqli_query($conn, "SELECT SUM(i.nominal) as total, COUNT(p.id_pembayaran) as jml FROM pembayaran p JOIN iuran i ON p.id_iuran = i.id_iuran JOIN grup g ON i.id_grup = g.id_grup WHERE g.id_bendahara = '$id_user' AND p.status = 'Lunas'");
+$q_masuk_iuran = mysqli_query($conn, "SELECT SUM(i.nominal) as total, COUNT(p.id_pembayaran) as jml FROM pembayaran p JOIN iuran i ON p.id_iuran = i.id_iuran WHERE p.status = 'Lunas'");
 $d_iuran = mysqli_fetch_assoc($q_masuk_iuran);
 
-$q_masuk_manual = mysqli_query($conn, "SELECT SUM(nominal) as total, COUNT(id_pemasukan) as jml, SUM(CASE WHEN metode='Tunai' THEN nominal ELSE 0 END) as tunai, SUM(CASE WHEN metode='Transfer' THEN nominal ELSE 0 END) as tf FROM pemasukan_kas pk JOIN grup g ON pk.id_grup = g.id_grup WHERE g.id_bendahara = '$id_user'");
+$q_masuk_manual = mysqli_query($conn, "SELECT SUM(nominal) as total, COUNT(id_pemasukan) as jml, SUM(CASE WHEN metode='Tunai' THEN nominal ELSE 0 END) as tunai, SUM(CASE WHEN metode='Transfer' THEN nominal ELSE 0 END) as tf FROM pemasukan_kas");
 $d_manual = mysqli_fetch_assoc($q_masuk_manual);
 
 $total_masuk = ($d_iuran['total'] ?? 0) + ($d_manual['total'] ?? 0);

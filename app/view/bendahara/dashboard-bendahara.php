@@ -1,11 +1,6 @@
 <?php
-session_start();
-require_once '../../../config/database.php';
-
-if (!isset($_SESSION['id_user']) || $_SESSION['role'] !== 'bendahara') {
-    header("Location: ../auth/login.php");
-    exit();
-}
+require_once '../../../config/auth_check.php';
+cekRole('bendahara');
 
 $id_user = $_SESSION['id_user'];
 
@@ -13,24 +8,24 @@ $user_query = mysqli_query($conn, "SELECT nama FROM users WHERE id_user = '$id_u
 $user_data = mysqli_fetch_assoc($user_query);
 $nama_bendahara = $user_data['nama'] ?? 'Bendahara';
 
-$grup_query = mysqli_query($conn, "SELECT COUNT(*) as total FROM grup WHERE id_bendahara = '$id_user'");
+$grup_query = mysqli_query($conn, "SELECT COUNT(*) as total FROM grup");
 $total_grup = mysqli_fetch_assoc($grup_query)['total'] ?? 0;
 
-$anggota_query = mysqli_query($conn, "SELECT COUNT(DISTINCT ga.id_user) as total FROM grup_anggota ga JOIN grup g ON ga.id_grup = g.id_grup WHERE g.id_bendahara = '$id_user'");
+$anggota_query = mysqli_query($conn, "SELECT COUNT(*) as total FROM users");
 $total_anggota = mysqli_fetch_assoc($anggota_query)['total'] ?? 0;
 
-$masuk_query = mysqli_query($conn, "SELECT SUM(i.nominal) as total FROM pembayaran p JOIN iuran i ON p.id_iuran = i.id_iuran JOIN grup g ON i.id_grup = g.id_grup WHERE g.id_bendahara = '$id_user' AND p.status = 'Lunas'");
+$masuk_query = mysqli_query($conn, "SELECT SUM(i.nominal) as total FROM pembayaran p JOIN iuran i ON p.id_iuran = i.id_iuran WHERE p.status = 'Lunas'");
 $total_masuk = mysqli_fetch_assoc($masuk_query)['total'] ?? 0;
 
-$keluar_query = mysqli_query($conn, "SELECT SUM(pe.nominal_keluar) as total FROM pengeluaran pe JOIN grup g ON pe.id_grup = g.id_grup WHERE g.id_bendahara = '$id_user'");
+$keluar_query = mysqli_query($conn, "SELECT SUM(nominal_keluar) as total FROM pengeluaran");
 $total_keluar = mysqli_fetch_assoc($keluar_query)['total'] ?? 0;
 
 $saldo = $total_masuk - $total_keluar;
 
-$status_lunas_q = mysqli_query($conn, "SELECT COUNT(*) as total FROM pembayaran p JOIN iuran i ON p.id_iuran = i.id_iuran JOIN grup g ON i.id_grup = g.id_grup WHERE g.id_bendahara = '$id_user' AND p.status = 'Lunas'");
+$status_lunas_q = mysqli_query($conn, "SELECT COUNT(*) as total FROM pembayaran WHERE status = 'Lunas'");
 $count_lunas = mysqli_fetch_assoc($status_lunas_q)['total'] ?? 0;
 
-$status_belum_q = mysqli_query($conn, "SELECT COUNT(*) as total FROM pembayaran p JOIN iuran i ON p.id_iuran = i.id_iuran JOIN grup g ON i.id_grup = g.id_grup WHERE g.id_bendahara = '$id_user' AND p.status = 'Belum Lunas'");
+$status_belum_q = mysqli_query($conn, "SELECT COUNT(*) as total FROM pembayaran WHERE status = 'Belum Lunas'");
 $count_belum = mysqli_fetch_assoc($status_belum_q)['total'] ?? 0;
 
 $total_tagihan_semua = $count_lunas + $count_belum;
@@ -180,7 +175,7 @@ $persen_belum = $total_tagihan_semua > 0 ? round(($count_belum / $total_tagihan_
                         </thead>
                         <tbody>
                             <?php
-                            $tabel_grup = mysqli_query($conn, "SELECT * FROM grup WHERE id_bendahara = '$id_user' ORDER BY id_grup DESC LIMIT 5");
+                            $tabel_grup = mysqli_query($conn, "SELECT * FROM grup ORDER BY id_grup DESC LIMIT 5");
                             $no = 1;
                             while($row = mysqli_fetch_assoc($tabel_grup)):
                             ?>

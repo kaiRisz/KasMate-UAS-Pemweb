@@ -1,16 +1,9 @@
 <?php
-session_start();
-if (!isset($_SESSION['id_user']) || $_SESSION['role'] !== 'user') {
-    header("Location: ../auth/login.php");
-    exit();
-}
+require_once '../../../config/auth_check.php';
+cekRole('user');
 
-$conn = mysqli_connect("localhost", "root", "", "kasmate_db");
 $id_user = $_SESSION['id_user'];
-
-$query_user = mysqli_query($conn, "SELECT nama FROM users WHERE id_user = $id_user");
-$data_user = mysqli_fetch_assoc($query_user);
-$nama_user = $data_user['nama'];
+$nama_user = $user_login['nama'];
 
 $query_grup = mysqli_query($conn, "SELECT g.id_grup, g.nama_grup, g.deskripsi, u.nama AS nama_bendahara FROM grup_anggota ga JOIN grup g ON ga.id_grup = g.id_grup JOIN users u ON g.id_bendahara = u.id_user WHERE ga.id_user = $id_user");
 $grup_list = [];

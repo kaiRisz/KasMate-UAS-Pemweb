@@ -1,18 +1,13 @@
 <?php
-session_start();
-require_once '../../../config/database.php';
-
-if (!isset($_SESSION['id_user']) || $_SESSION['role'] !== 'bendahara') {
-    header("Location: ../auth/login.php");
-    exit();
-}
+require_once '../../../config/auth_check.php';
+cekRole('bendahara');
 
 $id_user = $_SESSION['id_user'];
 $id_grup = isset($_GET['id']) ? mysqli_real_escape_string($conn, $_GET['id']) : null;
 $tab = isset($_GET['tab']) ? $_GET['tab'] : 'pembayaran';
 
 if (!$id_grup) {
-    $cek_grup = mysqli_query($conn, "SELECT id_grup FROM grup WHERE id_bendahara = '$id_user' ORDER BY id_grup DESC LIMIT 1");
+    $cek_grup = mysqli_query($conn, "SELECT id_grup FROM grup ORDER BY id_grup DESC LIMIT 1");
     if (mysqli_num_rows($cek_grup) > 0) {
         $id_grup = mysqli_fetch_assoc($cek_grup)['id_grup'];
     } else {
@@ -21,7 +16,7 @@ if (!$id_grup) {
     }
 }
 
-$grup_query = mysqli_query($conn, "SELECT nama_grup FROM grup WHERE id_grup = '$id_grup' AND id_bendahara = '$id_user'");
+$grup_query = mysqli_query($conn, "SELECT nama_grup FROM grup WHERE id_grup = '$id_grup'");
 if (mysqli_num_rows($grup_query) == 0) {
     echo "<script>alert('Grup tidak ditemukan!'); window.location.href='grup-iuran.php';</script>";
     exit();

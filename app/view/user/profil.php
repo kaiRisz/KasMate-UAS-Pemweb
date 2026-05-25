@@ -1,11 +1,7 @@
 <?php
-session_start();
-if (!isset($_SESSION['id_user']) || $_SESSION['role'] !== 'user') {
-    header("Location: ../auth/login.php");
-    exit();
-}
+require_once '../../../config/auth_check.php';
+cekRole('user');
 
-$conn = mysqli_connect("localhost", "root", "", "kasmate_db");
 $id_user = $_SESSION['id_user'];
 
 $message = "";

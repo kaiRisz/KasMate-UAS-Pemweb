@@ -1,23 +1,18 @@
 <?php
-session_start();
-require_once '../../../config/database.php';
-
-if (!isset($_SESSION['id_user']) || $_SESSION['role'] !== 'bendahara') {
-    header("Location: ../auth/login.php");
-    exit();
-}
+require_once '../../../config/auth_check.php';
+cekRole('bendahara');
 
 $id_user = $_SESSION['id_user'];
 
 $user_q = mysqli_query($conn, "SELECT nama FROM users WHERE id_user = '$id_user'");
 $nama_bendahara = mysqli_fetch_assoc($user_q)['nama'];
 
-$masuk_query = mysqli_query($conn, "SELECT SUM(i.nominal) as total, COUNT(*) as jml_transaksi FROM pembayaran p JOIN iuran i ON p.id_iuran = i.id_iuran JOIN grup g ON i.id_grup = g.id_grup WHERE g.id_bendahara = '$id_user' AND p.status = 'Lunas'");
+$masuk_query = mysqli_query($conn, "SELECT SUM(i.nominal) as total, COUNT(*) as jml_transaksi FROM pembayaran p JOIN iuran i ON p.id_iuran = i.id_iuran JOIN grup g ON i.id_grup = g.id_grup AND p.status = 'Lunas'");
 $data_masuk = mysqli_fetch_assoc($masuk_query);
 $total_masuk = $data_masuk['total'] ?? 0;
 $trx_masuk = $data_masuk['jml_transaksi'] ?? 0;
 
-$keluar_query = mysqli_query($conn, "SELECT SUM(pe.nominal_keluar) as total, COUNT(*) as jml_transaksi FROM pengeluaran pe JOIN grup g ON pe.id_grup = g.id_grup WHERE g.id_bendahara = '$id_user'");
+$keluar_query = mysqli_query($conn, "SELECT SUM(pe.nominal_keluar) as total, COUNT(*) as jml_transaksi FROM pengeluaran pe JOIN grup g ON pe.id_grup = g.id_grup");
 $data_keluar = mysqli_fetch_assoc($keluar_query);
 $total_keluar = $data_keluar['total'] ?? 0;
 $trx_keluar = $data_keluar['jml_transaksi'] ?? 0;

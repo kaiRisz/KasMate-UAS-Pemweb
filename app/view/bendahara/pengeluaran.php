@@ -1,11 +1,6 @@
 <?php
-session_start();
-require_once '../../../config/database.php';
-
-if (!isset($_SESSION['id_user']) || $_SESSION['role'] !== 'bendahara') {
-    header("Location: ../auth/login.php");
-    exit();
-}
+require_once '../../../config/auth_check.php';
+cekRole('bendahara');
 
 $id_user = $_SESSION['id_user'];
 
@@ -25,15 +20,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['tambah_pengeluaran']))
 $user_q = mysqli_query($conn, "SELECT nama FROM users WHERE id_user = '$id_user'");
 $nama_bendahara = mysqli_fetch_assoc($user_q)['nama'] ?? 'Bendahara';
 
-$keluar_query = mysqli_query($conn, "SELECT SUM(pe.nominal_keluar) as total, COUNT(pe.id_pengeluaran) as jml, MAX(pe.nominal_keluar) as terbesar, AVG(pe.nominal_keluar) as rata FROM pengeluaran pe JOIN grup g ON pe.id_grup = g.id_grup WHERE g.id_bendahara = '$id_user'");
+$keluar_query = mysqli_query($conn, "SELECT SUM(pe.nominal_keluar) as total, COUNT(pe.id_pengeluaran) as jml, MAX(pe.nominal_keluar) as terbesar, AVG(pe.nominal_keluar) as rata FROM pengeluaran pe JOIN grup g ON pe.id_grup = g.id_grup");
 $data_keluar = mysqli_fetch_assoc($keluar_query);
 $total_keluar = $data_keluar['total'] ?? 0;
 $total_trx = $data_keluar['jml'] ?? 0;
 $pengeluaran_terbesar = $data_keluar['terbesar'] ?? 0;
 $rata_rata = $data_keluar['rata'] ?? 0;
 
-$tabel_pengeluaran = mysqli_query($conn, "SELECT pe.*, g.nama_grup FROM pengeluaran pe JOIN grup g ON pe.id_grup = g.id_grup WHERE g.id_bendahara = '$id_user' ORDER BY pe.tanggal_keluar DESC");
-$daftar_grup = mysqli_query($conn, "SELECT id_grup, nama_grup FROM grup WHERE id_bendahara = '$id_user'");
+$tabel_pengeluaran = mysqli_query($conn, "SELECT pe.*, g.nama_grup FROM pengeluaran pe JOIN grup g ON pe.id_grup = g.id_grup ORDER BY pe.tanggal_keluar DESC");
+$daftar_grup = mysqli_query($conn, "SELECT id_grup, nama_grup FROM grup");
 ?>
 <!DOCTYPE html>
 <html lang="id">

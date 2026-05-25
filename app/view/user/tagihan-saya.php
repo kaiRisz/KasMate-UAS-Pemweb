@@ -1,16 +1,9 @@
 <?php
-session_start();
-if (!isset($_SESSION['id_user']) || $_SESSION['role'] !== 'user') {
-    header("Location: ../auth/login.php");
-    exit();
-}
+require_once '../../../config/auth_check.php';
+cekRole('user');
 
-$conn = mysqli_connect("localhost", "root", "", "kasmate_db");
 $id_user = $_SESSION['id_user'];
-
-$query_user = mysqli_query($conn, "SELECT nama FROM users WHERE id_user = $id_user");
-$data_user = mysqli_fetch_assoc($query_user);
-$nama_user = $data_user['nama'];
+$nama_user = $user_login['nama'];
 ?>
 <!DOCTYPE html>
 <html lang="en">

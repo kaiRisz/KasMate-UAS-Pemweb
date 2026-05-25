@@ -1,11 +1,6 @@
 <?php
-session_start();
-require_once '../../../config/database.php';
-
-if (!isset($_SESSION['id_user']) || $_SESSION['role'] !== 'bendahara') {
-    header("Location: ../auth/login.php");
-    exit();
-}
+require_once '../../../config/auth_check.php';
+cekRole('bendahara');
 
 $id_user = $_SESSION['id_user'];
 
@@ -41,16 +36,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['tambah_grup'])) {
     exit();
 }
 
-$grup_query = mysqli_query($conn, "SELECT COUNT(*) as total FROM grup WHERE id_bendahara = '$id_user'");
+$grup_query = mysqli_query($conn, "SELECT COUNT(*) as total FROM grup");
 $total_grup = mysqli_fetch_assoc($grup_query)['total'] ?? 0;
 
-$anggota_query = mysqli_query($conn, "SELECT COUNT(DISTINCT ga.id_user) as total FROM grup_anggota ga JOIN grup g ON ga.id_grup = g.id_grup WHERE g.id_bendahara = '$id_user'");
+$anggota_query = mysqli_query($conn, "SELECT COUNT(DISTINCT ga.id_user) as total FROM grup_anggota ga JOIN grup g ON ga.id_grup = g.id_grup");
 $total_anggota = mysqli_fetch_assoc($anggota_query)['total'] ?? 0;
 
-$iuran_query = mysqli_query($conn, "SELECT AVG(i.nominal) as avg_nominal FROM iuran i JOIN grup g ON i.id_grup = g.id_grup WHERE g.id_bendahara = '$id_user'");
+$iuran_query = mysqli_query($conn, "SELECT AVG(i.nominal) as avg_nominal FROM iuran i JOIN grup g ON i.id_grup = g.id_grup");
 $avg_iuran = mysqli_fetch_assoc($iuran_query)['avg_nominal'] ?? 0;
 
-$max_grup_query = mysqli_query($conn, "SELECT MAX(member_count) as max_member FROM (SELECT COUNT(ga.id_user) as member_count FROM grup g LEFT JOIN grup_anggota ga ON g.id_grup = ga.id_grup WHERE g.id_bendahara = '$id_user' GROUP BY g.id_grup) as counts");
+$max_grup_query = mysqli_query($conn, "SELECT MAX(member_count) as max_member FROM (SELECT COUNT(ga.id_user) as member_count FROM grup g LEFT JOIN grup_anggota ga ON g.id_grup = ga.id_grup GROUP BY g.id_grup) as counts");
 $max_grup = mysqli_fetch_assoc($max_grup_query)['max_member'] ?? 0;
 
 $tabel_grup = mysqli_query($conn, "
@@ -58,9 +53,8 @@ $tabel_grup = mysqli_query($conn, "
     (SELECT COUNT(*) FROM grup_anggota WHERE id_grup = g.id_grup) as jml_anggota,
     (SELECT AVG(nominal) FROM iuran WHERE id_grup = g.id_grup) as avg_nominal
     FROM grup g 
-    WHERE g.id_bendahara = '$id_user' 
     ORDER BY g.id_grup DESC
-");
+    ");
 ?>
 <!DOCTYPE html>
 <html lang="id">
