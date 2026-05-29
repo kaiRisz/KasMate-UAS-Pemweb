@@ -1,6 +1,8 @@
 <?php
-require_once '../../../config/auth_check.php';
-require_once '../../model/user/ProfilUserModel.php';
+
+require_once __DIR__ . '/../../../config/auth_check.php';
+
+require_once __DIR__ . '/../../model/user/ProfilUserModel.php';
 
 cekRole('user');
 
@@ -18,5 +20,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['aksi']) && $_POST['ak
     }
 }
 
-require_once '../../view/user/profil.php';
+require_once __DIR__ . '/../../view/user/profil.php';
 ?>
