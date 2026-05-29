@@ -115,8 +115,7 @@
                             <td class="fw-500">Rp <?php echo number_format($row['avg_nominal'] ?? 0, 0, ',', '.'); ?></td>
                             <td>
                                 <div class="action-icons" style="justify-content: center; display: flex; gap: 15px; align-items: center;">
-                                    <a href="../../controller/bendahara/DetailGrupController.php?id=<?php echo $row['id_grup']; ?>" style="color: #64748b;" title="Lihat Detail"><i class="fa-regular fa-eye"></i></a>
-                                    <a href="javascript:void(0);" onclick="openEditModal('<?php echo $row['id_grup']; ?>', '<?php echo addslashes(htmlspecialchars($row['nama_grup'])); ?>', '<?php echo addslashes(htmlspecialchars($row['deskripsi'])); ?>')" style="color: #64748b;" title="Edit Grup"><i class="fa-solid fa-pen"></i></a>
+                                    <a href="../../controller/bendahara/DetailGrupController.php?id=<?php echo $row['id_grup']; ?>" style="color: #64748b;" title="Kelola Grup"><i class="fa-solid fa-pen"></i></a>
                                     <a href="../../controller/bendahara/GrupIuranController.php?hapus=<?php echo $row['id_grup']; ?>" onclick="return confirm('Peringatan: Menghapus grup ini juga akan MENGHAPUS SEMUA DATA iuran, pengeluaran, dan pembayaran yang ada di dalamnya. Anda yakin?');" style="color: #ef4444;" title="Hapus Grup"><i class="fa-regular fa-trash-can"></i></a>
                                 </div>
                             </td>
@@ -155,34 +154,5 @@
         </div>
     </div>
 
-    <div id="modalEditGrup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
-        <div style="background:#fff; padding:30px; border-radius:12px; width:400px; max-width:90%; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
-            <h3 style="margin-top:0; margin-bottom:20px; color:#1e293b;">Edit Grup Iuran</h3>
-            <form action="" method="POST">
-                <input type="hidden" name="id_grup" id="edit_id_grup">
-                <div style="margin-bottom:15px;">
-                    <label style="display:block; margin-bottom:5px; font-weight:500; color:#475569;">Nama Grup</label>
-                    <input type="text" name="nama_grup" id="edit_nama_grup" required style="width:100%; padding:12px; border:1px solid #cbd5e1; border-radius:8px; box-sizing: border-box;">
-                </div>
-                <div style="margin-bottom:20px;">
-                    <label style="display:block; margin-bottom:5px; font-weight:500; color:#475569;">Deskripsi / Keterangan</label>
-                    <textarea name="deskripsi" id="edit_deskripsi" required rows="3" style="width:100%; padding:12px; border:1px solid #cbd5e1; border-radius:8px; box-sizing: border-box;"></textarea>
-                </div>
-                <div style="display:flex; justify-content:flex-end; gap:10px;">
-                    <button type="button" onclick="document.getElementById('modalEditGrup').style.display='none'" style="padding:10px 20px; border:none; background:#e2e8f0; color:#475569; font-weight:600; border-radius:8px; cursor:pointer;">Batal</button>
-                    <button type="submit" name="edit_grup" style="padding:10px 20px; border:none; background:#1e293b; color:#fff; font-weight:600; border-radius:8px; cursor:pointer;">Update Grup</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <script>
-        function openEditModal(id, nama, deskripsi) {
-            document.getElementById('edit_id_grup').value = id;
-            document.getElementById('edit_nama_grup').value = nama;
-            document.getElementById('edit_deskripsi').value = deskripsi;
-            document.getElementById('modalEditGrup').style.display = 'flex';
-        }
-    </script>
 </body>
 </html>

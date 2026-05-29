@@ -9,6 +9,18 @@ class GrupModel {
 
     public function hapusGrup($id_hapus) {
         $id_hapus = (int)$id_hapus;
+        
+        mysqli_query($this->conn, "DELETE FROM grup_anggota WHERE id_grup = $id_hapus");
+        
+        $q_iuran = mysqli_query($this->conn, "SELECT id_iuran FROM iuran WHERE id_grup = $id_hapus");
+        while ($row = mysqli_fetch_assoc($q_iuran)) {
+            $id_iuran = $row['id_iuran'];
+            mysqli_query($this->conn, "DELETE FROM pembayaran WHERE id_iuran = $id_iuran");
+        }
+        
+        mysqli_query($this->conn, "DELETE FROM iuran WHERE id_grup = $id_hapus");
+        mysqli_query($this->conn, "DELETE FROM pengeluaran WHERE id_grup = $id_hapus");
+        
         mysqli_query($this->conn, "DELETE FROM grup WHERE id_grup = $id_hapus");
     }
 
@@ -22,7 +34,7 @@ class GrupModel {
         $q_count = mysqli_query($this->conn, "
             SELECT COUNT(*) as total 
             FROM grup g 
-            JOIN users u ON g.id_bendahara = u.id_user 
+            LEFT JOIN users u ON g.id_bendahara = u.id_user 
             $where
         ");
         return mysqli_fetch_assoc($q_count)['total'];
@@ -42,7 +54,7 @@ class GrupModel {
             SELECT g.*, u.nama as nama_bendahara,
                 (SELECT COUNT(*) FROM grup_anggota ga WHERE ga.id_grup = g.id_grup) as jumlah_anggota
             FROM grup g 
-            JOIN users u ON g.id_bendahara = u.id_user 
+            LEFT JOIN users u ON g.id_bendahara = u.id_user 
             $where 
             ORDER BY g.id_grup DESC 
             LIMIT $per_page OFFSET $offset

@@ -23,7 +23,6 @@
                 <div class="menu-section">
                     <p class="section-title">KELOLA IURAN</p>
                     <a href="../../controller/bendahara/GrupIuranController.php" class="menu-item"><i class="fa-solid fa-users-line"></i> Grup Iuran</a>
-                    <a href="../../controller/bendahara/DetailGrupController.php" class="menu-item"><i class="fa-solid fa-user-group"></i> Detail Grup</a>
                 </div>
                 <div class="menu-section">
                     <p class="section-title">KEUANGAN</p>
@@ -94,7 +93,6 @@
             <section class="card table-card">
                 <div class="table-controls">
                     <h3 class="card-title" style="margin-bottom: 0;">Rincian Laporan (Keseluruhan)</h3>
-                    <button class="btn-action"><i class="fa-solid fa-download"></i> Unduh PDF</button>
                 </div>
 
                 <table class="data-table">

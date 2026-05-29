@@ -23,7 +23,6 @@
                 <div class="menu-section">
                     <p class="section-title">KELOLA IURAN</p>
                     <a href="../../controller/bendahara/GrupIuranController.php" class="menu-item"><i class="fa-solid fa-users-line"></i> Grup Iuran</a>
-                    <a href="../../controller/bendahara/DetailGrupController.php" class="menu-item"><i class="fa-solid fa-user-group"></i> Detail Grup</a>
                 </div>
                 <div class="menu-section">
                     <p class="section-title">KEUANGAN</p>

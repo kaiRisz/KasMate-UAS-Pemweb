@@ -55,9 +55,6 @@ if (isset($_GET['hapus_tagihan'])) {
 
 if (isset($_POST['bayar_tagihan'])) {
     $grupModel->bayarTagihan($_POST['id_user_bayar'], $_POST['id_iuran_bayar']);
-
-mysqli_query($conn, "INSERT INTO p_pemasukan_temp (keterangan) VALUES ('Bayar')"); 
-    
     header("Location: DetailGrupController.php?id=$id_grup&tab=pembayaran");
     exit();
 }

@@ -257,5 +257,19 @@
         });
     </script>
 
+    <?php if (isset($_SESSION['notif_error'])): ?>
+        <script>
+            alert("<?= addslashes($_SESSION['notif_error']) ?>");
+        </script>
+        <?php unset($_SESSION['notif_error']); ?>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['notif_sukses'])): ?>
+        <script>
+            alert("<?= addslashes($_SESSION['notif_sukses']) ?>");
+        </script>
+        <?php unset($_SESSION['notif_sukses']); ?>
+    <?php endif; ?>
+
 </body>
 </html>

@@ -1,7 +1,5 @@
 <?php
 
-?>
-
 $total_tagihan = $data_tagihan['total_tagihan'] ?? 0;
 $total_lunas = $data_tagihan['total_lunas'] ?? 0;
 $total_belum = $data_tagihan['total_belum'] ?? 0;
@@ -30,8 +28,7 @@ $persen_belum = $total_tagihan > 0 ? round(($total_belum / $total_tagihan) * 100
                 <a href="../../controller/bendahara/DashboardBendaharaController.php" class="menu-item"><i class="fa-solid fa-border-all"></i> Dashboard</a>
                 <div class="menu-section">
                     <p class="section-title">KELOLA IURAN</p>
-                    <a href="../../controller/bendahara/GrupIuranController.php" class="menu-item"><i class="fa-solid fa-users-line"></i> Grup Iuran</a>
-                    <a href="../../controller/bendahara/DetailGrupController.php?id=<?php echo $id_grup; ?>" class="menu-item active"><i class="fa-solid fa-user-group"></i> Detail Grup</a>
+                    <a href="../../controller/bendahara/GrupIuranController.php" class="menu-item active"><i class="fa-solid fa-users-line"></i> Grup Iuran</a>
                 </div>
                 <div class="menu-section">
                     <p class="section-title">KEUANGAN</p>

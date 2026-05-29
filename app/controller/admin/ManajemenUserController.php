@@ -7,7 +7,14 @@ cekRole('admin');
 $userModel = new UserModel($conn);
 
 if (isset($_GET['hapus'])) {
-    $userModel->hapusUser($_GET['hapus'], $user_login['id_user']);
+    $hasil = $userModel->hapusUser($_GET['hapus'], $user_login['id_user']);
+    
+    if ($hasil['status'] === true) {
+        $_SESSION['notif_sukses'] = $hasil['pesan'];
+    } else {
+        $_SESSION['notif_error'] = $hasil['pesan'];
+    }
+    
     header("Location: ManajemenUserController.php");
     exit();
 }

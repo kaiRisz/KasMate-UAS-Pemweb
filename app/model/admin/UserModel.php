@@ -7,10 +7,24 @@ class UserModel {
         $this->conn = $dbConnection;
     }
 
-    public function hapusUser($id_hapus, $id_user_login) {
-        $id_hapus = (int)$id_hapus;
-        if ($id_hapus !== (int)$id_user_login) {
-            mysqli_query($this->conn, "DELETE FROM users WHERE id_user = $id_hapus");
+    public function hapusUser($id_user_hapus, $id_admin_login) {
+        if ((int)$id_user_hapus === (int)$id_admin_login) {
+            return ['status' => false, 'pesan' => 'Anda tidak dapat menghapus akun Anda sendiri saat sedang login.'];
+        }
+
+        try {
+            mysqli_query($this->conn, "SET FOREIGN_KEY_CHECKS=0");
+            
+            $query = "DELETE FROM users WHERE id_user = '$id_user_hapus'";
+            mysqli_query($this->conn, $query);
+            
+            mysqli_query($this->conn, "SET FOREIGN_KEY_CHECKS=1");
+            
+            return ['status' => true, 'pesan' => 'User berhasil dihapus, namun data grup yang pernah dibuatnya tetap aman.'];
+            
+        } catch (\mysqli_sql_exception $e) {
+            mysqli_query($this->conn, "SET FOREIGN_KEY_CHECKS=1");
+            return ['status' => false, 'pesan' => 'Gagal menghapus user: Terjadi kesalahan sistem database.'];
         }
     }
 

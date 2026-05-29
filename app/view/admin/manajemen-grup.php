@@ -1,5 +1,4 @@
 <?php
-
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -52,9 +51,9 @@
                 <div class="header-right">
                     <button class="btn-notification"><i class='bx bx-bell'></i></button>
                     <div class="user-profile">
-                        <img src="https://ui-avatars.com/api/?name=<?= urlencode($user_login['nama']) ?>&background=e2e8f0&color=475569" alt="<?= htmlspecialchars($user_login['nama']) ?>">
+                        <img src="https://ui-avatars.com/api/?name=<?= urlencode($user_login['nama'] ?? 'Admin') ?>&background=e2e8f0&color=475569" alt="<?= htmlspecialchars($user_login['nama'] ?? 'Admin') ?>">
                         <div class="user-info">
-                            <span class="user-name"><?= htmlspecialchars($user_login['nama']) ?></span>
+                            <span class="user-name"><?= htmlspecialchars($user_login['nama'] ?? 'Admin') ?></span>
                             <span class="user-role">Administrator</span>
                         </div>
                     </div>
@@ -65,7 +64,7 @@
                 <div class="card table-card">
                     <div class="table-controls">
                         <form method="GET" class="search-box">
-                            <input type="text" name="search" placeholder="Cari grup..." value="<?= htmlspecialchars($search) ?>">
+                            <input type="text" name="search" placeholder="Cari grup..." value="<?= htmlspecialchars($search ?? '') ?>">
                         </form>
                     </div>
 
@@ -80,17 +79,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if (count($q_groups) > 0): ?>
+                            <?php if (isset($q_groups) && count($q_groups) > 0): ?>
                                 <?php foreach ($q_groups as $g): ?>
                                     <tr>
-                                        <td class="fw-500"><?= htmlspecialchars($g['nama_grup']) ?></td>
+                                        <td class="fw-500"><?= htmlspecialchars($g['nama_grup'] ?? '') ?></td>
                                         <td><?= htmlspecialchars($g['deskripsi'] ?? '-') ?></td>
-                                        <td><?= htmlspecialchars($g['nama_bendahara']) ?></td>
-                                        <td><?= $g['jumlah_anggota'] ?> orang</td>
+                                        <td><?= htmlspecialchars($g['nama_bendahara'] ?? 'Belum Ada') ?></td>
+                                        <td><?= $g['jumlah_anggota'] ?? 0 ?> orang</td>
                                         <td>
                                             <div class="action-icons">
                                                 <i class='bx bx-trash text-red' style="cursor:pointer;" 
-                                                   onclick="bukaModalHapus(<?= $g['id_grup'] ?>, '<?= htmlspecialchars(addslashes($g['nama_grup'])) ?>')"></i>
+                                                   onclick="bukaModalHapus(<?= $g['id_grup'] ?>, '<?= htmlspecialchars(addslashes($g['nama_grup'] ?? '')) ?>')"></i>
                                             </div>
                                         </td>
                                     </tr>
@@ -109,13 +108,13 @@
                         </span>
                         <div class="pagination">
                             <?php if ($page > 1): ?>
-                                <a href="?page=<?= $page - 1 ?>&search=<?= urlencode($search) ?>" class="page-btn"><i class='bx bx-chevron-left'></i></a>
+                                <a href="?page=<?= $page - 1 ?>&search=<?= urlencode($search ?? '') ?>" class="page-btn"><i class='bx bx-chevron-left'></i></a>
                             <?php endif; ?>
                             <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                                <a href="?page=<?= $i ?>&search=<?= urlencode($search) ?>" class="page-btn <?= $i === $page ? 'active' : '' ?>"><?= $i ?></a>
+                                <a href="?page=<?= $i ?>&search=<?= urlencode($search ?? '') ?>" class="page-btn <?= $i === $page ? 'active' : '' ?>"><?= $i ?></a>
                             <?php endfor; ?>
                             <?php if ($page < $total_pages): ?>
-                                <a href="?page=<?= $page + 1 ?>&search=<?= urlencode($search) ?>" class="page-btn"><i class='bx bx-chevron-right'></i></a>
+                                <a href="?page=<?= $page + 1 ?>&search=<?= urlencode($search ?? '') ?>" class="page-btn"><i class='bx bx-chevron-right'></i></a>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -152,6 +151,5 @@
             });
         });
     </script>
-
 </body>
 </html>

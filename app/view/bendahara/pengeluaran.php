@@ -23,7 +23,6 @@
                 <div class="menu-section">
                     <p class="section-title">KELOLA IURAN</p>
                     <a href="../../controller/bendahara/GrupIuranController.php" class="menu-item"><i class="fa-solid fa-users-line"></i> Grup Iuran</a>
-                    <a href="../../controller/bendahara/DetailGrupController.php" class="menu-item"><i class="fa-solid fa-user-group"></i> Detail Grup</a>
                 </div>
                 <div class="menu-section">
                     <p class="section-title">KEUANGAN</p>
@@ -158,8 +157,7 @@
                             <td class="fw-500 text-red">- Rp <?php echo number_format($row['nominal_keluar'], 0, ',', '.'); ?></td>
                             <td>
                                 <div class="action-icons" style="justify-content: center;">
-                                    <i class="fa-solid fa-pen"></i>
-                                    <i class="fa-solid fa-trash-can text-red"></i>
+                                    <a href="../../controller/bendahara/PengeluaranController.php?hapus_pengeluaran=<?php echo $row['id_pengeluaran']; ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus pengeluaran ini?');" style="color: #ef4444;"><i class="fa-solid fa-trash-can"></i></a>
                                 </div>
                             </td>
                         </tr>
