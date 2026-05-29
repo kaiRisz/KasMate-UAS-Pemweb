@@ -4,9 +4,13 @@ cekRole('user');
 
 $id_user = $_SESSION['id_user'];
 $nama_user = $user_login['nama'];
+
 ?>
+
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +19,7 @@ $nama_user = $user_login['nama'];
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../../../public/assets/css/style.css">
 </head>
+
 <style>
     .main-content { padding: 20px; }   
     .table-tittle{ font-size: 16px; margin-bottom: 16px; }
@@ -28,54 +33,54 @@ $nama_user = $user_login['nama'];
     td { padding: 15px; border-bottom: 1px solid #f0f2f5; font-size: 14px; color: #1c1e21; }
     .btn-action{ background-color: #6f9693; color: white; padding: 5px 10px; border-radius: 8px; border: none; font-size: 12px; }
 </style>
+
 <body>
 
 <input type="checkbox" id="menu-toggle" class="menu-checkbox">
+    <div class="topbar-mobile">
+        <label for="menu-toggle" class="hamburger-btn">
+            <i class="fa-solid fa-bars"></i>
+        </label>
 
-<div class="topbar-mobile">
-    <label for="menu-toggle" class="hamburger-btn">
-        <i class="fa-solid fa-bars"></i>
-    </label>
-    <div class="logo-mobile">
-        <i class="fa-solid fa-cube"></i>
-        <span>KasMate</span>
+            <div class="logo-mobile">
+                    <i class="fa-solid fa-cube"></i>
+                <span>KasMate</span>
+            </div>
     </div>
-</div>
-
 <label for="menu-toggle" class="sidebar-overlay"></label>
 
     <div class="dashboard-layout">
         <aside class="sidebar">
-    <div class="logo">
-        <i class="fa-solid fa-cube"></i>
-        <span>KasMate</span>
-    </div>
-    <div class="menu-section">
-        <a href="/KasMate-UAS-Pemweb/app/controller/user/DashboardUserController.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'DashboardUserController.php' ? 'active' : '' ?>">
-            <i class="fa-solid fa-house-chimney"></i> Dashboard
-        </a>
+            <div class="logo">
+                <i class="fa-solid fa-cube"></i>
+                    <span>KasMate</span>
+            </div>
+            <div class="menu-section">
+                <a href="/KasMate-UAS-Pemweb/app/controller/user/DashboardUserController.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'DashboardUserController.php' ? 'active' : '' ?>">
+                    <i class="fa-solid fa-house-chimney"></i> Dashboard
+                </a>
 
-        <a href="/KasMate-UAS-Pemweb/app/controller/user/TagihanUserController.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'TagihanUserController.php' ? 'active' : '' ?>">
-            <i class="fa-solid fa-file-invoice-dollar"></i> Tagihan Saya
-        </a>
+                <a href="/KasMate-UAS-Pemweb/app/controller/user/TagihanUserController.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'TagihanUserController.php' ? 'active' : '' ?>">
+                    <i class="fa-solid fa-file-invoice-dollar"></i> Tagihan Saya
+                </a>
 
-        <a href="/KasMate-UAS-Pemweb/app/controller/user/RiwayatUserController.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'RiwayatUserController.php' ? 'active' : '' ?>">
-            <i class="fa-solid fa-clock-rotate-left"></i> Riwayat Pembayaran
-        </a>
+                <a href="/KasMate-UAS-Pemweb/app/controller/user/RiwayatUserController.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'RiwayatUserController.php' ? 'active' : '' ?>">
+                    <i class="fa-solid fa-clock-rotate-left"></i> Riwayat Pembayaran
+                </a>
 
-        <a href="/KasMate-UAS-Pemweb/app/controller/user/GrupUserController.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'GrupUserController.php' ? 'active' : '' ?>">
-            <i class="fa-solid fa-users-line"></i> Grup Saya
-        </a>
+                <a href="/KasMate-UAS-Pemweb/app/controller/user/GrupUserController.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'GrupUserController.php' ? 'active' : '' ?>">
+                    <i class="fa-solid fa-users-line"></i> Grup Saya
+                </a>
 
-        <a href="/KasMate-UAS-Pemweb/app/controller/user/ProfilUserController.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'ProfilUserController.php' ? 'active' : '' ?>">
-            <i class="fa-solid fa-circle-user"></i> Profil
-        </a>
+                <a href="/KasMate-UAS-Pemweb/app/controller/user/ProfilUserController.php" class="menu-item <?= basename($_SERVER['PHP_SELF']) == 'ProfilUserController.php' ? 'active' : '' ?>">
+                    <i class="fa-solid fa-circle-user"></i> Profil
+                </a>
 
-        <a href="/KasMate-UAS-Pemweb/app/view/user/logout.php" class="menu-item">
-            <i class="fa-solid fa-right-from-bracket"></i> Logout
-        </a>
-    </div>
-</aside>
+                <a href="/KasMate-UAS-Pemweb/app/view/user/logout.php" class="menu-item">
+                    <i class="fa-solid fa-right-from-bracket"></i> Logout
+                </a>
+            </div>
+        </aside>
 
         <main class="main-content">
             <header class="topbar">
