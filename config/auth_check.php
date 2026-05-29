@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 require_once __DIR__ . '/database.php';
 
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
@@ -8,21 +10,34 @@ header("Pragma: no-cache");
 header("Expires: 0"); 
 
 if (!isset($_SESSION['id_user'])) {
-    header("Location: ../auth/login.php");
+    header("Location: /KasMate-UAS-Pemweb/app/view/auth/login.php");
     exit();
 }
 
+$durasi_maksimal = 86400; 
+
+if (isset($_SESSION['terakhir_aktif'])) {
+    $selisih_waktu = time() - $_SESSION['terakhir_aktif'];
+    if ($selisih_waktu > $durasi_maksimal) {
+        session_unset();
+        session_destroy();
+        header("Location: /KasMate-UAS-Pemweb/app/view/auth/login.php?pesan=sesi_habis");
+        exit();
+    }
+}
+$_SESSION['terakhir_aktif'] = time();
+
 function cekRole($role_dibutuhkan) {
-    if ($_SESSION['role'] !== $role_dibutuhkan) {
+    if (!isset($_SESSION['role']) || $_SESSION['role'] !== $role_dibutuhkan) {
         switch ($_SESSION['role']) {
             case 'admin':
-                header("Location: ../admin/dashboard-admin.php");
+                header("Location: /KasMate-UAS-Pemweb/app/controller/admin/DashboardAdminController.php");
                 break;
             case 'bendahara':
-                header("Location: ../bendahara/dashboard-bendahara.php");
+                header("Location: /KasMate-UAS-Pemweb/app/controller/bendahara/DashboardBendaharaController.php");
                 break;
             default:
-                header("Location: ../user/dashboard-user.php");
+                header("Location: /KasMate-UAS-Pemweb/app/controller/user/DashboardUserController.php");
                 break;
         }
         exit();
