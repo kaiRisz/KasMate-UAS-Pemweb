@@ -1087,3 +1087,90 @@ tr:last-child td {
         justify-content: space-between;
     }
 }
+
+/* HAMBURGER ICON */
+.menu-checkbox {
+    display: none;
+}
+
+.topbar-mobile {
+    display: none;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+    background-color: #2A3636; 
+    color: white;
+    padding: 15px 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.logo-mobile { 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    font-weight: 700; 
+    font-size: 18px; 
+}
+
+.hamburger-btn { 
+    color: white; 
+    font-size: 22px; 
+    cursor: pointer; 
+}
+
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 998;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .topbar-mobile { 
+        display: flex; 
+    }
+    
+    .dashboard-layout {
+        display: block;
+        padding-top: 60px; 
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -260px; 
+        right: auto;
+        bottom: 0;
+        width: 250px;
+        z-index: 999;
+        transition: left 0.3s ease;
+        box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+    }
+
+    .overview {
+        grid-template-columns: 1fr;
+    }
+
+    .menu-checkbox:checked ~ .dashboard-layout .sidebar {
+        left: 0;
+        right: auto;
+    }
+
+    .menu-checkbox:checked ~ .sidebar-overlay {
+        display: block;
+        opacity: 1;
+        pointer-events: auto;
+    }
+}
