@@ -1,16 +1,6 @@
 <?php
-require_once '../../../config/database.php';
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nama = $_POST['nama'];
-    $email = $_POST['email'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $role = 'user';
-
-    $query = "INSERT INTO users (nama, email, password, role) VALUES ('$nama', '$email', '$password', '$role')";
-    mysqli_query($conn, $query);
-
-    header("Location: login.php");
+if (!isset($authModel)) {
+    header("Location: ../../controller/auth/RegisterController.php");
     exit();
 }
 ?>
@@ -150,7 +140,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input type="password" id="password" name="password" placeholder="Password" required>
                     </div>
                     <button type="submit" class="btn-login">Daftar</button>
-                    <p class="register-link">Sudah punya akun? <a href="login.php">Login di sini</a></p>
+                    <p class="register-link">Sudah punya akun? <a href="LoginController.php">Login di sini</a></p>
                 </form>
             </div>
         </div>

@@ -10,8 +10,7 @@ header("Pragma: no-cache");
 header("Expires: 0"); 
 
 if (!isset($_SESSION['id_user'])) {
-    header("Location: /KasMate-UAS-Pemweb/app/view/auth/login.php");
-    exit();
+    header("Location: /KasMate-UAS-Pemweb/app/controller/auth/LoginController.php");
 }
 
 $durasi_maksimal = 86400; 
@@ -21,8 +20,7 @@ if (isset($_SESSION['terakhir_aktif'])) {
     if ($selisih_waktu > $durasi_maksimal) {
         session_unset();
         session_destroy();
-        header("Location: /KasMate-UAS-Pemweb/app/view/auth/login.php?pesan=sesi_habis");
-        exit();
+        header("Location: /KasMate-UAS-Pemweb/app/controller/auth/LoginController.php?pesan=sesi_habis");
     }
 }
 $_SESSION['terakhir_aktif'] = time();

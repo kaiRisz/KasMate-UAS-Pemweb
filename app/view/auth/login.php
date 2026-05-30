@@ -1,52 +1,7 @@
 <?php
-session_start();
-require_once '../../../config/database.php';
-
-if (isset($_SESSION['id_user']) && isset($_SESSION['role'])) {
-    if ($_SESSION['role'] == 'admin') {
-        header("Location: ../../controller/admin/DashboardAdminController.php");
-        exit();
-    } elseif ($_SESSION['role'] == 'bendahara') {
-        header("Location: ../../controller/bendahara/DashboardBendaharaController.php");
-        exit();
-    } else {
-        header("Location: ../../controller/user/DashboardUserController.php");
-        exit();
-    }
-}
-
-header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-header("Cache-Control: post-check=0, pre-check=0", false);
-header("Pragma: no-cache");
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-
-    $query = "SELECT * FROM users WHERE email='$email'";
-    $result = mysqli_query($conn, $query);
-
-    if (mysqli_num_rows($result) === 1) {
-        $row = mysqli_fetch_assoc($result);
-        
-        if (password_verify($password, $row['password'])) {
-            $_SESSION['id_user'] = $row['id_user'];
-            $_SESSION['role'] = $row['role'];
-
-            if ($row['role'] == 'admin') {
-                header("Location: ../../controller/admin/DashboardAdminController.php");
-            } elseif ($row['role'] == 'bendahara') {
-                header("Location: ../../controller/bendahara/DashboardBendaharaController.php");
-            } else {
-                header("Location: ../../controller/user/DashboardUserController.php");
-            }
-            exit();
-        } else {
-            $error = true;
-        }
-    } else {
-        $error = true;
-    }
+if (!isset($authModel)) {
+    header("Location: ../../controller/auth/LoginController.php");
+    exit();
 }
 ?>
 <!DOCTYPE html>
@@ -185,7 +140,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <p>Silahkan masukkan email dan password anda</p>
                 </div>
                 
-                <?php if(isset($error)) : ?>
+                <?php if($error) : ?>
                     <div class="error-message">Email atau password salah!</div>
                 <?php endif; ?>
 
@@ -199,7 +154,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input type="password" id="password" name="password" placeholder="Password" required>
                     </div>
                     <button type="submit" class="btn-login">Login</button>
-                    <p class="register-link">Belum punya akun? <a href="register.php">Daftar sekarang</a></p>
+                    <p class="register-link">Belum punya akun? <a href="RegisterController.php">Daftar sekarang</a></p>
                 </form>
             </div>
         </div>

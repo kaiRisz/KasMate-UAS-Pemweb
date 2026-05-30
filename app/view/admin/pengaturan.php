@@ -46,7 +46,7 @@
                     </a>
                 </div>
                 <div class="menu-section" style="margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
-                    <a href="../../controller/admin/LogoutController.php" class="menu-item">
+                    <a href="../../controller/auth/LogoutController.php" class="menu-item">
                         <i class='bx bx-log-out'></i> Logout
                     </a>
                 </div>

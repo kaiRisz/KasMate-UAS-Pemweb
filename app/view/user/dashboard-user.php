@@ -57,7 +57,7 @@
             <i class="fa-solid fa-circle-user"></i> Profil
         </a>
 
-        <a href="../../view/user/logout.php" class="menu-item">
+        <a href="../../controller/auth/LogoutController.php" class="menu-item">
     <i class="fa-solid fa-right-from-bracket"></i> Logout
 </a>
     </div>
