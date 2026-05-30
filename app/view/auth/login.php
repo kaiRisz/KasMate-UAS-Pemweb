@@ -12,6 +12,7 @@ if (!isset($authModel)) {
     <title>Login - IMPULSEGUARD</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../../public/assets/css/style.css">
+
     <style>
         body {
             margin: 0;
@@ -123,44 +124,58 @@ if (!isset($authModel)) {
             margin-bottom: 15px;
         }
     </style>
+
     <script>
-        // Mencegah user menekan tombol 'back' kembali ke halaman sebelumnya setelah berada di login
         history.pushState(null, null, location.href);
         window.onpopstate = function () {
             history.go(1);
         };
     </script>
 </head>
-<body>
-    <div class="split-layout">
-        <div class="left-panel">
-            <div class="login-card">
-                <div class="login-header">
-                    <h1>Login</h1>
-                    <p>Silahkan masukkan email dan password anda</p>
-                </div>
-                
-                <?php if($error) : ?>
-                    <div class="error-message">Email atau password salah!</div>
-                <?php endif; ?>
 
-                <form action="" method="POST">
-                    <div class="input-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" placeholder="Email" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="password">Password</label>
-                        <input type="password" id="password" name="password" placeholder="Password" required>
-                    </div>
-                    <button type="submit" class="btn-login">Login</button>
-                    <p class="register-link">Belum punya akun? <a href="RegisterController.php">Daftar sekarang</a></p>
-                </form>
+<body>
+<div class="split-layout">
+
+    <div class="left-panel">
+        <div class="login-card">
+
+            <div class="login-header">
+                <h1>Login</h1>
+                <p>Silahkan masukkan email dan password anda</p>
             </div>
-        </div>
-        <div class="right-panel">
-            <img src="../../../public/assets/image/gambar.jpeg" alt="pict">
+
+            <!-- FIX: aman dari undefined variable -->
+            <?php if (!empty($error)) : ?>
+                <div class="error-message">
+                    Email atau password salah!
+                </div>
+            <?php endif; ?>
+
+            <form action="" method="POST">
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Masukkan email aktif" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Masukkan password" required>
+                </div>
+
+                <button type="submit" class="btn-login">Login</button>
+
+                <p class="register-link">
+                    Belum punya akun? <a href="RegisterController.php">Daftar sekarang</a>
+                </p>
+            </form>
+
         </div>
     </div>
+
+    <div class="right-panel">
+        <img src="../../../public/assets/image/gambar.jpeg" alt="pict">
+    </div>
+
+</div>
 </body>
 </html>
