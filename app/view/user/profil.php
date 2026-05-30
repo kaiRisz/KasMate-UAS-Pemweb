@@ -11,8 +11,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../../../public/assets/css/style.css">
 </head>
-</head>
 <body>
+
+
 
 <input type="checkbox" id="menu-toggle" class="menu-checkbox">
 
