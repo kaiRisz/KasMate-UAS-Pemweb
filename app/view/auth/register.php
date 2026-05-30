@@ -24,7 +24,7 @@ if (!isset($authModel)) {
         }
         .left-panel {
             flex: 1;
-            background-color: #2b3a4a;
+            background-color: #23312e;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -53,12 +53,12 @@ if (!isset($authModel)) {
         }
         .login-header h1 {
             margin-top: 0;
-            color: #1e293b;
+            color: #23312e;
             font-size: 2rem;
             margin-bottom: 5px;
         }
         .login-header p {
-            color: #64748b;
+            color: #5b7b76;
             font-size: 0.9rem;
             margin: 0;
         }
@@ -68,7 +68,7 @@ if (!isset($authModel)) {
         .input-group label {
             display: block;
             margin-bottom: 8px;
-            color: #1e293b;
+            color: #23312e;
             font-weight: 500;
             font-size: 0.95rem;
         }
@@ -88,7 +88,7 @@ if (!isset($authModel)) {
         .btn-login {
             width: 100%;
             padding: 14px;
-            background-color: #1e293b;
+            background-color: #23312e;
             color: #fff;
             border: none;
             border-radius: 8px;
@@ -106,7 +106,7 @@ if (!isset($authModel)) {
             text-align: center;
             margin-top: 20px;
             font-size: 0.9rem;
-            color: #64748b;
+            color: #5b7b76;
         }
         .register-link a {
             color: #3b82f6;
