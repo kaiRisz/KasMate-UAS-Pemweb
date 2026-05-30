@@ -25,7 +25,7 @@ if (!isset($authModel)) {
         }
         .left-panel {
             flex: 1;
-            background-color: #2b3a4a;
+            background-color: #23312e;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -40,7 +40,7 @@ if (!isset($authModel)) {
             object-fit: cover;
         }
         .login-card {
-            background: #fff;
+            background:  #ffffff;
             padding: 40px;
             border-radius: 12px;
             width: 100%;
@@ -54,12 +54,12 @@ if (!isset($authModel)) {
         }
         .login-header h1 {
             margin-top: 0;
-            color: #1e293b;
+            color: #243230;
             font-size: 2rem;
             margin-bottom: 5px;
         }
         .login-header p {
-            color: #64748b;
+            color: #5b7b76;
             font-size: 0.9rem;
             margin: 0;
         }
@@ -69,7 +69,7 @@ if (!isset($authModel)) {
         .input-group label {
             display: block;
             margin-bottom: 8px;
-            color: #1e293b;
+            color:#243230;
             font-weight: 500;
             font-size: 0.95rem;
         }
@@ -84,12 +84,12 @@ if (!isset($authModel)) {
         }
         .input-group input:focus {
             outline: none;
-            border-color: #3b82f6;
+            border-color: #5b7b76;
         }
         .btn-login {
             width: 100%;
             padding: 14px;
-            background-color: #1e293b;
+            background-color: #243230;;
             color: #fff;
             border: none;
             border-radius: 8px;
@@ -101,13 +101,13 @@ if (!isset($authModel)) {
             transition: background-color 0.2s;
         }
         .btn-login:hover {
-            background-color: #0f172a;
+            background-color: #243230;;
         }
         .register-link {
             text-align: center;
             margin-top: 20px;
             font-size: 0.9rem;
-            color: #64748b;
+            color: #5b7b76;
         }
         .register-link a {
             color: #3b82f6;
