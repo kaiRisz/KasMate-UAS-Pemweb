@@ -1,32 +1,5 @@
 <?php
-require_once '../../../config/auth_check.php';
-cekRole('user');
 
-$id_user = $_SESSION['id_user'];
-
-$message = "";
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $nama = mysqli_real_escape_string($conn, $_POST['nama']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $password_baru = $_POST['password_baru'];
-    $konfirmasi_password = $_POST['konfirmasi_password'];
-
-    if (!empty($password_baru)) {
-        if ($password_baru === $konfirmasi_password) {
-            $password_hashed = password_hash($password_baru, PASSWORD_BCRYPT);
-            mysqli_query($conn, "UPDATE users SET nama='$nama', email='$email', password='$password_hashed' WHERE id_user=$id_user");
-            $message = "Profil dan password berhasil diperbarui.";
-        } else {
-            $message = "Konfirmasi password tidak cocok.";
-        }
-    } else {
-        mysqli_query($conn, "UPDATE users SET nama='$nama', email='$email' WHERE id_user=$id_user");
-        $message = "Profil berhasil diperbarui.";
-    }
-}
-
-$query_user = mysqli_query($conn, "SELECT nama, email FROM users WHERE id_user = $id_user");
-$data_user = mysqli_fetch_assoc($query_user);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,23 +11,7 @@ $data_user = mysqli_fetch_assoc($query_user);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../../../public/assets/css/style.css">
 </head>
-<style>
-    .main-content { padding: 20px; }
-    .profile-container{ background: white; border-radius: 16px; padding: 30px; max-width: 700px; }
-    .profile-header{ display: flex; align-items: center; gap: 20px; margin-bottom: 25px; }
-    .profile-name{ font-size: 18px; font-weight: 600; }
-    .profile-role{ font-size: 14px; color: gray; }
-    .form-group{ margin-bottom: 16px; }
-    .form-group label{ display: block; margin-bottom: 6px; font-size: 14px; }
-    .form-group input{ width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc; }
-    .btn-save{ background-color: #2A3636; color: white; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; }
-    .btn-save:hover{ background-color: #1f2a2a; }
-    .user-profile { width: 100px; height: 100px; border-radius: 50%; overflow: hidden; display: flex; justify-content: center; align-items: center; border: 2px solid #ddd; }
-    .user-profile img { width: 100%; height: 100%; object-fit: cover; }
-    .menu-item.active { background-color: #6f9693; color: white; border-radius: 12px; font-weight: 600; }
-    .menu-item.active i { color: white; }
-    .alert { padding: 10px; margin-bottom: 15px; border-radius: 8px; background-color: #d4edda; color: darkgreen; }
-</style>
+</head>
 <body>
 
 <input type="checkbox" id="menu-toggle" class="menu-checkbox">
@@ -112,39 +69,40 @@ $data_user = mysqli_fetch_assoc($query_user);
                 </div>
             </header>
 
-            <div class="profile-container">
+            <div class="card" style="max-width: 700px; padding: 30px;">
                 <?php if (!empty($message)): ?>
-                    <div class="alert"><?= htmlspecialchars($message); ?></div>
+                    <div style="padding: 10px; margin-bottom: 15px; border-radius: 8px; background-color: #dcfce7; color: #16a34a; border: 1px solid #bbf7d0;"><?= htmlspecialchars($message); ?></div>
                 <?php endif; ?>
 
-                <div class="profile-header">
-                    <div class="user-profile">
-                        <img src="../../../public/assets/image/user_pict.jpg" alt="User Image">
+                <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 30px;">
+                    <div style="width: 80px; height: 80px; border-radius: 50%; overflow: hidden; border: 2px solid var(--border-color);">
+                        <img src="../../../public/assets/image/user_pict.jpg" alt="User Image" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                     <div>
-                        <div class="profile-name"><?= htmlspecialchars($data_user['nama']); ?></div>
-                        <div class="profile-role">Anggota</div>
+                        <div style="font-size: 18px; font-weight: 600; color: var(--text-dark);"><?= htmlspecialchars($data_user['nama']); ?></div>
+                        <div style="font-size: 14px; color: var(--text-muted);">Anggota</div>
                     </div>
                 </div>
 
                 <form action="" method="POST">
-                    <div class="form-group">
-                        <label>Nama Lengkap</label>
-                        <input type="text" name="nama" value="<?= htmlspecialchars($data_user['nama']); ?>" required>
+                    <input type="hidden" name="aksi" value="update">
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; margin-bottom: 6px; font-size: 14px; font-weight: 500; color: var(--text-dark);">Nama Lengkap</label>
+                        <input type="text" name="nama" value="<?= htmlspecialchars($data_user['nama']); ?>" required style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1; outline: none;">
                     </div>
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" name="email" value="<?= htmlspecialchars($data_user['email']); ?>" required>
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; margin-bottom: 6px; font-size: 14px; font-weight: 500; color: var(--text-dark);">Email</label>
+                        <input type="email" name="email" value="<?= htmlspecialchars($data_user['email']); ?>" required style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1; outline: none;">
                     </div>
-                    <div class="form-group">
-                        <label>Password Baru</label>
-                        <input type="password" name="password_baru" placeholder="Masukkan password baru">
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; margin-bottom: 6px; font-size: 14px; font-weight: 500; color: var(--text-dark);">Password Baru</label>
+                        <input type="password" name="password_baru" placeholder="Masukkan password baru" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1; outline: none;">
                     </div>
-                    <div class="form-group">
-                        <label>Konfirmasi Password</label>
-                        <input type="password" name="konfirmasi_password" placeholder="Ulangi password">
+                    <div style="margin-bottom: 25px;">
+                        <label style="display: block; margin-bottom: 6px; font-size: 14px; font-weight: 500; color: var(--text-dark);">Konfirmasi Password</label>
+                        <input type="password" name="konfirmasi_password" placeholder="Ulangi password" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1; outline: none;">
                     </div>
-                    <button type="submit" class="btn-save">Simpan Perubahan</button>
+                    <button type="submit" class="btn-action btn-dark" style="font-size: 14px; padding: 10px 20px;">Simpan Perubahan</button>
                 </form>
             </div>
         </main>

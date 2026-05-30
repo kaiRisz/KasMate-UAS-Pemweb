@@ -22,6 +22,8 @@ while ($row = mysqli_fetch_assoc($query_grup)) {
 $selected_grup_id = isset($_GET['id_grup']) ? (int)$_GET['id_grup'] : (!empty($grup_list) ? $grup_list[0]['id_grup'] : 0);
 
 $detail_grup = null;
+$grup_tagihan_list = [];
+
 if ($selected_grup_id > 0) {
     // Perbaikan: Pakai LEFT JOIN untuk detail grup juga
     $query_detail = mysqli_query($conn, "
@@ -32,6 +34,11 @@ if ($selected_grup_id > 0) {
         WHERE g.id_grup = $selected_grup_id
     ");
     $detail_grup = mysqli_fetch_assoc($query_detail);
+
+    $query_grup_tagihan = mysqli_query($conn, "SELECT i.nama_iuran, i.nominal, COALESCE(p.status, 'Belum Lunas') AS status_bayar FROM iuran i LEFT JOIN pembayaran p ON i.id_iuran = p.id_iuran AND p.id_user = $id_user WHERE i.id_grup = $selected_grup_id");
+    while ($t = mysqli_fetch_assoc($query_grup_tagihan)) {
+        $grup_tagihan_list[] = $t;
+    }
 }
 
 require_once '../../view/user/grup-saya.php';

@@ -13,6 +13,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <input type="checkbox" id="menu-toggle" class="menu-checkbox">
+    <div class="topbar-mobile">
+        <label for="menu-toggle" class="hamburger-btn">
+            <i class="fa-solid fa-bars"></i>
+        </label>
+        <div class="logo-mobile">
+            <i class="fa-solid fa-cube"></i> KasMate
+        </div>
+    </div>
+    <label for="menu-toggle" class="sidebar-overlay"></label>
 
     <div class="dashboard-layout">
         <aside class="sidebar"> 

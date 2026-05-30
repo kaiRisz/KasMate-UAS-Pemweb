@@ -1,9 +1,5 @@
 <?php
-require_once '../../../config/auth_check.php';
-cekRole('user');
 
-$id_user = $_SESSION['id_user'];
-$nama_user = $user_login['nama'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,19 +11,7 @@ $nama_user = $user_login['nama'];
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../../../public/assets/css/style.css">
 </head>
-<style>
-    .main-content { padding: 20px; }   
-    .table-tittle{ font-size: 16px; margin-bottom: 16px; }
-    .table-content{ background-color: white; padding: 20px 40px 40px 40px; border-radius: 16px; }
-    .status-belum-lunas{ background-color: #ffcdcd; color: crimson; padding: 5px 10px; border-radius: 10px; text-align: center; display: inline-block; }
-    .status-sudah-lunas{ background-color: #d4edda; color: darkgreen; padding: 5px 10px; border-radius: 10px; text-align: center; display: inline-block; }
-    .menu-item.active { background-color: #6f9693; color: white; border-radius: 12px; font-weight: 600; }
-    .menu-item.active i { color: white; }
-    table { width: 100%; border-collapse: collapse; }
-    th { text-align: left; padding: 12px 15px; border-bottom: 2px solid #f0f2f5; color: #65676b; font-size: 13px; font-weight: 600; }
-    td { padding: 15px; border-bottom: 1px solid #f0f2f5; font-size: 14px; color: #1c1e21; }
-    .btn-action{ background-color: #6f9693; color: white; padding: 5px 10px; border-radius: 8px; border: none; font-size: 12px; }
-</style>
+</head>
 <body>
 
 <input type="checkbox" id="menu-toggle" class="menu-checkbox">
@@ -97,44 +81,37 @@ $nama_user = $user_login['nama'];
                 </div>
             </header>
 
-            <section class="table-content">
-                <h1 class="table-tittle">Daftar Semua Tagihan</h1>
-                <div table-card>
-                    <table cellpadding="2px">
-                        <thead>
+            <section class="card table-card">
+                <h3 class="card-title">Daftar Semua Tagihan</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Grup</th>
+                            <th>Nama Iuran</th>
+                            <th>Jumlah</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($tagihan_list as $row): ?>
+                            <?php $status_class = ($row['status_bayar'] == 'Lunas') ? 'badge-lunas' : 'badge-pending'; ?>
                             <tr>
-                                <th>Grup</th>
-                                <th>Nama Iuran</th>
-                                <th>Jumlah</th>
-                                <th>Status</th>
-                                <th>Aksi</th>
+                                <td class="fw-500"><?= htmlspecialchars($row['nama_grup']); ?></td>
+                                <td class="fw-500"><?= htmlspecialchars($row['nama_iuran']); ?></td>
+                                <td class="fw-500">Rp <?= number_format($row['nominal'], 0, ',', '.'); ?></td>
+                                <td><span class="badge <?= $status_class; ?>"><?= $row['status_bayar']; ?></span></td>
+                                <td>
+                                    <?php if($row['status_bayar'] == 'Lunas'): ?>
+                                        <button class="btn-action" style="background-color: #10b981; color: white; border: none;" disabled>Selesai</button>
+                                    <?php else: ?>
+                                        <button class="btn-action" style="background-color: #e2e8f0; color: #64748b; border: none;" disabled>Bayar ke Bendahara</button>
+                                    <?php endif; ?>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $query_all_tagihan = mysqli_query($conn, "SELECT g.nama_grup, i.nama_iuran, i.nominal, COALESCE(p.status, 'Belum Lunas') AS status_bayar FROM iuran i JOIN grup g ON i.id_grup = g.id_grup JOIN grup_anggota ga ON g.id_grup = ga.id_grup LEFT JOIN pembayaran p ON i.id_iuran = p.id_iuran AND p.id_user = ga.id_user WHERE ga.id_user = $id_user");
-                            while ($row = mysqli_fetch_assoc($query_all_tagihan)) {
-                                $status_class = ($row['status_bayar'] == 'Lunas') ? 'status-sudah-lunas' : 'status-belum-lunas';
-                                ?>
-                                <tr>
-                                    <td><?= htmlspecialchars($row['nama_grup']); ?></td>
-                                    <td><?= htmlspecialchars($row['nama_iuran']); ?></td>
-                                    <td>Rp. <?= number_format($row['nominal'], 2, ',', '.'); ?></td>
-                                    <td><span class="<?= $status_class; ?>"><?= $row['status_bayar']; ?></span></td>
-                                    <td>
-                                        <?php if($row['status_bayar'] == 'Lunas'): ?>
-                                            <button class="btn-action" style="background-color: green;" disabled>Selesai</button>
-                                        <?php else: ?>
-                                            <button class="btn-action" disabled>Bayar ke Bendahara</button>
-                                        <?php endif; ?>
-                                    </td>
-                                </tr>
-                                <?php
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
             </section>
         </main>
     </div>

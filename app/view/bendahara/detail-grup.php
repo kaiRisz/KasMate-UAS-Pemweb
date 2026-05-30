@@ -18,6 +18,17 @@ $persen_belum = $total_tagihan > 0 ? round(($total_belum / $total_tagihan) * 100
     <link rel="stylesheet" href="../../../public/assets/css/style.css">
 </head>
 <body>
+    <input type="checkbox" id="menu-toggle" class="menu-checkbox">
+    <div class="topbar-mobile">
+        <label for="menu-toggle" class="hamburger-btn">
+            <i class="fa-solid fa-bars"></i>
+        </label>
+        <div class="logo-mobile">
+            <i class="fa-solid fa-cube"></i> KasMate
+        </div>
+    </div>
+    <label for="menu-toggle" class="sidebar-overlay"></label>
+
     <div class="dashboard-layout">
         <aside class="sidebar">
             <div class="logo">
@@ -99,7 +110,7 @@ $persen_belum = $total_tagihan > 0 ? round(($total_belum / $total_tagihan) * 100
 
             <section class="card table-card">
                 <?php if($tab == 'anggota'): ?>
-                    <div class="table-controls" style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                    <div class="table-controls">
                         <h3 class="card-title" style="margin-bottom: 0;">Daftar Anggota Grup</h3>
                         <button class="btn-action btn-dark" onclick="document.getElementById('modalTambahAnggota').style.display='flex'">+ Tambah Anggota</button>
                     </div>
@@ -136,7 +147,7 @@ $persen_belum = $total_tagihan > 0 ? round(($total_belum / $total_tagihan) * 100
                     </table>
 
                 <?php elseif($tab == 'tagihan'): ?>
-                    <div class="table-controls" style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                    <div class="table-controls">
                         <h3 class="card-title" style="margin-bottom: 0;">Daftar Tagihan Iuran</h3>
                         <button class="btn-action btn-dark" onclick="document.getElementById('modalTambahTagihan').style.display='flex'">+ Buat Tagihan</button>
                     </div>
@@ -173,7 +184,7 @@ $persen_belum = $total_tagihan > 0 ? round(($total_belum / $total_tagihan) * 100
                     </table>
 
                 <?php else: ?>
-                    <div class="table-controls" style="margin-bottom: 20px;">
+                    <div class="table-controls">
                         <h3 class="card-title" style="margin-bottom: 0;">Status Pembayaran Anggota</h3>
                     </div>
                     <table class="data-table">

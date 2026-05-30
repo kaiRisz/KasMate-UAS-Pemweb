@@ -1,3 +1,6 @@
+<?php
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,26 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../../../public/assets/css/style.css">
 </head>
-<style>
-    .main-content { padding: 20px; }
-    .content-wrapper { display: flex; gap: 20px; }
-    .group-list { width: 40%; background: white; border-radius: 16px; padding: 20px; }
-    .group-card { border: 1px solid #ddd; border-radius: 12px; padding: 15px; margin-bottom: 12px; cursor: pointer; transition: 0.2s; text-decoration: none; display: block; color: inherit; }
-    .group-card:hover { background-color: #f5f5f5; }
-    .group-name { font-weight: 600; margin-bottom: 6px; }
-    .group-info { font-size: 13px; color: #666; }
-    .group-detail { width: 60%; background: white; border-radius: 16px; padding: 20px; }
-    .detail-header { margin-bottom: 20px; }
-    .detail-header h2 { margin: 0; }
-    .detail-item { margin-bottom: 10px; font-size: 14px; }
-    .tagihan-table { margin-top: 20px; }
-    .tagihan-table table { width: 100%; border-collapse: collapse; }
-    .tagihan-table th, .tagihan-table td { padding: 10px; border-bottom: 1px solid #ddd; text-align: left; }
-    .status-lunas { background-color: #d4edda; color: darkgreen; padding: 5px 10px; border-radius: 10px; text-align: center; display: inline-block; }
-    .status-belum { background-color: #ffcdcd; color: crimson; padding: 5px 10px; border-radius: 10px; text-align: center; display: inline-block; }
-    .menu-item.active { background-color: #6f9693; color: white; border-radius: 12px; font-weight: 600; }
-    .menu-item.active i { color: white; }
-</style>
+
 <body>
 
 <input type="checkbox" id="menu-toggle" class="menu-checkbox">
@@ -92,33 +76,44 @@
             </div>
         </header>
 
-        <div class="content-wrapper">
-            <div class="group-list">
-                <h3 class="section-title">Daftar Grup</h3>
+        <section class="charts-section">
+            <div class="card flex-1">
+                <h3 class="card-title">Daftar Grup</h3>
                 <?php if (!empty($grup_list)): ?>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
                     <?php foreach ($grup_list as $g): ?>
-                        <a href="../../controller/user/GrupUserController.php?id_grup=<?= $g['id_grup']; ?>" class="group-card" style="background-color: <?= $selected_grup_id == $g['id_grup'] ? '#f5f5f5' : 'transparent'; ?>">
-                            <div class="group-name"><?= htmlspecialchars($g['nama_grup']); ?></div>
-                            <div class="group-info">Bendahara: <?= htmlspecialchars($g['nama_bendahara']); ?></div>
+                        <a href="../../controller/user/GrupUserController.php?id_grup=<?= $g['id_grup']; ?>" style="border: 1px solid var(--border-color); border-radius: 12px; padding: 15px; text-decoration: none; color: inherit; background-color: <?= $selected_grup_id == $g['id_grup'] ? '#f1f5f9' : 'white'; ?>;">
+                            <div class="fw-500" style="margin-bottom: 5px;"><?= htmlspecialchars($g['nama_grup']); ?></div>
+                            <div style="font-size: 13px; color: var(--text-muted);">Bendahara: <?= htmlspecialchars($g['nama_bendahara']); ?></div>
                         </a>
                     <?php endforeach; ?>
+                    </div>
                 <?php else: ?>
-                    <p style="color: #666; font-size: 14px;">Anda belum bergabung dengan grup manapun.</p>
+                    <p style="color: var(--text-muted); font-size: 14px;">Anda belum bergabung dengan grup manapun.</p>
                 <?php endif; ?>
             </div>
 
-            <div class="group-detail">
+            <div class="card flex-2">
                 <?php if ($detail_grup): ?>
-                    <div class="detail-header">
-                        <h2><?= htmlspecialchars($detail_grup['nama_grup']); ?></h2>
-                        <p><?= htmlspecialchars($detail_grup['deskripsi']); ?></p>
+                    <div style="margin-bottom: 25px;">
+                        <h2 style="margin-bottom: 5px;"><?= htmlspecialchars($detail_grup['nama_grup']); ?></h2>
+                        <p style="color: var(--text-muted);"><?= htmlspecialchars($detail_grup['deskripsi']); ?></p>
                     </div>
-                    <div class="detail-item">Bendahara: <?= htmlspecialchars($detail_grup['nama_bendahara']); ?></div>
-                    <div class="detail-item">Jumlah Anggota: <?= $detail_grup['jml_anggota']; ?> orang</div>
+                    
+                    <div style="display: flex; gap: 20px; margin-bottom: 25px;">
+                        <div class="cash-flow-box">
+                            <p class="legend-label">Bendahara</p>
+                            <h4 style="font-size: 16px;"><?= htmlspecialchars($detail_grup['nama_bendahara']); ?></h4>
+                        </div>
+                        <div class="cash-flow-box">
+                            <p class="legend-label">Jumlah Anggota</p>
+                            <h4 style="font-size: 16px;"><?= $detail_grup['jml_anggota']; ?> orang</h4>
+                        </div>
+                    </div>
 
-                    <div class="tagihan-table">
-                        <h3 class="section-title">Tagihan Saya di Grup Ini</h3>
-                        <table>
+                    <div class="table-card">
+                        <h3 class="card-title">Tagihan Saya di Grup Ini</h3>
+                        <table class="data-table">
                             <thead>
                                 <tr>
                                     <th>Nama Iuran</th>
@@ -128,15 +123,14 @@
                             </thead>
                             <tbody>
                                 <?php
-                                $query_grup_tagihan = mysqli_query($conn, "SELECT i.nama_iuran, i.nominal, COALESCE(p.status, 'Belum Lunas') AS status_bayar FROM iuran i LEFT JOIN pembayaran p ON i.id_iuran = p.id_iuran AND p.id_user = $id_user WHERE i.id_grup = $selected_grup_id");
-                                if (mysqli_num_rows($query_grup_tagihan) > 0) {
-                                    while ($t = mysqli_fetch_assoc($query_grup_tagihan)) {
-                                        $status_cl = ($t['status_bayar'] == 'Lunas') ? 'status-lunas' : 'status-belum';
+                                if (!empty($grup_tagihan_list)) {
+                                    foreach ($grup_tagihan_list as $t) {
+                                        $status_cl = ($t['status_bayar'] == 'Lunas') ? 'badge-lunas' : 'badge-pending';
                                         ?>
                                         <tr>
-                                            <td><?= htmlspecialchars($t['nama_iuran']); ?></td>
-                                            <td>Rp <?= number_format($t['nominal'], 0, ',', '.'); ?></td>
-                                            <td><span class="<?= $status_cl; ?>"><?= $t['status_bayar']; ?></span></td>
+                                            <td class="fw-500"><?= htmlspecialchars($t['nama_iuran']); ?></td>
+                                            <td class="fw-500 text-green">Rp <?= number_format($t['nominal'], 0, ',', '.'); ?></td>
+                                            <td><span class="badge <?= $status_cl; ?>"><?= $t['status_bayar']; ?></span></td>
                                         </tr>
                                         <?php
                                     }
@@ -148,13 +142,13 @@
                         </table>
                     </div>
                 <?php else: ?>
-                    <div style="text-align: center; color: #999; margin-top: 50px;">
-                        <i class="fa-solid fa-users-slash" style="font-size: 40px; margin-bottom: 10px;"></i>
+                    <div style="text-align: center; color: #94a3b8; padding: 50px 0;">
+                        <i class="fa-solid fa-users-slash" style="font-size: 40px; margin-bottom: 15px;"></i>
                         <p>Pilih grup di sebelah kiri untuk melihat detail.</p>
                     </div>
                 <?php endif; ?>
             </div>
-        </div>
+        </section>
     </main>
 </div>
 </body>
