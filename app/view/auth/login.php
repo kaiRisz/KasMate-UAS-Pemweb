@@ -13,118 +13,6 @@ if (!isset($authModel)) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../../public/assets/css/style.css">
 
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-            overflow: hidden;
-        }
-        .split-layout {
-            display: flex;
-            height: 100vh;
-        }
-        .left-panel {
-            flex: 1;
-            background-color: #23312e;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        .right-panel {
-            flex: 1;
-        }
-        .right-panel img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .login-card {
-            background:  #ffffff;
-            padding: 40px;
-            border-radius: 12px;
-            width: 100%;
-            max-width: 400px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            box-sizing: border-box;
-        }
-        .login-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .login-header h1 {
-            margin-top: 0;
-            color: #243230;
-            font-size: 2rem;
-            margin-bottom: 5px;
-        }
-        .login-header p {
-            color: #5b7b76;
-            font-size: 0.9rem;
-            margin: 0;
-        }
-        .input-group {
-            margin-bottom: 20px;
-        }
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
-            color:#243230;
-            font-weight: 500;
-            font-size: 0.95rem;
-        }
-        .input-group input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-family: inherit;
-            font-size: 1rem;
-        }
-        .input-group input:focus {
-            outline: none;
-            border-color: #5b7b76;
-        }
-        .btn-login {
-            width: 100%;
-            padding: 14px;
-            background-color: #243230;;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            font-family: inherit;
-            font-size: 1rem;
-            margin-top: 10px;
-            transition: background-color 0.2s;
-        }
-        .btn-login:hover {
-            background-color: #243230;;
-        }
-        .register-link {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 0.9rem;
-            color: #5b7b76;
-        }
-        .register-link a {
-            color: #3b82f6;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        .register-link a:hover {
-            text-decoration: underline;
-        }
-        .error-message {
-            color: #ef4444;
-            font-size: 0.9rem;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-    </style>
-
     <script>
         history.pushState(null, null, location.href);
         window.onpopstate = function () {
@@ -144,8 +32,7 @@ if (!isset($authModel)) {
                 <p>Silahkan masukkan email dan password anda</p>
             </div>
 
-            <!-- FIX: aman dari undefined variable -->
-            <?php if (!empty($error)) : ?>
+                        <?php if (!empty($error)) : ?>
                 <div class="error-message">
                     Email atau password salah!
                 </div>

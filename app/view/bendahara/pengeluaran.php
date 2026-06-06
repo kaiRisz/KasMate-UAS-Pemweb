@@ -44,7 +44,7 @@
                     <p class="section-title">LAPORAN</p>
                     <a href="../../controller/bendahara/LaporanKeuanganController.php" class="menu-item"><i class="fa-regular fa-file-lines"></i> Laporan Keuangan</a>
                 </div>
-                <div class="sidebar-bottom">
+                <div class="sidebar-bottom sidebar-footer-menu">
                     <a href="../../controller/auth/LogoutController.php" class="menu-item">
                         <i class="fa-solid fa-right-from-bracket"></i> Logout
                     </a>
@@ -61,7 +61,7 @@
                 <div class="header-right">
                     <button class="btn-notification"><i class="fa-regular fa-bell"></i></button>
                     <div class="user-profile">
-                        <img src="../../../public/assets/image/user_pict.jpg" alt="Profile" style="width: 32px; height: 32px; border-radius: 50%;">
+                        <img src="../../../public/assets/image/user_pict.jpg" alt="Profile" class="profile-img-small">
                         <div class="user-info">
                             <span class="user-name"><?php echo htmlspecialchars($nama_bendahara); ?></span>
                             <span class="user-role">Bendahara Utama</span>
@@ -102,12 +102,12 @@
                 </div>
             </section>
 
-            <section class="card" style="margin-bottom: 25px;">
+            <section class="card mb-25">
                 <h3 class="card-title">Tambah Pengeluaran Baru</h3>
-                <form action="" method="POST" style="display: flex; gap: 15px; align-items: flex-end; flex-wrap: wrap;">
-                    <div class="input-group" style="margin-bottom: 0; flex: 1; min-width: 150px;">
+                <form action="" method="POST" class="form-inline-flex">
+                    <div class="input-group input-group-flex-1">
                         <label>Grup Iuran</label>
-                        <select name="id_grup" required style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1;">
+                        <select name="id_grup" required class="form-control-bordered-select">
                             <option value="">Pilih Grup</option>
                             <?php 
                             if (count($daftar_grup) > 0):
@@ -120,38 +120,38 @@
                             ?>
                         </select>
                     </div>
-                    <div class="input-group" style="margin-bottom: 0; flex: 1; min-width: 150px;">
+                    <div class="input-group input-group-flex-1">
                         <label>Tanggal</label>
-                        <input type="date" name="tanggal" required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1;">
+                        <input type="date" name="tanggal" required class="form-control-bordered">
                     </div>
-                    <div class="input-group" style="margin-bottom: 0; flex: 2; min-width: 250px;">
+                    <div class="input-group input-group-flex-2">
                         <label>Keterangan</label>
-                        <input type="text" name="keterangan" placeholder="Contoh: Beli ATK, Konsumsi, dll." required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1;">
+                        <input type="text" name="keterangan" placeholder="Contoh: Beli ATK, Konsumsi, dll." required class="form-control-bordered">
                     </div>
-                    <div class="input-group" style="margin-bottom: 0; flex: 1; min-width: 150px;">
+                    <div class="input-group input-group-flex-1">
                         <label>Jumlah (Rp)</label>
-                        <input type="number" name="jumlah" placeholder="0" required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1;">
+                        <input type="number" name="jumlah" placeholder="0" required class="form-control-bordered">
                     </div>
-                    <button type="submit" name="tambah_pengeluaran" class="btn-action btn-dark" style="padding: 12px 20px; height: 46px; border-radius: 10px; border:none; cursor:pointer;">
+                    <button type="submit" name="tambah_pengeluaran" class="btn-action btn-dark btn-save-inline">
                         <i class="fa-solid fa-save"></i> Simpan
                     </button>
                 </form>
             </section>
 
             <section class="card table-card">
-                <div class="search-box" style="margin-bottom: 20px;">
+                <div class="search-box mb-20">
                     <input type="text" placeholder="Cari pengeluaran...">
                 </div>
 
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th style="width: 50px; text-align: center;">No</th>
+                            <th class="width-50 text-center">No</th>
                             <th>Tanggal</th>
                             <th>Grup</th>
                             <th>Keterangan</th>
                             <th>Jumlah</th>
-                            <th style="text-align: center;">Aksi</th>
+                            <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -161,14 +161,14 @@
                             foreach($tabel_pengeluaran as $row): 
                         ?>
                         <tr>
-                            <td style="text-align: center; color: var(--text-muted);"><?php echo $no++; ?></td>
+                            <td class="text-center text-muted-custom"><?php echo $no++; ?></td>
                             <td><?php echo date('d M Y', strtotime($row['tanggal_keluar'])); ?></td>
-                            <td><span class="badge" style="background: #f1f5f9; color: #1e293b;"><?php echo htmlspecialchars($row['nama_grup']); ?></span></td>
+                            <td><span class="badge badge-grey"><?php echo htmlspecialchars($row['nama_grup']); ?></span></td>
                             <td class="fw-500"><?php echo htmlspecialchars($row['deskripsi']); ?></td>
                             <td class="fw-500 text-red">- Rp <?php echo number_format($row['nominal_keluar'], 0, ',', '.'); ?></td>
                             <td>
-                                <div class="action-icons" style="justify-content: center;">
-                                    <a href="../../controller/bendahara/PengeluaranController.php?hapus_pengeluaran=<?php echo $row['id_pengeluaran']; ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus pengeluaran ini?');" style="color: #ef4444;"><i class="fa-solid fa-trash-can"></i></a>
+                                <div class="action-icons justify-center">
+                                    <a href="../../controller/bendahara/PengeluaranController.php?hapus_pengeluaran=<?php echo $row['id_pengeluaran']; ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus pengeluaran ini?');" class="text-red"><i class="fa-solid fa-trash-can"></i></a>
                                 </div>
                             </td>
                         </tr>
@@ -177,7 +177,7 @@
                         else: 
                         ?>
                         <tr>
-                            <td colspan="6" style="text-align:center;">Belum ada data pengeluaran.</td>
+                            <td colspan="6" class="text-center">Belum ada data pengeluaran.</td>
                         </tr>
                         <?php endif; ?>
                     </tbody>

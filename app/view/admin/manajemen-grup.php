@@ -1,4 +1,5 @@
 <?php
+
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -41,10 +42,10 @@
                         <i class='bx bxs-group'></i> Manajemen Grup
                     </a>
                     <a href="../../controller/admin/PengaturanController.php" class="menu-item">
-                        <i class='bx bxs-cog'></i> Pengaturan Sistem
+                        <i class='bx bxs-cog'></i> Pengaturan Akun
                     </a>
                 </div>
-                <div class="menu-section" style="margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
+                <div class="menu-section sidebar-footer-menu">
                     <a href="../../controller/auth/LogoutController.php" class="menu-item">
                         <i class='bx bx-log-out'></i> Logout
                     </a>
@@ -98,7 +99,7 @@
                                         <td><?= $g['jumlah_anggota'] ?? 0 ?> orang</td>
                                         <td>
                                             <div class="action-icons">
-                                                <i class='bx bx-trash text-red' style="cursor:pointer;" 
+                                                <i class='bx bx-trash text-red cursor-pointer' 
                                                    onclick="bukaModalHapus(<?= $g['id_grup'] ?>, '<?= htmlspecialchars(addslashes($g['nama_grup'] ?? '')) ?>')"></i>
                                             </div>
                                         </td>
@@ -106,7 +107,7 @@
                                 <?php endforeach; ?>
                             <?php else: ?>
                                 <tr>
-                                    <td colspan="5" style="text-align: center; padding: 30px; color: #94a3b8;">Data tidak ditemukan</td>
+                                    <td colspan="5" class="empty-table-row">Data tidak ditemukan</td>
                                 </tr>
                             <?php endif; ?>
                         </tbody>
@@ -135,11 +136,11 @@
 
     <div class="modal-overlay" id="modalHapus">
         <div class="modal-box">
-            <h3><i class='bx bx-trash' style="color: #ef4444;"></i> Hapus Grup</h3>
-            <p>Apakah Anda yakin ingin menghapus grup <strong id="hapus_nama"></strong>? Semua data anggota dan transaksi dalam grup ini akan ikut terhapus.</p>
+            <h3 class="modal-title text-red mb-15"><i class='bx bx-trash'></i> Konfirmasi Hapus</h3>
+            <p class="text-muted-custom text-sm mb-25">Apakah Anda yakin ingin menghapus grup <strong id="hapus_nama" class="text-dark"></strong>? Semua data anggota dan transaksi dalam grup ini akan ikut terhapus permanen.</p>
             <div class="modal-actions">
                 <button type="button" class="btn-cancel" onclick="tutupModal()">Batal</button>
-                <a id="hapus_link" href="#" class="btn-confirm-delete">Hapus</a>
+                <a id="hapus_link" href="#" class="btn-danger">Ya, Hapus Grup</a>
             </div>
         </div>
     </div>

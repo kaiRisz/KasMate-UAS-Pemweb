@@ -80,34 +80,34 @@
             <div class="card flex-1">
                 <h3 class="card-title">Daftar Grup</h3>
                 <?php if (!empty($grup_list)): ?>
-                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <div class="group-list-container">
                     <?php foreach ($grup_list as $g): ?>
-                        <a href="../../controller/user/GrupUserController.php?id_grup=<?= $g['id_grup']; ?>" style="border: 1px solid var(--border-color); border-radius: 12px; padding: 15px; text-decoration: none; color: inherit; background-color: <?= $selected_grup_id == $g['id_grup'] ? '#f1f5f9' : 'white'; ?>;">
-                            <div class="fw-500" style="margin-bottom: 5px;"><?= htmlspecialchars($g['nama_grup']); ?></div>
-                            <div style="font-size: 13px; color: var(--text-muted);">Bendahara: <?= htmlspecialchars($g['nama_bendahara']); ?></div>
+                        <a href="../../controller/user/GrupUserController.php?id_grup=<?= $g['id_grup']; ?>" class="group-list-item <?= $selected_grup_id == $g['id_grup'] ? 'active-bg' : ''; ?>">
+                            <div class="fw-500 mb-5"><?= htmlspecialchars($g['nama_grup']); ?></div>
+                            <div class="text-sm text-muted">Bendahara: <?= htmlspecialchars($g['nama_bendahara']); ?></div>
                         </a>
                     <?php endforeach; ?>
                     </div>
                 <?php else: ?>
-                    <p style="color: var(--text-muted); font-size: 14px;">Anda belum bergabung dengan grup manapun.</p>
+                    <p class="empty-msg">Anda belum bergabung dengan grup manapun.</p>
                 <?php endif; ?>
             </div>
 
             <div class="card flex-2">
                 <?php if ($detail_grup): ?>
-                    <div style="margin-bottom: 25px;">
-                        <h2 style="margin-bottom: 5px;"><?= htmlspecialchars($detail_grup['nama_grup']); ?></h2>
-                        <p style="color: var(--text-muted);"><?= htmlspecialchars($detail_grup['deskripsi']); ?></p>
+                    <div class="mb-25">
+                        <h2 class="mb-5"><?= htmlspecialchars($detail_grup['nama_grup']); ?></h2>
+                        <p class="text-muted"><?= htmlspecialchars($detail_grup['deskripsi']); ?></p>
                     </div>
                     
-                    <div style="display: flex; gap: 20px; margin-bottom: 25px;">
+                    <div class="flex-gap-20 mb-25">
                         <div class="cash-flow-box">
                             <p class="legend-label">Bendahara</p>
-                            <h4 style="font-size: 16px;"><?= htmlspecialchars($detail_grup['nama_bendahara']); ?></h4>
+                            <h4 class="text-md"><?= htmlspecialchars($detail_grup['nama_bendahara']); ?></h4>
                         </div>
                         <div class="cash-flow-box">
                             <p class="legend-label">Jumlah Anggota</p>
-                            <h4 style="font-size: 16px;"><?= $detail_grup['jml_anggota']; ?> orang</h4>
+                            <h4 class="text-md"><?= $detail_grup['jml_anggota']; ?> orang</h4>
                         </div>
                     </div>
 
@@ -135,15 +135,15 @@
                                         <?php
                                     }
                                 } else {
-                                    echo '<tr><td colspan="3" style="text-align:center; color:#666;">Belum ada tagihan di grup ini.</td></tr>';
+                                    echo '<tr><td colspan="3" class="text-center text-muted-dark">Belum ada tagihan di grup ini.</td></tr>';
                                 }
                                 ?>
                             </tbody>
                         </table>
                     </div>
                 <?php else: ?>
-                    <div style="text-align: center; color: #94a3b8; padding: 50px 0;">
-                        <i class="fa-solid fa-users-slash" style="font-size: 40px; margin-bottom: 15px;"></i>
+                    <div class="empty-state-container">
+                        <i class="fa-solid fa-users-slash empty-state-icon"></i>
                         <p>Pilih grup di sebelah kiri untuk melihat detail.</p>
                     </div>
                 <?php endif; ?>

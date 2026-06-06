@@ -35,16 +35,12 @@
                     <p class="section-title">KELOLA IURAN</p>
                     <a href="../../controller/bendahara/GrupIuranController.php" class="menu-item active"><i class="fa-solid fa-users-line"></i> Grup Iuran</a>
                 </div>
-                <div class="menu-section">
-                    <p class="section-title">KEUANGAN</p>
-                    <a href="../../controller/bendahara/PemasukanController.php" class="menu-item"><i class="fa-solid fa-clock-rotate-left"></i> Pemasukan</a>
-                    <a href="../../controller/bendahara/PengeluaranController.php" class="menu-item"><i class="fa-regular fa-eye"></i> Pengeluaran</a>
-                </div>
+    
                 <div class="menu-section">
                     <p class="section-title">LAPORAN</p>
                     <a href="../../controller/bendahara/LaporanKeuanganController.php" class="menu-item"><i class="fa-regular fa-file-lines"></i> Laporan Keuangan</a>
                 </div>
-                <div class="sidebar-bottom">
+                <div class="sidebar-bottom sidebar-footer-menu">
                     <a href="../../controller/auth/LogoutController.php" class="menu-item">
                         <i class="fa-solid fa-right-from-bracket"></i> Logout
                     </a>
@@ -59,7 +55,7 @@
                     <p class="subtitle">Kelola semua grup iuran yang Anda buat.</p>
                 </div>
                 <div class="header-right">
-                    <button class="btn-action btn-dark" onclick="document.getElementById('modalTambahGrup').style.display='flex'">
+                    <button class="btn-action btn-dark" onclick="document.getElementById('modalTambahGrup').classList.add('active')">
                         <i class="fa-solid fa-plus"></i> Buat Grup Baru
                     </button>
                 </div>
@@ -97,19 +93,19 @@
             </section>
 
             <section class="card table-card">
-                <div class="search-box" style="margin-bottom: 20px;">
+                <div class="search-box mb-20">
                     <input type="text" placeholder="Cari grup iuran...">
                 </div>
 
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th style="text-align: center; width: 50px;">No</th>
+                            <th class="text-center width-50">No</th>
                             <th>Nama Grup</th>
                             <th>Deskripsi</th>
                             <th>Jumlah Anggota</th>
                             <th>Iuran per Orang</th>
-                            <th style="text-align: center;">Aksi</th>
+                            <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -119,15 +115,15 @@
                             foreach($tabel_grup as $row): 
                         ?>
                         <tr>
-                            <td style="text-align: center;"><?php echo $no++; ?></td>
+                            <td class="text-center"><?php echo $no++; ?></td>
                             <td class="fw-500"><?php echo htmlspecialchars($row['nama_grup']); ?></td>
                             <td><?php echo htmlspecialchars($row['deskripsi']); ?></td>
                             <td><?php echo $row['jml_anggota']; ?> Orang</td>
                             <td class="fw-500">Rp <?php echo number_format($row['avg_nominal'] ?? 0, 0, ',', '.'); ?></td>
                             <td>
-                                <div class="action-icons" style="justify-content: center; display: flex; gap: 15px; align-items: center;">
-                                    <a href="../../controller/bendahara/DetailGrupController.php?id=<?php echo $row['id_grup']; ?>" style="color: #64748b;" title="Kelola Grup"><i class="fa-solid fa-pen"></i></a>
-                                    <a href="../../controller/bendahara/GrupIuranController.php?hapus=<?php echo $row['id_grup']; ?>" onclick="return confirm('Peringatan: Menghapus grup ini juga akan MENGHAPUS SEMUA DATA iuran, pengeluaran, dan pembayaran yang ada di dalamnya. Anda yakin?');" style="color: #ef4444;" title="Hapus Grup"><i class="fa-regular fa-trash-can"></i></a>
+                                <div class="action-icons justify-center flex-gap-15 align-center">
+                                    <a href="../../controller/bendahara/DetailGrupController.php?id=<?php echo $row['id_grup']; ?>" class="text-slate-500" title="Kelola Grup"><i class="fa-solid fa-pen"></i></a>
+                                    <a href="../../controller/bendahara/GrupIuranController.php?hapus=<?php echo $row['id_grup']; ?>" onclick="return confirm('Peringatan: Menghapus grup ini juga akan MENGHAPUS SEMUA DATA iuran, pengeluaran, dan pembayaran yang ada di dalamnya. Anda yakin?');" class="text-red" title="Hapus Grup"><i class="fa-regular fa-trash-can"></i></a>
                                 </div>
                             </td>
                         </tr>
@@ -136,7 +132,7 @@
                         else: 
                         ?>
                         <tr>
-                            <td colspan="6" style="text-align:center;">Belum ada grup yang dibuat.</td>
+                            <td colspan="6" class="text-center">Belum ada grup yang dibuat.</td>
                         </tr>
                         <?php endif; ?>
                     </tbody>
@@ -145,21 +141,21 @@
         </main>
     </div>
 
-    <div id="modalTambahGrup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
-        <div style="background:#fff; padding:30px; border-radius:12px; width:400px; max-width:90%; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
-            <h3 style="margin-top:0; margin-bottom:20px; color:#1e293b;">Buat Grup Iuran Baru</h3>
+    <div class="modal-overlay" id="modalTambahGrup">
+        <div class="modal-box">
+            <h3 class="modal-title">Buat Grup Iuran Baru</h3>
             <form action="" method="POST">
-                <div style="margin-bottom:15px;">
-                    <label style="display:block; margin-bottom:5px; font-weight:500; color:#475569;">Nama Grup</label>
-                    <input type="text" name="nama_grup" required style="width:100%; padding:12px; border:1px solid #cbd5e1; border-radius:8px; box-sizing: border-box;">
+                <div class="input-group">
+                    <label>Nama Grup</label>
+                    <input type="text" name="nama_grup" required>
                 </div>
-                <div style="margin-bottom:20px;">
-                    <label style="display:block; margin-bottom:5px; font-weight:500; color:#475569;">Deskripsi / Keterangan</label>
-                    <textarea name="deskripsi" required rows="3" style="width:100%; padding:12px; border:1px solid #cbd5e1; border-radius:8px; box-sizing: border-box;"></textarea>
+                <div class="input-group">
+                    <label>Deskripsi / Keterangan</label>
+                    <textarea name="deskripsi" required rows="3"></textarea>
                 </div>
-                <div style="display:flex; justify-content:flex-end; gap:10px;">
-                    <button type="button" onclick="document.getElementById('modalTambahGrup').style.display='none'" style="padding:10px 20px; border:none; background:#e2e8f0; color:#475569; font-weight:600; border-radius:8px; cursor:pointer;">Batal</button>
-                    <button type="submit" name="tambah_grup" style="padding:10px 20px; border:none; background:#1e293b; color:#fff; font-weight:600; border-radius:8px; cursor:pointer;">Simpan Grup</button>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="document.getElementById('modalTambahGrup').classList.remove('active')">Batal</button>
+                    <button type="submit" name="tambah_grup" class="btn-save">Simpan Grup</button>
                 </div>
             </form>
         </div>

@@ -42,10 +42,10 @@
                         <i class='bx bxs-group'></i> Manajemen Grup
                     </a>
                     <a href="../../controller/admin/PengaturanController.php" class="menu-item">
-                        <i class='bx bxs-cog'></i> Pengaturan Sistem
+                        <i class='bx bxs-cog'></i> Pengaturan Akun
                     </a>
                 </div>
-                <div class="menu-section" style="margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
+                <div class="menu-section sidebar-footer-menu">
                     <a href="../../controller/auth/LogoutController.php" class="menu-item">
                         <i class='bx bx-log-out'></i> Logout
                     </a>
@@ -105,7 +105,7 @@
                             <?php if (count($users) > 0): ?>
                                 <?php foreach ($users as $u): ?>
                                     <tr>
-                                        <td><?= htmlspecialchars($u['nama']) ?></td>
+                                        <td class="fw-500"><?= htmlspecialchars($u['nama']) ?></td>
                                         <td><?= htmlspecialchars($u['email']) ?></td>
                                         <td>
                                             <span class="badge <?php
@@ -118,10 +118,10 @@
                                         </td>
                                         <td>
                                             <div class="action-icons">
-                                                <i class='bx bx-edit-alt' style="cursor:pointer;" 
+                                                <i class='bx bx-edit-alt cursor-pointer text-slate-500' 
                                                    onclick="bukaModalEdit(<?= $u['id_user'] ?>, '<?= htmlspecialchars(addslashes($u['nama'])) ?>', '<?= htmlspecialchars(addslashes($u['email'])) ?>', '<?= $u['role'] ?>')"></i>
                                                 <?php if ((int)$u['id_user'] !== (int)$user_login['id_user']): ?>
-                                                    <i class='bx bx-trash text-red' style="cursor:pointer;" 
+                                                    <i class='bx bx-trash text-red cursor-pointer' 
                                                        onclick="bukaModalHapus(<?= $u['id_user'] ?>, '<?= htmlspecialchars(addslashes($u['nama'])) ?>')"></i>
                                                 <?php endif; ?>
                                             </div>
@@ -130,7 +130,7 @@
                                 <?php endforeach; ?>
                             <?php else: ?>
                                 <tr>
-                                    <td colspan="4" style="text-align: center; padding: 30px; color: #94a3b8;">Data tidak ditemukan</td>
+                                    <td colspan="4" class="empty-table-row">Data tidak ditemukan</td>
                                 </tr>
                             <?php endif; ?>
                         </tbody>
@@ -159,7 +159,8 @@
 
     <div class="modal-overlay" id="modalTambah">
         <div class="modal-box">
-            <h3><i class='bx bx-user-plus'></i> Tambah User Baru</h3>
+            <h3 class="modal-title mb-5"><i class='bx bx-user-plus text-blue'></i> Tambah User Baru</h3>
+            <p class="text-muted-custom text-sm mb-20">Masukkan detail pengguna baru ke dalam sistem.</p>
             <form method="POST">
                 <input type="hidden" name="aksi" value="tambah">
                 <div class="input-group">
@@ -184,7 +185,7 @@
                 </div>
                 <div class="modal-actions">
                     <button type="button" class="btn-cancel" onclick="tutupModal('modalTambah')">Batal</button>
-                    <button type="submit" class="btn-save">Simpan</button>
+                    <button type="submit" class="btn-add-user"><i class='bx bx-save'></i> Simpan User</button>
                 </div>
             </form>
         </div>
@@ -192,7 +193,8 @@
 
     <div class="modal-overlay" id="modalEdit">
         <div class="modal-box">
-            <h3><i class='bx bx-edit'></i> Edit User</h3>
+            <h3 class="modal-title mb-5"><i class='bx bx-edit text-orange'></i> Edit Detail User</h3>
+            <p class="text-muted-custom text-sm mb-20">Perbarui informasi profil atau peran pengguna.</p>
             <form method="POST">
                 <input type="hidden" name="aksi" value="edit">
                 <input type="hidden" name="id_user" id="edit_id_user">
@@ -205,8 +207,8 @@
                     <input type="email" name="email" id="edit_email" required>
                 </div>
                 <div class="input-group">
-                    <label>Password Baru (kosongkan jika tidak diganti)</label>
-                    <input type="password" name="password" placeholder="Kosongkan jika tidak diganti">
+                    <label>Password Baru</label>
+                    <input type="password" name="password" placeholder="Kosongkan jika tidak ingin diganti">
                 </div>
                 <div class="input-group">
                     <label>Role</label>
@@ -218,7 +220,7 @@
                 </div>
                 <div class="modal-actions">
                     <button type="button" class="btn-cancel" onclick="tutupModal('modalEdit')">Batal</button>
-                    <button type="submit" class="btn-save">Simpan Perubahan</button>
+                    <button type="submit" class="btn-confirm-success"><i class='bx bx-check'></i> Simpan Perubahan</button>
                 </div>
             </form>
         </div>
@@ -226,11 +228,11 @@
 
     <div class="modal-overlay" id="modalHapus">
         <div class="modal-box">
-            <h3><i class='bx bx-trash' style="color: #ef4444;"></i> Hapus User</h3>
-            <p>Apakah Anda yakin ingin menghapus user <strong id="hapus_nama"></strong>? Tindakan ini tidak dapat dibatalkan.</p>
+            <h3 class="modal-title text-red mb-15"><i class='bx bx-trash'></i> Konfirmasi Hapus</h3>
+            <p class="text-muted-custom text-sm mb-25">Apakah Anda yakin ingin menghapus user <strong id="hapus_nama" class="text-dark"></strong>? Tindakan ini bersifat permanen dan tidak dapat dibatalkan.</p>
             <div class="modal-actions">
                 <button type="button" class="btn-cancel" onclick="tutupModal('modalHapus')">Batal</button>
-                <a id="hapus_link" href="#" class="btn-confirm-delete" style="text-decoration: none; text-align: center; padding: 10px 24px; border-radius: 8px; font-weight: 600; font-size: 0.9rem;">Hapus</a>
+                <a id="hapus_link" href="#" class="btn-danger">Ya, Hapus User</a>
             </div>
         </div>
     </div>

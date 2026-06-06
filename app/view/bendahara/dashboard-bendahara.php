@@ -1,6 +1,3 @@
-<?php
-
-?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -37,16 +34,12 @@
                     <p class="section-title">KELOLA IURAN</p>
                     <a href="../../controller/bendahara/GrupIuranController.php" class="menu-item"><i class="fa-solid fa-users-line"></i> Grup Iuran</a>
                 </div>
-                <div class="menu-section">
-                    <p class="section-title">KEUANGAN</p>
-                    <a href="../../controller/bendahara/PemasukanController.php" class="menu-item"><i class="fa-solid fa-clock-rotate-left"></i> Pemasukan</a>
-                    <a href="../../controller/bendahara/PengeluaranController.php" class="menu-item"><i class="fa-regular fa-eye"></i> Pengeluaran</a>
-                </div>
+                
                 <div class="menu-section">
                     <p class="section-title">LAPORAN</p>
                     <a href="../../controller/bendahara/LaporanKeuanganController.php" class="menu-item"><i class="fa-regular fa-file-lines"></i> Laporan Keuangan</a>
                 </div>
-                <div class="sidebar-bottom">
+                <div class="sidebar-bottom sidebar-footer-menu">
                     <a href="../../controller/auth/LogoutController.php" class="menu-item">
                         <i class="fa-solid fa-right-from-bracket"></i> Logout
                     </a>
@@ -58,124 +51,107 @@
             <header class="topbar">
                 <div class="header-text">
                     <h1>Dashboard Bendahara</h1>
-                    <p class="welcome-text">Halo, <?php echo $nama_bendahara; ?> 👋</p>
-                    <p class="subtitle">Berikut adalah ringkasan aktivitas keuangan kelompok Anda.</p>
+                    <p class="welcome-text">Halo, <?php echo htmlspecialchars($nama_bendahara); ?> 👋</p>
+                    <p class="subtitle">Pantau aktivitas dan tugas Anda hari ini.</p>
                 </div>
                 <div class="header-right">
                     <button class="btn-notification"><i class="fa-regular fa-bell"></i></button>
                     <div class="user-profile">
                         <img src="../../../public/assets/image/user_pict.jpg" alt="Profile">
                         <div class="user-info">
-                            <span class="user-name"><?php echo $nama_bendahara; ?></span>
+                            <span class="user-name"><?php echo htmlspecialchars($nama_bendahara); ?></span>
                             <span class="user-role">Bendahara Utama</span>
                         </div>
-                        <i class="fa-solid fa-chevron-down dropdown-icon"></i>
                     </div>
                 </div>
             </header>
 
             <section class="overview-cards">
                 <div class="card stat-card">
-                    <div><i class="fa-solid fa-users-rectangle"></i></div>
+                    <div><i class="fa-solid fa-users-rectangle text-blue"></i></div>
                     <div>
-                        <p>Grup Aktif</p>
+                        <p>Grup Dikelola</p>
                         <h2><?php echo $total_grup; ?></h2>
                     </div>
                 </div>
                 <div class="card stat-card">
-                    <div><i class="fa-solid fa-user-group"></i></div>
+                    <div><i class="fa-solid fa-user-group text-green"></i></div>
                     <div>
                         <p>Total Anggota</p>
-                        <h2><?php echo $total_anggota; ?> <span>Orang</span></h2>
+                        <h2><?php echo $total_anggota; ?></h2>
                     </div>
                 </div>
                 <div class="card stat-card">
-                    <div><i class="fa-solid fa-wallet"></i></div>
+                    <div><i class="fa-solid fa-clock-rotate-left text-orange"></i></div>
                     <div>
-                        <p>Total Pemasukan</p>
-                        <h2>Rp <?php echo number_format($total_masuk, 0, ',', '.'); ?></h2>
+                        <p>Perlu Verifikasi</p>
+                        <h2><?php echo $total_pending; ?></h2>
                     </div>
                 </div>
                 <div class="card stat-card">
-                    <div><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                    <div><i class="fa-solid fa-file-invoice text-red"></i></div>
                     <div>
-                        <p>Total Pengeluaran</p>
-                        <h2>Rp <?php echo number_format($total_keluar, 0, ',', '.'); ?></h2>
+                        <p>Transaksi Selesai</p>
+                        <h2><?php echo $total_trx; ?></h2>
                     </div>
                 </div>
             </section>
 
             <section class="charts-section">
-                <div class="card chart-card flex-2">
-                    <h3 class="card-title">Arus Kas</h3>
-                    <div class="cash-flow-cards">
-                        <div class="cash-flow-box">
-                            <p class="legend-label"><span class="dot dot-blue"></span> Pemasukan</p>
-                            <h4>Rp <?php echo number_format($total_masuk, 0, ',', '.'); ?></h4>
-                        </div>
-                        <div class="cash-flow-box">
-                            <p class="legend-label"><span class="dot dot-green"></span> Total Saldo</p>
-                            <h4>Rp <?php echo number_format($saldo, 0, ',', '.'); ?></h4>
-                        </div>
-                        <div class="cash-flow-box">
-                            <p class="legend-label"><span class="dot dot-yellow"></span> Pengeluaran</p>
-                            <h4>Rp <?php echo number_format($total_keluar, 0, ',', '.'); ?></h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="card chart-card flex-1">
-                    <h3 class="card-title">Status Tagihan</h3>
-                    <div class="chart-container">
-                        <ul class="legend-list status-tagihan-list">
-                            <li>
-                                <span><span class="dot dot-green"></span> Lunas</span>
-                                <span><?php echo $count_lunas; ?> <span>(<?php echo $persen_lunas; ?>%)</span></span>
-                            </li>
-                            <li>
-                                <span><span class="dot dot-orange"></span> Belum Lunas</span>
-                                <span><?php echo $count_belum; ?> <span>(<?php echo $persen_belum; ?>%)</span></span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-
-            <section class="table-section">
-                <div class="card table-card">
-                    <h3 class="card-title">Grup Iuran Terbaru</h3>
-                    <table>
+                <div class="card flex-2">
+                    <h3 class="card-title">Tugas Menunggu Verifikasi</h3>
+                    <table class="data-table">
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Nama Grup</th>
-                                <th>Deskripsi</th>
-                                <th>Aksi</th>
+                                <th>Grup</th>
+                                <th>Anggota</th>
+                                <th>Iuran</th>
+                                <th>Nominal</th>
+                                <th class="text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php
-                            $no = 1;
-                            if (count($tabel_grup) > 0):
-                                foreach($tabel_grup as $row):
-                            ?>
-                            <tr>
-                                <td><?php echo $no++; ?></td>
-                                <td><span class="fw-500"><?php echo htmlspecialchars($row['nama_grup']); ?></span></td>
-                                <td><?php echo htmlspecialchars($row['deskripsi']); ?></td>
-                                <td>
-                                    <a href="../../controller/bendahara/DetailGrupController.php?id=<?php echo $row['id_grup']; ?>" class="btn-action" style="text-decoration:none; padding:5px 10px; border-radius:5px; background:#1e293b; color:#fff;">Kelola</a>
-                                </td>
-                            </tr>
-                            <?php 
-                                endforeach;
-                            else: 
-                            ?>
-                            <tr>
-                                <td colspan="4" style="text-align:center;">Belum ada grup yang dibuat.</td>
-                            </tr>
+                            <?php if (count($list_pending) > 0): ?>
+                                <?php foreach($list_pending as $p): ?>
+                                <tr>
+                                    <td class="fw-500"><?php echo htmlspecialchars($p['nama_grup']); ?></td>
+                                    <td><?php echo htmlspecialchars($p['nama_user']); ?></td>
+                                    <td><?php echo htmlspecialchars($p['nama_iuran']); ?></td>
+                                    <td class="text-green fw-500">Rp <?php echo number_format($p['nominal'], 0, ',', '.'); ?></td>
+                                    <td class="text-center">
+                                        <a href="../../controller/bendahara/DetailGrupController.php?id=<?php echo $p['id_grup']; ?>&tab=pembayaran" class="btn-action btn-kelola">Cek Bukti</a>
+                                    </td>
+                                </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="5" class="text-center">Tidak ada pembayaran yang perlu diverifikasi saat ini.</td>
+                                </tr>
                             <?php endif; ?>
                         </tbody>
                     </table>
+                </div>
+
+                <div class="card flex-1">
+                    <h3 class="card-title">Riwayat Transaksi Terbaru</h3>
+                    <div class="activity-list">
+                        <?php if (count($list_riwayat) > 0): ?>
+                            <?php foreach ($list_riwayat as $r): ?>
+                                <div class="activity-item">
+                                    <div class="activity-user">
+                                        <strong><?php echo htmlspecialchars($r['nama_user'] ?? 'Pemasukan Kas'); ?></strong>
+                                        <span><?php echo htmlspecialchars($r['deskripsi']); ?> (<?php echo htmlspecialchars($r['nama_grup']); ?>)</span>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="text-green fw-600 block-element mb-5">+<?php echo number_format($r['nominal'], 0, ',', '.'); ?></span>
+                                        <span class="activity-time"><?php echo date('d M', strtotime($r['tanggal'])); ?></span>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <p class="stat-desc empty-state-msg">Belum ada transaksi</p>
+                        <?php endif; ?>
+                    </div>
                 </div>
             </section>
         </main>

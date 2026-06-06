@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KasMate - Pengaturan</title>
+    <title>KasMate - Pengaturan Akun</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../../public/assets/css/style.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
@@ -42,10 +42,10 @@
                         <i class='bx bxs-group'></i> Manajemen Grup
                     </a>
                     <a href="../../controller/admin/PengaturanController.php" class="menu-item active">
-                        <i class='bx bxs-cog'></i> Pengaturan Sistem
+                        <i class='bx bxs-user-detail'></i> Pengaturan Akun
                     </a>
                 </div>
-                <div class="menu-section" style="margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
+                <div class="menu-section sidebar-footer-menu">
                     <a href="../../controller/auth/LogoutController.php" class="menu-item">
                         <i class='bx bx-log-out'></i> Logout
                     </a>
@@ -56,8 +56,8 @@
         <main class="main-content">
             <header class="topbar">
                 <div class="header-text">
-                    <h1>Pengaturan</h1>
-                    <p class="subtitle">Pengaturan Akun & Informasi Sistem</p>
+                    <h1>Pengaturan Akun</h1>
+                    <p class="subtitle">Kelola informasi profil dan keamanan akun Anda</p>
                 </div>
                 <div class="header-right">
                     <button class="btn-notification"><i class='bx bx-bell'></i></button>
@@ -73,80 +73,55 @@
 
             <section class="content-body">
                 <?php if ($sukses): ?>
-                    <div class="alert alert-success"><i class='bx bx-check-circle'></i> Perubahan berhasil disimpan!</div>
+                    <div class="alert alert-success">
+                        <i class='bx bx-check-circle'></i> Perubahan berhasil disimpan!
+                    </div>
                 <?php endif; ?>
                 <?php if ($error): ?>
-                    <div class="alert alert-error"><i class='bx bx-error-circle'></i> <?= htmlspecialchars($error) ?></div>
+                    <div class="alert alert-error">
+                        <i class='bx bx-error-circle'></i> <?= htmlspecialchars($error) ?>
+                    </div>
                 <?php endif; ?>
 
                 <div class="settings-grid">
-                    
                     <div class="card">
-                        <h3 class="card-title"><i class='bx bx-user'></i> Profil Admin</h3>
+                        <h3 class="card-title mb-20"><i class='bx bx-user-circle text-blue'></i> Profil Administrator</h3>
                         <form method="POST">
                             <input type="hidden" name="aksi" value="update_profil">
                             <div class="input-group">
                                 <label>Nama Lengkap</label>
-                                <input type="text" name="nama" value="<?= htmlspecialchars($user_login['nama']) ?>" required>
+                                <input type="text" name="nama" value="<?= htmlspecialchars($user_login['nama']) ?>" required class="form-control-bordered">
                             </div>
                             <div class="input-group">
-                                <label>Email</label>
-                                <input type="email" name="email" value="<?= htmlspecialchars($user_login['email']) ?>" required>
+                                <label>Alamat Email</label>
+                                <input type="email" name="email" value="<?= htmlspecialchars($user_login['email']) ?>" required class="form-control-bordered">
                             </div>
-                            <div style="display: flex; justify-content: flex-end;">
-                                <button type="submit" class="btn-action btn-dark">Simpan Profil</button>
+                            <div class="flex-justify-end mt-20">
+                                <button type="submit" class="btn-add-user"><i class='bx bx-save'></i> Simpan Profil</button>
                             </div>
                         </form>
                     </div>
 
                     <div class="card">
-                        <h3 class="card-title"><i class='bx bx-lock-alt'></i> Ganti Password</h3>
+                        <h3 class="card-title mb-20"><i class='bx bx-shield-quarter text-green'></i> Keamanan Akun</h3>
                         <form method="POST">
                             <input type="hidden" name="aksi" value="update_password">
                             <div class="input-group">
-                                <label>Password Lama</label>
-                                <input type="password" name="password_lama" required placeholder="Masukkan password lama">
+                                <label>Password Saat Ini</label>
+                                <input type="password" name="password_lama" required placeholder="Masukkan password lama Anda" class="form-control-bordered">
                             </div>
                             <div class="input-group">
                                 <label>Password Baru</label>
-                                <input type="password" name="password_baru" required placeholder="Minimal 6 karakter">
+                                <input type="password" name="password_baru" required placeholder="Ketik password baru (min. 6 karakter)" class="form-control-bordered">
                             </div>
                             <div class="input-group">
                                 <label>Konfirmasi Password Baru</label>
-                                <input type="password" name="konfirmasi_password" required placeholder="Ulangi password baru">
+                                <input type="password" name="konfirmasi_password" required placeholder="Ketik ulang password baru" class="form-control-bordered">
                             </div>
-                            <div style="display: flex; justify-content: flex-end;">
-                                <button type="submit" class="btn-action btn-dark">Ganti Password</button>
+                            <div class="flex-justify-end mt-20">
+                                <button type="submit" class="btn-add-user"><i class='bx bx-key'></i> Perbarui Password</button>
                             </div>
                         </form>
-                    </div>
-
-                    <div class="card full-width">
-                        <h3 class="card-title"><i class='bx bx-info-circle'></i> Informasi Sistem</h3>
-                        <div class="info-row">
-                            <span class="label">Nama Sistem</span>
-                            <span class="value">KasMate</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="label">Deskripsi</span>
-                            <span class="value">Sistem Informasi Manajemen Iuran dan Keuangan Kelompok</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="label">Total Pengguna</span>
-                            <span class="value"><?= $total_user ?> user</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="label">Total Grup</span>
-                            <span class="value"><?= $total_grup ?> grup</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="label">Total Transaksi</span>
-                            <span class="value"><?= $total_trx ?> transaksi</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="label">Versi</span>
-                            <span class="value">v1.0.0</span>
-                        </div>
                     </div>
                 </div>
             </section>
